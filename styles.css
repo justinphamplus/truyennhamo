@@ -1476,10 +1476,13 @@ h3 {
 
 .vip-upgrade p {
   margin: 0;
+  min-width: 0;
   color: var(--text);
   font-size: 1rem;
   font-weight: 700;
   line-height: 1.65;
+  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
 .vip-upgrade strong {
@@ -2163,6 +2166,17 @@ h3 {
     align-items: stretch;
     flex-direction: column;
     padding: 1rem;
+  }
+
+  .vip-upgrade p {
+    max-width: 24ch;
+    white-space: normal;
+  }
+
+  .vip-upgrade-copy {
+    align-items: flex-start;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
   }
 
   .vip-upgrade .button {
