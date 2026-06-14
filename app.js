@@ -201,6 +201,14 @@ function storyBlurb(story) {
   return story.blurb;
 }
 
+function statusText(status) {
+  return status.includes("Hoàn") ? "Full" : status;
+}
+
+function statusClass(status) {
+  return status.includes("Hoàn") ? "full" : "ongoing";
+}
+
 function truncateHeroTitle(title) {
   return title.length > 48 ? `${title.slice(0, 48).trim()}...` : title;
 }
@@ -211,7 +219,8 @@ function renderHero(index = activeHeroIndex) {
   const stats = $$(".hero-stats div");
 
   $("#home-title").textContent = truncateHeroTitle(story.title);
-  $(".hero-copy .status").textContent = story.status;
+  $(".hero-copy .status").className = `status ${statusClass(story.status)}`;
+  $(".hero-copy .status").textContent = statusText(story.status);
   $(".hero-copy p").textContent = story.blurb;
   stats[0].querySelector("dt").textContent = story.time;
   stats[0].querySelector("dd").textContent = "cập nhật";
@@ -251,9 +260,8 @@ function renderRecommendations() {
       ${cover(story.cover)}
       <span class="recommend-copy">
         <h3>${story.title}</h3>
-        <span class="status ongoing">${story.status}</span>
+        <span class="status ${statusClass(story.status)}">${statusText(story.status)}</span>
         <p>${storyBlurb(story)}</p>
-        <span class="meta-row">${story.time}</span>
       </span>
     </a>
   `).join("");
@@ -307,17 +315,29 @@ function renderUpdates() {
 
 function renderStoryCards() {
   const list = $("[data-story-card-list]");
-  list.innerHTML = [...stories, ...stories.slice(0, 6)].map((story) => storyCard(story)).join("");
+  list.innerHTML = [...stories, ...stories.slice(0, 6)].map((story) => storyCard(story, { showMeta: false })).join("");
 }
 
-function storyCard(story) {
-  return `
-    <a class="story-card" href="#story" data-open-story>
-      <span class="story-cover ${story.cover}" aria-hidden="true"></span>
-      <h3>${story.title}</h3>
+function renderCompletedCards() {
+  const list = $("[data-completed-card-list]");
+  list.innerHTML = [...stories.slice(2), ...stories.slice(0, 8)].slice(0, 16).map((story) => storyCard(story, {
+    showMeta: false,
+    fullBadge: true,
+  })).join("");
+}
+
+function storyCard(story, options = {}) {
+  const { showMeta = true, fullBadge = false } = options;
+  const meta = showMeta ? `
       <p>${story.genre}</p>
       <span class="rating-line"><strong>★ ${story.rating}</strong></span>
-      <span class="read-line">${story.reads} lượt đọc</span>
+      <span class="read-line">${story.reads} lượt đọc</span>` : "";
+
+  return `
+    <a class="story-card ${fullBadge ? "is-full" : ""}" href="#story" data-open-story>
+      <span class="story-cover ${story.cover}" aria-hidden="true">${fullBadge ? '<span class="full-tag">Full</span>' : ""}</span>
+      <h3>${story.title}</h3>
+      ${meta}
     </a>
   `;
 }
@@ -544,6 +564,7 @@ function renderApp() {
   renderRanking();
   renderUpdates();
   renderStoryCards();
+  renderCompletedCards();
   renderContinue();
   renderTags();
   renderChapters();
