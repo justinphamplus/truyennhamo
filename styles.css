@@ -659,10 +659,15 @@ svg {
 }
 
 .hero-slider {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2rem;
+  z-index: 2;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.45rem;
-  margin-top: 1.2rem;
 }
 
 .hero-dot {
@@ -736,6 +741,7 @@ h3 {
 
 .recommend-panel {
   padding: 1.25rem;
+  min-height: 560px;
 }
 
 .recommend-panel .panel-link {
@@ -1049,6 +1055,20 @@ h3 {
 .score::before {
   content: "🔥";
   font-size: 0.82rem;
+}
+
+.score::before {
+  content: none;
+}
+
+.score svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .updates-list,

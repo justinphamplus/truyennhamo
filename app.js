@@ -287,10 +287,14 @@ function renderRanking(mode = "week") {
       <span class="ranking-copy">
         <h3>${story.title}</h3>
         <p>${story.genre}</p>
-        <span class="score">${formatScore(story.score, multiplier)}</span>
+        <span class="score">${flameIcon()}${formatScore(story.score, multiplier)}</span>
       </span>
     </li>
   `).join("");
+}
+
+function flameIcon() {
+  return `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22c4.2 0 7-2.8 7-6.7 0-2.7-1.5-4.7-3.1-6.3-.7 1.7-1.8 2.8-3 3.3.5-3.4-1.1-6.5-4.3-9.3.2 3.9-1.6 5.8-3 7.5A7.7 7.7 0 0 0 4 15.3C4 19.2 7.8 22 12 22Z"/></svg>`;
 }
 
 function formatScore(score, multiplier) {
