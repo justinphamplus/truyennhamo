@@ -402,12 +402,21 @@ function renderChapters(filter = "", reversed = false) {
 
   list.innerHTML = items.map(([title, time, flags], index) => {
     const [chapterNo, chapterTitle = ""] = title.split(": ");
+    const isVip = flags.includes("vip");
+    const meta = isVip
+      ? `<span class="chapter-meta">
+          <span class="label-vip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z" /></svg>VIP</span>
+          <span class="chapter-price">700 <span class="coin-icon" aria-hidden="true">$</span></span>
+          <i class="lock-mini" aria-hidden="true"></i>
+        </span>`
+      : `<span class="chapter-meta">
+          ${flags.includes("hot") ? '<i class="label-free">Free</i>' : ""}
+          <span class="chapter-chevron" aria-hidden="true">›</span>
+        </span>`;
     return `
-    <button class="chapter-row ${index === 0 ? "is-latest" : ""}" type="button" aria-label="${title}${flags.includes("vip") ? " VIP" : ""}">
+    <button class="chapter-row ${isVip ? "is-vip" : ""} ${index === 0 ? "is-latest" : ""}" type="button" aria-label="${title}${isVip ? " VIP 700 Gold" : ""}">
       <span class="chapter-title"><strong>${chapterNo}</strong>${chapterTitle ? `<span>${chapterTitle}</span>` : ""}</span>
-      <time>${time}</time>
-      ${flags.includes("hot") ? '<i class="label-free">Free</i>' : ""}
-      ${flags.includes("vip") ? '<i class="lock-mini" aria-hidden="true"></i>' : ""}
+      ${meta}
     </button>
   `;
   }).join("");
