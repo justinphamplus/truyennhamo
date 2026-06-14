@@ -340,7 +340,29 @@ svg {
 }
 
 #story-page .shell {
-  width: min(calc(100% - 8rem), 980px) !important;
+  width: min(calc(100vw - 2rem), 980px) !important;
+  max-width: 980px;
+  overflow-x: clip;
+}
+
+#story-page .page-stack > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+#story-page .story-detail,
+#story-page .section-block {
+  width: 100%;
+  overflow: hidden;
+}
+
+#story-page .story-info,
+#story-page .stat-grid,
+#story-page .story-actions,
+#story-page .tag-list,
+#story-page .related-track {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .card,
@@ -1391,6 +1413,10 @@ h3 {
   margin: 0 0 1.25rem;
 }
 
+#story-page .stat-grid {
+  width: 100%;
+}
+
 .stat-grid div {
   padding: 0.9rem;
   border: 1px solid var(--border-soft);
@@ -1426,7 +1452,12 @@ h3 {
   margin: 0;
   color: var(--text-soft);
   max-width: 100%;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
+}
+
+#story-page .story-actions .button {
+  max-width: 100%;
+  white-space: normal;
 }
 
 .chapter-head {
@@ -1475,6 +1506,7 @@ h3 {
 #story-page .chapter-row {
   display: flex;
   justify-content: flex-start;
+  max-width: 100%;
 }
 
 #story-page .chapter-row time {
@@ -1856,7 +1888,8 @@ h3 {
   }
 
   #story-page .shell {
-    width: min(calc(100% - 2rem), 1240px) !important;
+    width: min(calc(100vw - 2.5rem), 980px) !important;
+    max-width: calc(100vw - 2.5rem);
   }
 
   .site-header {
