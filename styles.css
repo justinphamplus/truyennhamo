@@ -1443,6 +1443,53 @@ h3 {
   font-size: 0.78rem;
 }
 
+.vip-upgrade {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  width: 100%;
+  min-width: 0;
+  padding: 1.35rem 1.5rem;
+  background: rgba(17, 22, 36, 0.98);
+}
+
+.vip-upgrade-copy {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.vip-crown {
+  flex: 0 0 auto;
+  width: 2rem;
+  height: 2rem;
+  color: var(--amber);
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.32));
+}
+
+.vip-upgrade p {
+  margin: 0;
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.vip-upgrade strong {
+  color: var(--amber);
+}
+
+.vip-upgrade .button {
+  min-width: 9.5rem;
+}
+
 .story-description {
   display: grid;
   gap: 0.7rem;
@@ -2108,6 +2155,17 @@ h3 {
 
   .story-actions .button,
   .hero-actions .button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .vip-upgrade {
+    align-items: stretch;
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .vip-upgrade .button {
     width: 100%;
     min-width: 0;
   }
