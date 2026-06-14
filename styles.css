@@ -660,14 +660,14 @@ svg {
 
 .hero-slider {
   position: absolute;
-  left: 0;
-  right: 0;
+  left: 65%;
   bottom: 2rem;
   z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.45rem;
+  transform: translateX(-50%);
 }
 
 .hero-dot {
@@ -740,6 +740,8 @@ h3 {
 }
 
 .recommend-panel {
+  display: flex;
+  flex-direction: column;
   padding: 1.25rem;
   min-height: 560px;
 }
@@ -769,6 +771,8 @@ h3 {
 .recommend-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: repeat(3, minmax(0, 1fr));
+  flex: 1;
   gap: 0.625rem;
 }
 
@@ -785,6 +789,7 @@ h3 {
 .recommend-item {
   display: grid;
   grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
   gap: 0.55rem;
   padding: 0.45rem;
   min-width: 0;
