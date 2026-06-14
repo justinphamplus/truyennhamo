@@ -141,6 +141,7 @@ const heroStories = [
 ];
 
 let activeHeroIndex = 0;
+let heroAutoSlideTimer;
 
 const genres = [
   ["Tiên Hiệp", "122K truyện"],
@@ -149,7 +150,6 @@ const genres = [
   ["Hệ Thống", "64K truyện"],
   ["Ngôn Tình", "58K truyện"],
   ["Kinh Dị", "32K truyện"],
-  ["Lịch Sử", "28K truyện"],
   ["Tất cả", "thể loại"],
 ];
 
@@ -221,6 +221,13 @@ function renderHero(index = activeHeroIndex) {
   $("[data-hero-dots]").innerHTML = heroStories.map((item, itemIndex) => `
     <button class="hero-dot ${itemIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${itemIndex}" aria-label="Xem truyện hot ${itemIndex + 1}"></button>
   `).join("");
+}
+
+function startHeroAutoSlide() {
+  window.clearInterval(heroAutoSlideTimer);
+  heroAutoSlideTimer = window.setInterval(() => {
+    renderHero((activeHeroIndex + 1) % heroStories.length);
+  }, 5000);
 }
 
 function genreIcon(index) {
@@ -436,6 +443,7 @@ function bindInteractions() {
     const heroSlide = event.target.closest("[data-hero-slide]");
     if (heroSlide) {
       renderHero(Number(heroSlide.dataset.heroSlide));
+      startHeroAutoSlide();
       return;
     }
 
@@ -530,6 +538,7 @@ function bindInteractions() {
 
 function renderApp() {
   renderHero();
+  startHeroAutoSlide();
   renderRecommendations();
   renderGenres();
   renderRanking();
