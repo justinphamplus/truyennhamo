@@ -400,14 +400,17 @@ function renderChapters(filter = "", reversed = false) {
     return;
   }
 
-  list.innerHTML = items.map(([title, time, flags], index) => `
+  list.innerHTML = items.map(([title, time, flags], index) => {
+    const [chapterNo, chapterTitle = ""] = title.split(": ");
+    return `
     <button class="chapter-row ${index === 0 ? "is-latest" : ""}" type="button" aria-label="${title}${flags.includes("vip") ? " VIP" : ""}">
-      <strong>${title}</strong>
+      <span class="chapter-title"><strong>${chapterNo}</strong>${chapterTitle ? `<span>${chapterTitle}</span>` : ""}</span>
       <time>${time}</time>
-      ${flags.includes("hot") ? '<i class="label-hot">Hot</i>' : ""}
+      ${flags.includes("hot") ? '<i class="label-free">Free</i>' : ""}
       ${flags.includes("vip") ? '<i class="lock-mini" aria-hidden="true"></i>' : ""}
     </button>
-  `).join("");
+  `;
+  }).join("");
 }
 
 function renderComments() {
