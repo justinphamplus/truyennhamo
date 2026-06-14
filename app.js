@@ -255,16 +255,7 @@ function genreIcon(index) {
 
 function renderRecommendations() {
   const list = $("[data-recommend-list]");
-  list.innerHTML = stories.slice(0, 6).map((story) => `
-    <a class="recommend-item" href="#story" data-open-story>
-      ${cover(story.cover)}
-      <span class="recommend-copy">
-        <h3>${story.title}</h3>
-        <span class="status ${statusClass(story.status)}">${statusText(story.status)}</span>
-        <p>${storyBlurb(story)}</p>
-      </span>
-    </a>
-  `).join("");
+  list.innerHTML = stories.slice(0, 8).map((story) => storyCard(story, { showMeta: false })).join("");
 }
 
 function renderGenres() {

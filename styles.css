@@ -185,7 +185,7 @@ svg {
   display: flex;
   align-items: center;
   gap: 0.625rem;
-  width: min(100%, 360px);
+  width: min(100%, 180px);
   margin-left: auto;
   padding: 0.5rem 0.625rem;
   color: var(--muted);
@@ -233,6 +233,38 @@ svg {
   gap: 0.5rem;
 }
 
+.wallet-action,
+.gold-balance {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.35rem;
+  border-radius: 999px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.wallet-action {
+  padding: 0.45rem 1.1rem;
+  color: #fff7ed;
+  border: 0;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  box-shadow: 0 10px 28px rgba(245, 158, 11, 0.24);
+}
+
+.gold-balance {
+  gap: 0.35rem;
+  padding: 0.4rem 0.85rem;
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.34);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.gold-balance .material-symbols-rounded {
+  color: #f59e0b;
+  font-size: 1.25rem;
+}
+
 .icon-button,
 .menu-button {
   display: inline-grid;
@@ -266,6 +298,12 @@ svg {
   border-radius: var(--radius);
   background: transparent;
   font-weight: 700;
+}
+
+.user-button.avatar-only {
+  min-height: auto;
+  padding: 0;
+  border-radius: 999px;
 }
 
 .avatar {
@@ -377,7 +415,7 @@ svg {
 
 .home-hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
+  grid-template-columns: 1fr;
   align-items: start;
   gap: 1.5rem;
 }
@@ -686,7 +724,7 @@ svg {
 
 .hero-slider {
   position: absolute;
-  left: 65%;
+  left: 50%;
   bottom: 2rem;
   z-index: 2;
   display: flex;
@@ -835,7 +873,7 @@ h3 {
 }
 
 .cover-thumb {
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 2 / 3;
   min-height: 0;
 }
 
@@ -1171,7 +1209,7 @@ h3 {
 }
 
 .story-cover {
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 2 / 3;
   margin-bottom: 0.75rem;
 }
 
@@ -1324,7 +1362,7 @@ h3 {
 }
 
 .cover-card {
-  aspect-ratio: 9 / 16;
+  aspect-ratio: 2 / 3;
   min-height: 420px;
 }
 
@@ -1913,7 +1951,8 @@ h3 {
 @media (max-width: 960px) {
   .main-nav,
   .header-actions .icon-button,
-  .user-name {
+  .wallet-action,
+  .gold-balance {
     display: none;
   }
 
