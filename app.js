@@ -405,9 +405,9 @@ function renderChapters(filter = "", reversed = false) {
     const isVip = flags.includes("vip");
     const meta = isVip
       ? `<span class="chapter-meta">
-          <span class="label-vip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.5 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.3l-5.8 3.1 1.1-6.5-4.7-4.6 6.5-.9L12 2.5Z" /></svg>VIP</span>
-          <span class="chapter-price">700 <span class="coin-icon" aria-hidden="true">$</span></span>
-          <i class="lock-mini" aria-hidden="true"></i>
+          <span class="label-vip"><span class="material-symbols-rounded vip-star" aria-hidden="true">star</span><span>VIP</span></span>
+          <span class="chapter-price"><span>700</span><span class="material-symbols-rounded coin-icon" aria-hidden="true">monetization_on</span></span>
+          <span class="material-symbols-rounded lock-mini" aria-hidden="true">lock</span>
         </span>`
       : `<span class="chapter-meta">
           ${flags.includes("hot") ? '<i class="label-free">Free</i>' : ""}
