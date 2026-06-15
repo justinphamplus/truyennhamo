@@ -1179,6 +1179,10 @@ h3 {
   gap: 0.625rem;
 }
 
+.updates-list {
+  margin: 1rem 0;
+}
+
 .update-item {
   display: grid;
   grid-template-columns: 54px minmax(0, 1fr) auto;
@@ -2221,6 +2225,11 @@ h3 {
     justify-content: flex-start;
     width: 100%;
     margin-left: 0;
+  }
+
+  #library .section-head {
+    align-items: flex-start;
+    flex-direction: column;
   }
 
   .recommend-item {
