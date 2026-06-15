@@ -1,6 +1,6 @@
 # Progress Tracker: NovelVerse
 
-Cap nhat lan cuoi: 2026-06-13
+Cap nhat lan cuoi: 2026-06-15
 
 ## Current Phase
 
@@ -16,6 +16,7 @@ Static public website prototype.
 | Interactions | Done | Mock interactions da co |
 | Responsive CSS | In progress | Da co breakpoint, can browser QA ky |
 | Documentation | Done | Bo docs du an da duoc tao |
+| Visual theme | In progress | Dang refactor sang Mystical Night glassmorphism, giu layout |
 | Backend/API | Not started | Out of scope hien tai |
 | Admin dashboard | Not started | Out of scope hien tai |
 | Deployment | Not started | Chua yeu cau |
@@ -48,6 +49,18 @@ Static public website prototype.
   - User dropdown.
   - Hash routing `#home` va `#story`.
   - Section anchors tren homepage.
+
+## Theme Refactor 2026-06-15
+
+- Applied Mystical Night color tokens from `C:/Users/Admin/Desktop/New Design.md`.
+- Added glassmorphism treatment for header, cards, panels, rows, menus, footer and mobile CTA.
+- Updated badge, CTA, VIP/rating, status and cover placeholder colors.
+- Kept homepage and story detail layout structure unchanged.
+- Latest QA screenshots:
+  - `docs/screenshots/theme-home-desktop-1440.png`
+  - `docs/screenshots/theme-home-mobile-390-fixed-2.png`
+  - `docs/screenshots/theme-story-desktop-1440.png`
+  - `docs/screenshots/theme-story-mobile-390-fixed-3.png`
   - Ranking tabs.
   - Library tabs.
   - Chapter search/sort.

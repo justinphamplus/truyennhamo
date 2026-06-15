@@ -249,56 +249,69 @@ Motion components/patterns can co:
 
 ## 5. Mau sac
 
-Theme la dark fantasy. Nen tranh bien toan bo UI thanh mot mau tim; tim chi la brand/action.
+Theme hien tai la Mystical Night / Tieu Mo: dark fantasy, nen xanh dem sau, card kinh mo va diem nhan xanh linh hon. Layout giu nguyen, chi refactor token mau va glass treatment.
 
 ### Core colors
 
 | Purpose | Token | Value |
 | --- | --- | --- |
-| Main background | `--bg` | `#070A13` |
-| Deep background | `--bg-deep` | `#050710` |
-| Card surface | `--surface` | `#111624` |
-| Raised surface | `--surface-2` | `#151A2A` |
-| Border | `--border` | `#252B3D` |
-| Primary text | `--text` | `#F8FAFC` |
-| Secondary text | `--text-soft` | `#C7C9D4` |
-| Muted text | `--muted` | `#8A91A6` |
+| Main background / Deep Night | `--bg` | `#050B17` |
+| Deep background | `--bg-deep` | `#020611` |
+| Card surface / Midnight Blue | `--surface` | `#0E1B33` |
+| Raised surface | `--surface-2` | `#132640` |
+| Layer depth / Star Blue | `--surface-3` | `#1D2F4F` |
+| Border / Stone Blue | `--border` | `#5A6B8C` |
+| Primary text | `--text` | `#F8FAFF` |
+| Secondary text / Soul Light | `--text-soft` | `#DDF2FF` |
+| Muted text | `--muted` | `#9FB6D1` |
 
 ### Accent colors
 
 | Purpose | Token | Value |
 | --- | --- | --- |
-| Brand/action violet | `--violet` | `#7C3AED` |
-| Violet hover | `--violet-2` | `#8B5CF6` |
-| Pink hot accent | `--pink` | `#EC4899` |
-| Blue secondary accent | `--blue` | `#3B82F6` |
-| Success/ongoing | `--green` | `#22C55E` |
-| Rating/VIP | `--amber` | `#F59E0B` |
-| Hot/alert | `--red` | `#F43F5E` |
+| Mystic Purple | `--violet` | `#B78CFF` |
+| Spirit Blue / active hover | `--violet-2`, `--blue` | `#7DDCFF` |
+| Fairy Pink / hot accent | `--pink`, `--red` | `#FFC2E7` |
+| Aqua Mist / new/ongoing | `--green` | `#59E3E3` |
+| Magic Gold / VIP/rating | `--amber` | `#FFD875` |
+
+### Glassmorphism tokens
+
+| Purpose | Token | Value |
+| --- | --- | --- |
+| Glass background | `--glass-bg` | `rgba(14, 27, 51, 0.68)` |
+| Strong glass background | `--glass-bg-strong` | `rgba(14, 27, 51, 0.8)` |
+| Glass depth | `--glass-depth` | `rgba(29, 47, 79, 0.5)` |
+| Glass border | `--glass-line` | `rgba(90, 107, 140, 0.2)` |
+| Starlight gradient | `--starlight-gradient` | `linear-gradient(135deg, #7DDCFF, #B78CFF)` |
+| Deep ocean gradient | `--deep-ocean-gradient` | `linear-gradient(180deg, rgba(14, 27, 51, 0.82), rgba(29, 47, 79, 0.62))` |
+| Magic glow gradient | `--magic-glow-gradient` | `linear-gradient(45deg, #FFD875, #FFC2E7)` |
 
 ### Usage rules
 
-- Primary CTA: violet gradient or solid violet.
-- Buy/VIP CTA: orange to pink gradient.
-- Status Dang ra: green badge.
-- Rating: amber star/text.
-- New/Hot: violet/pink badges.
-- Card borders: subtle blue-gray, not bright.
+- Header, cards, menus and rows use translucent Midnight Blue with `backdrop-filter: blur(12px) saturate(180%)`.
+- Primary CTA uses Starlight Gradient.
+- Buy/VIP CTA and VIP/rating accents use Magic Gold / Magic Glow.
+- Status Dang ra and New badges use Aqua Mist.
+- Hot badges use Fairy Pink / Mystic Purple.
+- Card borders stay subtle Stone Blue, not bright.
 
 ## 6. Font/typography
 
 Primary font:
 
-- `Be Vietnam Pro`
+- Body: `DM Sans`
+- Display/headings/actions: `Plus Jakarta Sans`, fallback `Inter`
+- Reading/long description content: `Lora` where useful
 
 Fallback:
 
-- `Inter`, system sans-serif
+- system sans-serif
 
 Reason:
 
-- Ho tro tieng Viet tot.
-- Hop voi UI hien dai, dark dashboard/web novel.
+- Match Mystical Night design guideline.
+- Keep Vietnamese text readable in compact novel UI.
 - De doc o kich thuoc nho.
 
 Typography scale:

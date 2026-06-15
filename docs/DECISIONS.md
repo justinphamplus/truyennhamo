@@ -71,3 +71,19 @@ Reason:
 Consequence:
 
 - Moi task tiep theo nen cap nhat `PROGRESS.md` va `TASKS.md`.
+
+## 2026-06-15: Mystical Night Theme Refactor
+
+Decision: Doi design system sang bang mau Mystical Night / Tieu Mo va ap dung glassmorphism, nhung giu nguyen layout hien tai.
+
+Reason:
+
+- User cung cap `New Design.md` lam guideline mau moi.
+- Yeu cau chi thay bo mau, glass effect va chi tiet visual can thiet.
+- Layout homepage/story detail dang dung dung flow nen khong refactor cau truc.
+
+Consequence:
+
+- `styles.css` la noi map token mau moi va glass treatment.
+- Khong doi grid/flex/position chinh cua cac section.
+- Neu them theme tiep theo, can cap nhat `docs/SPEC.md` truoc khi sua CSS.
