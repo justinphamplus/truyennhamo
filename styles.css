@@ -1065,6 +1065,15 @@ h3 {
   gap: 1.5rem;
 }
 
+.split-grid > .section-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.split-grid > .section-block > .panel-link {
+  margin-top: auto;
+}
+
 .tabs {
   display: inline-flex;
   flex-wrap: wrap;
@@ -1172,7 +1181,7 @@ h3 {
 
 .update-item {
   display: grid;
-  grid-template-columns: 58px minmax(0, 1fr) auto;
+  grid-template-columns: 54px minmax(0, 1fr) auto;
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem;
