@@ -129,6 +129,7 @@ const heroStories = [
     time: "52 phút trước",
     reads: "125.6K",
     rating: "4.8",
+    cover: "cover-gold",
   },
   ...stories.slice(0, 4).map((story) => ({
     title: story.title,
@@ -137,6 +138,7 @@ const heroStories = [
     time: story.time,
     reads: story.reads,
     rating: story.rating,
+    cover: story.cover,
   })),
 ];
 
@@ -226,6 +228,8 @@ function renderHero(index = activeHeroIndex) {
   stats[0].querySelector("dd").textContent = "cập nhật";
   stats[1].querySelector("dt").textContent = story.reads;
   stats[2].querySelector("dt").textContent = story.rating;
+  $("[data-hero-cover]").className = `hero-featured-cover ${story.cover}`;
+  $("[data-hero-rank] strong").textContent = `#${activeHeroIndex + 1}`;
 
   $("[data-hero-dots]").innerHTML = heroStories.map((item, itemIndex) => `
     <button class="hero-dot ${itemIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${itemIndex}" aria-label="Xem truyện hot ${itemIndex + 1}"></button>
