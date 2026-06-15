@@ -249,60 +249,59 @@ Motion components/patterns can co:
 
 ## 5. Mau sac
 
-Theme hien tai la Mystical Night / Tieu Mo: dark fantasy, nen xanh dem sau, card kinh mo va diem nhan xanh linh hon. Layout giu nguyen, chi refactor token mau va glass treatment.
+Theme hien tai la Tieu Mo Cozy Fantasy Library: dark emerald, mint glow, warm gold, soft glassmorphism va mascot-first branding. Layout va logic du lieu giu nguyen, chi refactor visual/style can thiet.
 
 ### Core colors
 
 | Purpose | Token | Value |
 | --- | --- | --- |
-| Main background / Deep Night | `--bg` | `#050B17` |
-| Deep background | `--bg-deep` | `#020611` |
-| Card surface / Midnight Blue | `--surface` | `#0E1B33` |
-| Raised surface | `--surface-2` | `#132640` |
-| Layer depth / Star Blue | `--surface-3` | `#1D2F4F` |
-| Border / Stone Blue | `--border` | `#5A6B8C` |
-| Primary text | `--text` | `#F8FAFF` |
-| Secondary text / Soul Light | `--text-soft` | `#DDF2FF` |
-| Muted text | `--muted` | `#9FB6D1` |
+| Main background / Dark Emerald | `--tm-bg-main` | `#031F1F` |
+| Deep background | `--tm-bg-deep` | `#021514` |
+| Black depth | `--tm-bg-black` | `#010B0A` |
+| Library layer | `--tm-bg-library` | `#082B28` |
+| Card surface | `--tm-surface-card` | `rgba(8, 48, 45, 0.78)` |
+| Card hover | `--tm-surface-card-hover` | `rgba(11, 70, 65, 0.9)` |
+| Primary text / Cream | `--tm-text-primary` | `#F5F1E6` |
+| Secondary text | `--tm-text-secondary` | `rgba(245, 241, 230, 0.72)` |
+| Muted text | `--tm-text-muted` | `rgba(245, 241, 230, 0.52)` |
 
 ### Accent colors
 
 | Purpose | Token | Value |
 | --- | --- | --- |
-| Mystic Purple | `--violet` | `#B78CFF` |
-| Spirit Blue / active hover | `--violet-2`, `--blue` | `#7DDCFF` |
-| Fairy Pink / hot accent | `--pink`, `--red` | `#FFC2E7` |
-| Aqua Mist / new/ongoing | `--green` | `#59E3E3` |
-| Magic Gold / VIP/rating | `--amber` | `#FFD875` |
+| Mint primary | `--tm-primary` | `#38D4C7` |
+| Mint soft | `--tm-primary-soft` | `#A8F0E6` |
+| Emerald deep | `--tm-primary-deep` | `#14998F` |
+| Warm gold | `--tm-gold` | `#FFD98A` |
+| Gold light | `--tm-gold-light` | `#FFE8B6` |
+| Lantern accent | `--tm-lantern` | `#FFB86B` |
 
 ### Glassmorphism tokens
 
 | Purpose | Token | Value |
 | --- | --- | --- |
-| Glass background | `--glass-bg` | `rgba(14, 27, 51, 0.68)` |
-| Strong glass background | `--glass-bg-strong` | `rgba(14, 27, 51, 0.8)` |
-| Glass depth | `--glass-depth` | `rgba(29, 47, 79, 0.5)` |
-| Glass border | `--glass-line` | `rgba(90, 107, 140, 0.2)` |
-| Starlight gradient | `--starlight-gradient` | `linear-gradient(135deg, #7DDCFF, #B78CFF)` |
-| Deep ocean gradient | `--deep-ocean-gradient` | `linear-gradient(180deg, rgba(14, 27, 51, 0.82), rgba(29, 47, 79, 0.62))` |
-| Magic glow gradient | `--magic-glow-gradient` | `linear-gradient(45deg, #FFD875, #FFC2E7)` |
+| Soft border | `--tm-border-soft` | `rgba(168, 240, 230, 0.14)` |
+| Medium border | `--tm-border-medium` | `rgba(168, 240, 230, 0.22)` |
+| Gold border | `--tm-border-gold` | `rgba(255, 217, 138, 0.28)` |
+| Mint glow | `--tm-glow-soft` | `0 0 18px rgba(168, 240, 230, 0.22)` |
+| Gold glow | `--tm-glow-gold` | `0 0 24px rgba(255, 217, 138, 0.35)` |
 
 ### Usage rules
 
-- Header, cards, menus and rows use translucent Midnight Blue with `backdrop-filter: blur(12px) saturate(180%)`.
-- Primary CTA uses Starlight Gradient.
-- Buy/VIP CTA and VIP/rating accents use Magic Gold / Magic Glow.
-- Status Dang ra and New badges use Aqua Mist.
-- Hot badges use Fairy Pink / Mystic Purple.
-- Card borders stay subtle Stone Blue, not bright.
+- Header, cards, menus and rows use translucent emerald glass with `backdrop-filter: blur(18px) saturate(145%)`.
+- Primary CTA uses mint gradient.
+- Buy/VIP CTA and VIP/rating accents use warm gold.
+- Status Dang ra and New badges use mint.
+- Hot badges use lantern gold/orange.
+- Avoid cyber neon pink, laser lines, RGB glow and hard sci-fi borders.
 
 ## 6. Font/typography
 
 Primary font:
 
-- Body: `DM Sans`
-- Display/headings/actions: `Plus Jakarta Sans`, fallback `Inter`
-- Reading/long description content: `Lora` where useful
+- Body/actions: `Be Vietnam Pro`
+- Display/headings: `Lora`
+- Reading/long description content: `Lora`
 
 Fallback:
 
@@ -310,7 +309,7 @@ Fallback:
 
 Reason:
 
-- Match Mystical Night design guideline.
+- Match Tieu Mo Cozy Fantasy Library design guideline.
 - Keep Vietnamese text readable in compact novel UI.
 - De doc o kich thuoc nho.
 

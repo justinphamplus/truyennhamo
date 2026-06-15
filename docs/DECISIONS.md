@@ -87,3 +87,19 @@ Consequence:
 - `styles.css` la noi map token mau moi va glass treatment.
 - Khong doi grid/flex/position chinh cua cac section.
 - Neu them theme tiep theo, can cap nhat `docs/SPEC.md` truoc khi sua CSS.
+
+## 2026-06-15: Tieu Mo Cozy Fantasy Library Theme
+
+Decision: Refactor visual style sang brand "Tieu Mo - Nam Truyen" theo file `tieu-mo-style-refactor-codex.md`.
+
+Reason:
+
+- User cung cap design moi voi huong cozy fantasy library, dark emerald, mint glow va warm gold.
+- Can loai bo cam giac cyber neon / laser / sci-fi cua theme cu.
+- Mascot Tieu Mo can co vai tro ro hon trong homepage.
+
+Consequence:
+
+- Header/logo, hero, action bar, cards, badges, VIP, footer va detail page dung token `--tm-*`.
+- Them CSS-art mascot/action bar/widget de khong can asset moi.
+- Layout va mock data hien co van duoc giu.

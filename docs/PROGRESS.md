@@ -16,7 +16,7 @@ Static public website prototype.
 | Interactions | Done | Mock interactions da co |
 | Responsive CSS | In progress | Da co breakpoint, can browser QA ky |
 | Documentation | Done | Bo docs du an da duoc tao |
-| Visual theme | In progress | Dang refactor sang Mystical Night glassmorphism, giu layout |
+| Visual theme | In progress | Dang refactor sang Tieu Mo Cozy Fantasy Library, giu logic/layout chinh |
 | Backend/API | Not started | Out of scope hien tai |
 | Admin dashboard | Not started | Out of scope hien tai |
 | Deployment | Not started | Chua yeu cau |
@@ -56,7 +56,14 @@ Static public website prototype.
 - Added glassmorphism treatment for header, cards, panels, rows, menus, footer and mobile CTA.
 - Updated badge, CTA, VIP/rating, status and cover placeholder colors.
 - Kept homepage and story detail layout structure unchanged.
+- Applied Tieu Mo Cozy Fantasy Library tokens from `C:/Users/Admin/Desktop/tieu-mo-style-refactor-codex.md`.
+- Added Tieu Mo mascot CSS art, mascot action bar, suggestion widget and story banner.
+- Refactored visual language toward dark emerald, mint glow, warm gold and soft glassmorphism.
 - Latest QA screenshots:
+  - `docs/screenshots/tieumo-home-desktop-1440.png`
+  - `docs/screenshots/tieumo-home-mobile-390-fixed.png`
+  - `docs/screenshots/tieumo-story-desktop-1440.png`
+  - `docs/screenshots/tieumo-story-mobile-390.png`
   - `docs/screenshots/theme-home-desktop-1440.png`
   - `docs/screenshots/theme-home-mobile-390-fixed-2.png`
   - `docs/screenshots/theme-story-desktop-1440.png`
