@@ -2001,10 +2001,7 @@ h3 {
 }
 
 @media (max-width: 960px) {
-  .main-nav,
-  .header-actions .icon-button,
-  .wallet-action,
-  .gold-balance {
+  .main-nav {
     display: none;
   }
 
@@ -2099,12 +2096,28 @@ h3 {
   }
 
   .search-form {
-    flex: 0 1 260px;
-    min-width: 0;
-    width: auto;
-    max-width: calc(100% - 6rem);
+    flex: 0 0 2rem;
+    position: relative;
+    justify-content: center;
+    min-width: 2rem;
+    width: 2rem;
+    height: 2rem;
+    max-width: 2rem;
     margin-left: 0;
-    padding: 0.45rem 0.55rem;
+    padding: 0;
+    gap: 0;
+  }
+
+  .search-form .icon {
+    display: inline-grid;
+    place-items: center;
+  }
+
+  .search-form input {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    cursor: pointer;
   }
 
   .search-form kbd {
@@ -2112,7 +2125,7 @@ h3 {
   }
 
   .user-button {
-    display: none;
+    display: inline-flex;
   }
 
   .user-button svg {
@@ -2129,9 +2142,34 @@ h3 {
     gap: 0.25rem;
   }
 
+  .wallet-action,
+  .gold-balance {
+    min-height: 2.05rem;
+    font-size: 0.76rem;
+  }
+
+  .wallet-action {
+    padding: 0.35rem 0.55rem;
+  }
+
+  .gold-balance {
+    gap: 0.18rem;
+    padding: 0.3rem 0.45rem;
+  }
+
+  .gold-balance .material-symbols-rounded {
+    font-size: 1rem;
+  }
+
+  .header-actions .icon-button,
+  .menu-button {
+    width: 2rem;
+    height: 2rem;
+  }
+
   .menu-button {
     display: inline-grid;
-    flex: 0 0 2.25rem;
+    flex: 0 0 2rem;
   }
 
   .page-stack {
@@ -2384,6 +2422,47 @@ h3 {
 }
 
 @media (max-width: 420px) {
+  .site-header .shell {
+    width: calc(100% - 0.5rem);
+  }
+
+  .header-inner,
+  .header-actions {
+    gap: 0.12rem;
+  }
+
+  .search-form,
+  .header-actions .icon-button,
+  .menu-button,
+  .avatar {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .search-form,
+  .menu-button {
+    flex-basis: 1.75rem;
+  }
+
+  .wallet-action,
+  .gold-balance {
+    min-height: 1.75rem;
+    font-size: 0.64rem;
+  }
+
+  .wallet-action {
+    padding: 0.25rem 0.28rem;
+  }
+
+  .gold-balance {
+    gap: 0.1rem;
+    padding: 0.22rem 0.26rem;
+  }
+
+  .gold-balance .material-symbols-rounded {
+    font-size: 0.9rem;
+  }
+
   .recommend-item,
   .update-item,
   .continue-card {
