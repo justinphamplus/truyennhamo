@@ -2093,6 +2093,7 @@ h3 {
 
   .brand {
     flex: 0 0 1.625rem;
+    margin-right: auto;
   }
 
   .search-form {
@@ -2421,6 +2422,17 @@ h3 {
   }
 }
 
+@media (max-width: 520px) {
+  .search-form,
+  .header-actions {
+    transform: translateX(-4.5rem);
+  }
+
+  .header-actions .menu-button {
+    display: none;
+  }
+}
+
 @media (max-width: 420px) {
   .site-header .shell {
     width: calc(100% - 0.5rem);
@@ -2429,6 +2441,15 @@ h3 {
   .header-inner,
   .header-actions {
     gap: 0.12rem;
+  }
+
+  .header-actions {
+    margin-right: 0;
+    transform: translateX(-4.5rem);
+  }
+
+  .search-form {
+    transform: translateX(-4.5rem);
   }
 
   .search-form,
@@ -2442,6 +2463,10 @@ h3 {
   .search-form,
   .menu-button {
     flex-basis: 1.75rem;
+  }
+
+  .header-actions .menu-button {
+    display: none;
   }
 
   .wallet-action,
