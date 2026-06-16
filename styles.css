@@ -3,10 +3,10 @@
   --tm-bg-deep: #021514;
   --tm-bg-black: #010b0a;
   --tm-bg-library: #082b28;
-  --tm-surface-primary: rgba(6, 59, 56, 0.82);
-  --tm-surface-secondary: rgba(10, 43, 42, 0.86);
-  --tm-surface-card: rgba(8, 48, 45, 0.78);
-  --tm-surface-card-hover: rgba(11, 70, 65, 0.9);
+  --tm-surface-primary: rgba(6, 59, 56, 0.7);
+  --tm-surface-secondary: rgba(10, 43, 42, 0.72);
+  --tm-surface-card: rgba(8, 48, 45, 0.46);
+  --tm-surface-card-hover: rgba(11, 70, 65, 0.62);
   --tm-surface-soft: rgba(168, 240, 230, 0.08);
   --tm-primary: #38d4c7;
   --tm-primary-soft: #a8f0e6;
@@ -69,8 +69,8 @@
   --amber: var(--tm-gold);
   --red: var(--tm-status-error);
   --glass-bg: var(--tm-surface-card);
-  --glass-bg-strong: var(--tm-surface-secondary);
-  --glass-depth: rgba(8, 43, 40, 0.72);
+  --glass-bg-strong: rgba(10, 43, 42, 0.7);
+  --glass-depth: rgba(8, 43, 40, 0.48);
   --glass-line: var(--tm-border-soft);
   --starlight-gradient: linear-gradient(135deg, var(--tm-primary-soft), var(--tm-primary));
   --deep-ocean-gradient: linear-gradient(180deg, rgba(6, 59, 56, 0.82), rgba(2, 21, 20, 0.72));
@@ -96,10 +96,11 @@ body {
   overflow-x: hidden;
   color: var(--text);
   background:
-    radial-gradient(circle at 18% 12%, rgba(56, 212, 199, 0.16), transparent 28%),
-    radial-gradient(circle at 82% 8%, rgba(255, 211, 79, 0.1), transparent 26%),
-    radial-gradient(circle at 50% 90%, rgba(20, 153, 143, 0.18), transparent 34%),
-    linear-gradient(180deg, var(--tm-bg-deep) 0%, var(--tm-bg-main) 48%, var(--tm-bg-black) 100%);
+    radial-gradient(circle at 18% 12%, rgba(56, 212, 199, 0.18), transparent 28%),
+    radial-gradient(circle at 82% 8%, rgba(255, 211, 79, 0.13), transparent 26%),
+    linear-gradient(180deg, rgba(1, 11, 10, 0.78) 0%, rgba(3, 31, 31, 0.58) 46%, rgba(1, 11, 10, 0.86) 100%),
+    url("assets/site-ambient-bg.png") center top / cover fixed,
+    var(--tm-bg-black);
   font-family: var(--tm-font-body);
   font-size: 14px;
   line-height: 1.55;
@@ -113,10 +114,11 @@ body::before {
   pointer-events: none;
   background-image:
     radial-gradient(circle, rgba(255, 211, 79, 0.42) 0 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(168, 240, 230, 0.32) 0 1px, transparent 1.5px);
+    radial-gradient(circle, rgba(168, 240, 230, 0.32) 0 1px, transparent 1.5px),
+    linear-gradient(180deg, rgba(1, 11, 10, 0.2), rgba(1, 11, 10, 0.56));
   background-position: 0 0, 40px 80px;
   background-size: 120px 120px, 180px 180px;
-  opacity: 0.22;
+  opacity: 0.34;
 }
 
 body.menu-open {
@@ -533,15 +535,14 @@ h3 {
 .hero-card {
   min-width: 0;
   max-width: 100%;
-  border: 1px solid var(--border-soft);
+  border: 1px solid rgba(168, 240, 230, 0.2);
   border-radius: var(--tm-radius-lg);
   background:
-    radial-gradient(circle at 24% 38%, rgba(56, 212, 199, 0.18), transparent 30%),
-    radial-gradient(circle at 72% 26%, rgba(255, 211, 79, 0.14), transparent 26%),
-    linear-gradient(180deg, rgba(2, 21, 20, 0.12), rgba(2, 21, 20, 0.92)),
-    linear-gradient(135deg, #082b28 0%, #031f1f 58%, #010b0a 100%);
-  box-shadow: var(--shadow), inset 0 1px 0 rgba(248, 250, 255, 0.05);
-  backdrop-filter: blur(18px) saturate(145%);
+    radial-gradient(circle at 24% 38%, rgba(56, 212, 199, 0.12), transparent 30%),
+    radial-gradient(circle at 72% 26%, rgba(255, 211, 79, 0.1), transparent 26%),
+    linear-gradient(180deg, rgba(6, 59, 56, 0.34), rgba(1, 11, 10, 0.56));
+  box-shadow: var(--shadow), inset 0 1px 0 rgba(248, 250, 255, 0.08);
+  backdrop-filter: blur(26px) saturate(165%);
 }
 
 .card:not(.hero-card) {
@@ -561,19 +562,19 @@ h3 {
 
 .card:not(.hero-card)::before {
   background:
-    radial-gradient(circle at 22% 72%, rgba(255, 211, 79, 0.22), transparent 10rem),
-    radial-gradient(circle at 84% 18%, rgba(168, 240, 230, 0.18), transparent 13rem),
-    linear-gradient(18deg, transparent 0 48%, rgba(255, 243, 217, 0.08) 49%, transparent 52%),
-    linear-gradient(154deg, transparent 0 62%, rgba(168, 240, 230, 0.09) 63%, transparent 66%);
-  opacity: 0.88;
+    radial-gradient(circle at 22% 72%, rgba(255, 211, 79, 0.12), transparent 10rem),
+    radial-gradient(circle at 84% 18%, rgba(168, 240, 230, 0.14), transparent 13rem),
+    linear-gradient(18deg, transparent 0 48%, rgba(255, 243, 217, 0.05) 49%, transparent 52%),
+    linear-gradient(154deg, transparent 0 62%, rgba(168, 240, 230, 0.07) 63%, transparent 66%);
+  opacity: 0.72;
 }
 
 .card:not(.hero-card)::after {
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 211, 79, 0.16) 0 0.18rem, transparent 0.22rem),
-    radial-gradient(circle at 28% 28%, rgba(168, 240, 230, 0.16) 0 0.14rem, transparent 0.18rem),
-    radial-gradient(circle at 78% 64%, rgba(255, 211, 79, 0.12), transparent 10rem),
-    linear-gradient(180deg, transparent 45%, rgba(1, 11, 10, 0.92) 100%);
+    radial-gradient(circle at 12% 18%, rgba(255, 211, 79, 0.11) 0 0.18rem, transparent 0.22rem),
+    radial-gradient(circle at 28% 28%, rgba(168, 240, 230, 0.11) 0 0.14rem, transparent 0.18rem),
+    radial-gradient(circle at 78% 64%, rgba(255, 211, 79, 0.08), transparent 10rem),
+    linear-gradient(180deg, transparent 45%, rgba(1, 11, 10, 0.54) 100%);
 }
 
 .card:not(.hero-card) > * {
@@ -594,6 +595,7 @@ h3 {
   overflow: hidden;
   isolation: isolate;
   border-radius: var(--tm-radius-xl);
+  border-color: rgba(168, 240, 230, 0.24);
   box-shadow: var(--tm-shadow-hero);
 }
 
@@ -603,9 +605,9 @@ h3 {
   z-index: -2;
   overflow: hidden;
   background:
-    radial-gradient(circle at 24% 38%, rgba(56, 212, 199, 0.18), transparent 30%),
-    radial-gradient(circle at 72% 26%, rgba(255, 211, 79, 0.14), transparent 26%),
-    linear-gradient(180deg, rgba(2, 21, 20, 0.12), rgba(2, 21, 20, 0.92)),
+    linear-gradient(90deg, rgba(1, 11, 10, 0.92) 0%, rgba(2, 21, 20, 0.74) 46%, rgba(2, 21, 20, 0.34) 100%),
+    linear-gradient(180deg, rgba(1, 11, 10, 0.22), rgba(1, 11, 10, 0.88)),
+    url("assets/hero-hot-bg.png") center center / cover no-repeat,
     linear-gradient(135deg, #082b28 0%, #031f1f 58%, #010b0a 100%);
 }
 
@@ -618,19 +620,19 @@ h3 {
 
 .hero-art::before {
   background:
-    radial-gradient(circle at 22% 72%, rgba(255, 211, 79, 0.22), transparent 10rem),
-    radial-gradient(circle at 84% 18%, rgba(168, 240, 230, 0.18), transparent 13rem),
+    radial-gradient(circle at 22% 72%, rgba(255, 211, 79, 0.13), transparent 10rem),
+    radial-gradient(circle at 84% 18%, rgba(168, 240, 230, 0.12), transparent 13rem),
     linear-gradient(18deg, transparent 0 48%, rgba(255, 243, 217, 0.08) 49%, transparent 52%),
     linear-gradient(154deg, transparent 0 62%, rgba(168, 240, 230, 0.09) 63%, transparent 66%);
-  opacity: 0.88;
+  opacity: 0.5;
 }
 
 .hero-art::after {
   background:
-    radial-gradient(circle at 12% 18%, rgba(255, 211, 79, 0.16) 0 0.18rem, transparent 0.22rem),
-    radial-gradient(circle at 28% 28%, rgba(168, 240, 230, 0.16) 0 0.14rem, transparent 0.18rem),
-    radial-gradient(circle at 78% 64%, rgba(255, 211, 79, 0.12), transparent 10rem),
-    linear-gradient(180deg, transparent 45%, rgba(1, 11, 10, 0.92) 100%);
+    radial-gradient(circle at 12% 18%, rgba(255, 211, 79, 0.12) 0 0.18rem, transparent 0.22rem),
+    radial-gradient(circle at 28% 28%, rgba(168, 240, 230, 0.12) 0 0.14rem, transparent 0.18rem),
+    radial-gradient(circle at 78% 64%, rgba(255, 211, 79, 0.08), transparent 10rem),
+    linear-gradient(180deg, transparent 45%, rgba(1, 11, 10, 0.9) 100%);
 }
 
 .art-glow {
@@ -2426,6 +2428,10 @@ h3 {
 }
 
 @media (max-width: 720px) {
+  body {
+    background-attachment: scroll, scroll, scroll, scroll, scroll;
+  }
+
   :root {
     --header-h: 58px;
   }
