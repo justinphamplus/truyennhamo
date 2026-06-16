@@ -181,9 +181,9 @@ const chapters = [
 ];
 
 const comments = [
-  ["Thiên Đạo Vô Cực", "Lv.32", "Truyện quá hay! Mình đã đọc, tình tiết hấp dẫn, càng đọc càng cuốn!", "2 giờ trước"],
-  ["Kiếm Tâm", "Lv.28", "Chương mới ra nhanh quá, cảm ơn tác giả và nhóm tác giả nhiều!", "1 giờ trước"],
-  ["Huyền Vũ", "Lv.45", "Top 1 tiên hiệp không phải tự nhiên mà có!", "30 phút trước"],
+  ["Thiên Đạo Vô Cực", "Truyện quá hay! Mình đã đọc, tình tiết hấp dẫn, càng đọc càng cuốn!", "2 giờ trước"],
+  ["Kiếm Tâm", "Chương mới ra nhanh quá, cảm ơn tác giả và nhóm tác giả nhiều!", "1 giờ trước"],
+  ["Huyền Vũ", "Top 1 tiên hiệp không phải tự nhiên mà có!", "30 phút trước"],
 ];
 
 const continueItems = [
@@ -418,13 +418,13 @@ function renderChapters(filter = "", reversed = false) {
 }
 
 function renderComments() {
-  $("[data-comment-list]").innerHTML = comments.map(([name, level, text, time]) => `
+  $("[data-comment-list]").innerHTML = comments.map(([name, text, time]) => `
     <article class="comment">
       <span class="avatar">${name.slice(0, 1)}</span>
       <div class="comment-body">
-        <strong>${name}</strong> <span class="level">${level}</span>
+        <strong>${name}</strong>
         <p>${text}</p>
-        <span class="comment-meta"><time>${time}</time><button class="text-button" type="button">Phản hồi</button></span>
+        <span class="comment-meta"><time>${time}</time><span aria-hidden="true">·</span><button class="text-button" type="button">Phản hồi</button></span>
       </div>
     </article>
   `).join("");
@@ -540,7 +540,7 @@ function bindInteractions() {
     const input = $("#comment-input");
     const value = input.value.trim();
     if (!value) return;
-    comments.unshift(["Bạn", "Lv.1", value, "vừa xong"]);
+    comments.unshift(["Bạn", value, "vừa xong"]);
     input.value = "";
     renderComments();
   });
