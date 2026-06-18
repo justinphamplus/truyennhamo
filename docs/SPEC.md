@@ -1,10 +1,10 @@
 # Final UI Spec: NovelVerse Public Website
 
-Cap nhat: 2026-06-13
+Cap nhat: 2026-06-18
 
 ## 1. Muc tieu website
 
-NovelVerse la website doc truyen online theo phong cach dark fantasy/premium. Muc tieu cua phase hien tai la xay dung public website bam sat visual da upload, dung mock data, chua lam backend that.
+NovelVerse la website doc truyen online theo phong cach Ruby Noir Romance premium. Muc tieu cua phase hien tai la xay dung public website ngon tinh voi mock data, chua lam backend that.
 
 Website can giup doc gia:
 
@@ -249,7 +249,7 @@ Motion components/patterns can co:
 
 ## 5. Mau sac
 
-Theme hien tai la Tieu Mo Cozy Fantasy Library: dark emerald, mint glow, warm gold, soft glassmorphism va mascot-first branding. Layout va logic du lieu giu nguyen, chi refactor visual/style can thiet.
+Theme chinh thuc va duy nhat la Ruby Noir Romance: silk noir, ruby/rose, champagne gold, serif typography va glassmorphism toi. Khong con theme toggle, query theme hoac localStorage theme.
 
 ### Core colors
 
@@ -309,7 +309,7 @@ Fallback:
 
 Reason:
 
-- Match Tieu Mo Cozy Fantasy Library design guideline.
+- Match Ruby Noir Romance design guideline.
 - Keep Vietnamese text readable in compact novel UI.
 - De doc o kich thuoc nho.
 
@@ -605,6 +605,7 @@ Them sau khi xac nhan dung framework hoac xac nhan cho phep cai dependency npm. 
 - Lam public website truoc.
 - Dung mock data truoc.
 - Bam visual rat sat.
+- Ruby Noir Romance la theme duy nhat.
 - Chua code them o buoc spec nay.
 
 ## 13. Open questions cho phase tiep theo

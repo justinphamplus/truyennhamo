@@ -217,110 +217,7 @@ const continueItems = [
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-const THEME_KEY = "novelverse-theme";
 const RUBY_NOIR_THEME = "ruby-noir";
-const DEFAULT_THEME = "default";
-
-const themeLabels = {
-  default: {
-    toggle: "Doi sang theme Ruby Noir",
-    newTitle: "Truyện mới",
-    recommendTitle: "Đề cử cho bạn",
-    completedTitle: "Truyện đã hoàn",
-    genresTitle: "Thể loại phổ biến",
-    footerBrand: "Tiểu Mộ",
-    footerTagline: "Nấm Truyện",
-  },
-  "ruby-noir": {
-    toggle: "Doi ve theme mac dinh",
-    newTitle: "Truyện Hot",
-    recommendTitle: "Truyện mới ra",
-    completedTitle: "Truyện Đã Hoàn Thành",
-    genresTitle: "Thể loại nổi bật",
-    footerBrand: "Ruby Noir",
-    footerTagline: "Romance",
-  },
-};
-
-themeLabels[RUBY_NOIR_THEME].completedTitle = "Truy\u1ec7n Ho\u00e0n Th\u00e0nh";
-
-function readTheme() {
-  const themeParam = new URLSearchParams(location.search).get("theme");
-  if (themeParam === RUBY_NOIR_THEME) return RUBY_NOIR_THEME;
-  if (themeParam === DEFAULT_THEME) return DEFAULT_THEME;
-  try {
-    return localStorage.getItem(THEME_KEY) === RUBY_NOIR_THEME ? RUBY_NOIR_THEME : DEFAULT_THEME;
-  } catch {
-    return DEFAULT_THEME;
-  }
-}
-
-function applyTheme(theme, options = {}) {
-  const resolvedTheme = theme === RUBY_NOIR_THEME ? RUBY_NOIR_THEME : DEFAULT_THEME;
-  const labels = themeLabels[resolvedTheme];
-  document.documentElement.dataset.theme = resolvedTheme;
-  document.body.dataset.layout = resolvedTheme;
-
-  const toggle = $("[data-theme-toggle]");
-  if (toggle) {
-    toggle.setAttribute("aria-pressed", String(resolvedTheme === RUBY_NOIR_THEME));
-    toggle.setAttribute("aria-label", labels.toggle);
-    toggle.title = labels.toggle;
-  }
-
-  const titleMap = [
-    ["#new-title", labels.newTitle],
-    ["#recommend-title", labels.recommendTitle],
-    ["#completed-title", labels.completedTitle],
-    ["#genres-title", labels.genresTitle],
-  ];
-
-  titleMap.forEach(([selector, text]) => {
-    const node = $(selector);
-    if (node) node.textContent = text;
-  });
-
-  const navLabels = [
-    ['.main-nav a[href="#ranking"]', resolvedTheme === RUBY_NOIR_THEME ? "Bảng xếp hạng" : "BXH"],
-    ['.main-nav a[href="#completed"]', "Đã hoàn"],
-    ['.main-nav a[href="#community"]', "Cộng đồng"],
-  ];
-
-  navLabels.forEach(([selector, text]) => {
-    const node = $(selector);
-    if (node) node.textContent = text;
-  });
-
-  const heroHotPill = $(".hero-copy .pill.hot");
-  if (heroHotPill) {
-    heroHotPill.textContent = resolvedTheme === RUBY_NOIR_THEME ? "Truyện nổi bật" : "Truyện hot";
-  }
-
-  $$(".brand-copy").forEach((brandCopy) => {
-    const strong = $("strong", brandCopy);
-    const small = $("small", brandCopy);
-    if (strong) strong.textContent = labels.footerBrand;
-    if (small) small.textContent = labels.footerTagline;
-  });
-
-  if (options.persist !== false) {
-    try {
-      localStorage.setItem(THEME_KEY, resolvedTheme);
-    } catch {
-      // Storage can be unavailable in strict browser privacy modes.
-    }
-  }
-}
-
-function toggleTheme() {
-  const currentTheme = document.documentElement.dataset.theme === RUBY_NOIR_THEME ? RUBY_NOIR_THEME : DEFAULT_THEME;
-  applyTheme(currentTheme === RUBY_NOIR_THEME ? DEFAULT_THEME : RUBY_NOIR_THEME);
-  renderHero(activeHeroIndex);
-  renderRecommendations();
-  renderStoryCards();
-  renderCompletedCards();
-  renderRelated();
-}
 
 function coverImageStyle(image) {
   return image ? `style="background-image: url('${image.replace(/'/g, "%27")}')"` : "";
@@ -652,12 +549,6 @@ function syncRoute() {
 
 function bindInteractions() {
   document.addEventListener("click", (event) => {
-    const themeToggle = event.target.closest("[data-theme-toggle]");
-    if (themeToggle) {
-      toggleTheme();
-      return;
-    }
-
     if (event.target.closest("[data-hero-prev]")) {
       renderHero((activeHeroIndex - 1 + heroStories.length) % heroStories.length);
       startHeroAutoSlide();
@@ -789,7 +680,6 @@ function bindInteractions() {
 }
 
 function renderApp() {
-  applyTheme(readTheme(), { persist: false });
   renderHero();
   startHeroAutoSlide();
   renderRecommendations();
@@ -804,7 +694,6 @@ function renderApp() {
   renderComments();
   renderRelated();
   renderStoryDetailCover();
-  applyTheme(readTheme(), { persist: false });
   bindInteractions();
   syncRoute();
 }

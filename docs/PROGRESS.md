@@ -1,6 +1,6 @@
 # Progress Tracker: NovelVerse
 
-Cap nhat lan cuoi: 2026-06-15
+Cap nhat lan cuoi: 2026-06-18
 
 ## Current Phase
 
@@ -16,7 +16,7 @@ Static public website prototype.
 | Interactions | Done | Mock interactions da co |
 | Responsive CSS | In progress | Da co breakpoint, can browser QA ky |
 | Documentation | Done | Bo docs du an da duoc tao |
-| Visual theme | In progress | Dang refactor sang Tieu Mo Cozy Fantasy Library, giu logic/layout chinh |
+| Visual theme | Done | Ruby Noir Romance la theme chinh thuc duy nhat |
 | Backend/API | Not started | Out of scope hien tai |
 | Admin dashboard | Not started | Out of scope hien tai |
 | Deployment | Not started | Chua yeu cau |
@@ -59,6 +59,14 @@ Static public website prototype.
 - Applied Tieu Mo Cozy Fantasy Library tokens from `C:/Users/Admin/Desktop/tieu-mo-style-refactor-codex.md`.
 - Added Tieu Mo mascot CSS art, mascot action bar, suggestion widget and story banner.
 - Refactored visual language toward dark emerald, mint glow, warm gold and soft glassmorphism.
+
+## Ruby Noir Finalization 2026-06-18
+
+- Chot Ruby Noir Romance lam theme duy nhat cho home va story detail.
+- Xoa nut chuyen theme khoi header.
+- Xoa query/localStorage/toggle logic cua theme cu.
+- Gan Ruby Noir truc tiep tren HTML de tranh flash giao dien cu.
+- Cap nhat spec, design system, decision log va theme documentation.
 - Latest QA screenshots:
   - `docs/screenshots/tieumo-home-desktop-1440.png`
   - `docs/screenshots/tieumo-home-mobile-390-fixed.png`

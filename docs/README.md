@@ -20,6 +20,7 @@ Du an dang o giai doan static prototype:
 - Co trang chu public.
 - Co trang chi tiet truyen.
 - Dung mock data trong `app.js`.
+- Ruby Noir Romance la visual theme chinh thuc va duy nhat.
 - Chua co backend, database, auth, admin dashboard hoac thanh toan that.
 
 Mo file `../index.html` bang trinh duyet de xem giao dien.

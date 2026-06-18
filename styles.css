@@ -3087,19 +3087,6 @@ html[data-theme="ruby-noir"] .gold-balance .material-symbols-rounded {
   font-size: 1.05rem;
 }
 
-html[data-theme="ruby-noir"] .theme-toggle {
-  color: var(--tm-primary-soft);
-  border-color: rgba(244, 114, 182, 0.22);
-  background: rgba(244, 114, 182, 0.08);
-}
-
-html[data-theme="ruby-noir"] .theme-toggle[aria-pressed="true"] {
-  color: #24040d;
-  border-color: transparent;
-  background: linear-gradient(135deg, #ff8ab8, #e11d48);
-  box-shadow: 0 0 24px rgba(225, 29, 72, 0.42);
-}
-
 html[data-theme="ruby-noir"] #home-page .home-hero-grid { order: 1; }
 html[data-theme="ruby-noir"] #home-page .recommend-section { order: 2; }
 html[data-theme="ruby-noir"] #home-page #new { order: 3; }
@@ -3432,10 +3419,6 @@ html[data-theme="ruby-noir"] .site-footer {
 
   html[data-theme="ruby-noir"] .brand {
     margin-right: auto;
-  }
-
-  html[data-theme="ruby-noir"] .theme-toggle {
-    display: inline-grid;
   }
 
   html[data-theme="ruby-noir"] .hero-card {

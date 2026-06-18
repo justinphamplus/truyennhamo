@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="vi">
+<html lang="vi" data-theme="ruby-noir">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,7 +20,7 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-layout="ruby-noir">
     <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
 
     <header class="site-header" data-header>
@@ -29,16 +29,16 @@
           <span class="brand-mark" aria-hidden="true">
             <span></span><span></span>
           </span>
-          <span class="brand-copy"><strong>Tiểu Mộ</strong><small>Nấm Truyện</small></span>
+          <span class="brand-copy"><strong>Ruby Noir</strong><small>Romance</small></span>
         </a>
 
         <nav class="main-nav" aria-label="Điều hướng chính">
           <a href="#home" data-nav="home">Trang chủ</a>
           <a href="#genres">Thể loại</a>
-          <a href="#ranking">BXH</a>
+          <a href="#ranking">Bảng xếp hạng</a>
           <a href="#new">Truyện mới</a>
-          <a class="ruby-only-nav" href="#completed">Da hoan</a>
-          <a class="ruby-only-nav" href="#community">Cong dong</a>
+          <a class="ruby-only-nav" href="#completed">Đã hoàn</a>
+          <a class="ruby-only-nav" href="#community">Cộng đồng</a>
         </nav>
 
         <form class="search-form" role="search">
@@ -56,9 +56,6 @@
             <span class="material-symbols-rounded" aria-hidden="true">monetization_on</span>
             <strong>0 Xu</strong>
           </span>
-          <button class="icon-button theme-toggle" type="button" aria-label="Doi theme" aria-pressed="false" data-theme-toggle>
-            <span class="material-symbols-rounded" aria-hidden="true">palette</span>
-          </button>
           <button class="icon-button" type="button" aria-label="Thông báo">
             <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" /><path d="M13.7 21a2 2 0 0 1-3.4 0" /></svg>
           </button>
@@ -106,7 +103,7 @@
               </button>
               <div class="ruby-hero-thumbs" data-ruby-hero-thumbs aria-label="Truyen noi bat khac"></div>
               <div class="hero-copy">
-                <span class="pill hot">Truyện hot</span>
+                <span class="pill hot">Truyện nổi bật</span>
                 <h1 id="home-title">Trở Thành Kiều Nữ Trong Lòng Thái Tử, Bùi Đại Nhân Hối Hận</h1>
                 <div class="status-line">
                   <span class="status ongoing">Đang ra</span>
@@ -137,7 +134,7 @@
 
           <section class="card section-block recommend-section" aria-labelledby="recommend-title">
             <div class="section-head">
-              <h2 id="recommend-title">Đề cử cho bạn</h2>
+              <h2 id="recommend-title">Truyện mới ra</h2>
               <div class="recommend-controls" aria-label="Dieu huong truyen moi ra">
                 <button class="recommend-arrow" type="button" aria-label="Truyen truoc" data-recommend-prev>
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
@@ -152,7 +149,7 @@
 
           <section class="card section-block" id="genres" aria-labelledby="genres-title">
             <div class="section-head">
-              <h2 id="genres-title">Thể loại phổ biến</h2>
+              <h2 id="genres-title">Thể loại nổi bật</h2>
             </div>
             <div class="genre-grid" data-genre-list></div>
           </section>
@@ -182,7 +179,7 @@
 
           <section class="card section-block" id="new" aria-labelledby="new-title">
             <div class="section-head">
-              <h2 id="new-title">Truyện mới</h2>
+              <h2 id="new-title">Truyện Hot</h2>
               <a href="#new">Xem tất cả</a>
               <div class="recommend-controls hot-story-controls" aria-label="Dieu huong truyen hot">
                 <button class="recommend-arrow" type="button" aria-label="Truyen hot truoc" data-hot-prev>
@@ -198,7 +195,7 @@
 
           <section class="card section-block" id="completed" aria-labelledby="completed-title">
             <div class="section-head">
-              <h2 id="completed-title">Truyện đã hoàn</h2>
+              <h2 id="completed-title">Truyện Hoàn Thành</h2>
               <a href="#completed">Xem tất cả</a>
             </div>
             <div class="story-card-grid" data-completed-card-list></div>
@@ -406,7 +403,7 @@
         <div>
           <a class="brand" href="#home">
             <span class="brand-mark" aria-hidden="true"><span></span><span></span></span>
-            <span class="brand-copy"><strong>Tiểu Mộ</strong><small>Nấm Truyện</small></span>
+            <span class="brand-copy"><strong>Ruby Noir</strong><small>Romance</small></span>
           </a>
           <p>Thế giới truyện chủ đỉnh cao dành cho mọi độc giả.</p>
           <div class="socials" aria-label="Mạng xã hội">

@@ -1,17 +1,17 @@
 # Theme Spec: Ruby Noir Romance
 
-Cap nhat: 2026-06-17
+Cap nhat: 2026-06-18
 
 ## 1. Muc tieu theme
 
-Ruby Noir Romance la theme thu hai cho public website, khong thay the theme hien tai.
+Ruby Noir Romance la theme chinh thuc va duy nhat cua public website.
 
 Muc tieu:
 
 - Tao giao dien phu hop hon voi web doc truyen ngon tinh, dac biet cac nhom truyen tong tai, cuoi truoc yeu sau, drama, co dai, sung/nguc.
-- Tao mot trai nghiem Ruby Noir rieng, co the doi layout, section order va density de bam sat visual Ruby Noir da chon.
-- Giu theme hien tai nhu default de co the chuyen qua lai va so sanh nhanh giua theme cu va Ruby Noir.
-- Them nut doi theme tren nav de nguoi dung co the chuyen qua lai giua theme hien tai va Ruby Noir.
+- Dung layout, section order va density Ruby Noir da duoc chot.
+- Loai bo theme toggle, query parameter va localStorage lien quan den viec chuyen theme.
+- Ruby Noir phai duoc ap dung ngay khi HTML tai, khong flash theme cu.
 - Van giu cam giac premium, toi, nhieu anh bia truyen, nhung bot chat fantasy/teal va chuyen sang noir romance: den, do ruby, hong rose, vang champagne.
 
 Pham vi theme:
@@ -45,32 +45,17 @@ Khong nen:
 
 ## 3. Theme architecture de xuat
 
-Ruby Noir khong chi la CSS skin. Theme nay la mot layout variant rieng cho public site, nhung van nam trong cung app de toggle nhanh voi default theme.
+Ruby Noir khong chi la CSS skin. Day la visual system va layout chinh thuc cua public site.
 
 Huong trien khai:
 
-- Theme hien tai la default.
-- Them `data-theme="ruby-noir"` tren `document.documentElement` hoac `body`.
+- Dat `data-theme="ruby-noir"` truc tiep tren `document.documentElement`.
+- Dat `data-layout="ruby-noir"` tren `body`.
 - Dung CSS custom properties de override mau:
-  - `:root` giu token theme hien tai.
-  - `[data-theme="ruby-noir"]` override token cho theme moi.
-- Them layout mode cho Ruby Noir:
-  - Co the dung `data-layout="ruby-noir"` tren body/root.
-  - Hoac tach render function rieng: `renderDefaultHome()` va `renderRubyNoirHome()`.
-  - Detail page co the co `renderDefaultStoryDetail()` va `renderRubyNoirStoryDetail()`.
-- Nen tai su dung data va component nho, nhung cho phep compose lai section de bam visual Ruby Noir.
-- Nut doi theme tren nav:
-  - Desktop: icon palette hoac nut nho gan search/gold balance.
-  - Mobile: icon button trong header action.
-  - Click de toggle giua `default` va `ruby-noir`.
-- Luu lua chon vao `localStorage` voi key `novelverse-theme`.
-
-Trang thai theme:
-
-| Theme id | Ten hien thi | Mo ta |
-| --- | --- | --- |
-| `default` | Mac dinh | Theme hien tai cua website |
-| `ruby-noir` | Ruby Noir | Theme ngon tinh toi, ruby/champagne |
+  - `:root` giu token nen ky thuat hien co.
+  - `[data-theme="ruby-noir"]` la source of truth cho token va layout san pham.
+- Tai su dung data va component nho, compose section theo Ruby Noir.
+- Khong render nut doi theme va khong doc/ghi `novelverse-theme`.
 
 ## 4. Ruby Noir layout direction
 
@@ -101,7 +86,7 @@ Hero Ruby Noir:
 Header Ruby Noir:
 
 - Compact, toi, glass, border rose mong.
-- Logo + nav + search + nap vang + so xu + notification + avatar + theme toggle.
+- Logo + nav + search + nap vang + so xu + notification + avatar.
 - Mobile uu tien action row gon: search icon, nap vang, so xu, notification, avatar, menu.
 
 Section cards:
@@ -129,9 +114,8 @@ Detail Ruby Noir:
 ### Routing and behavior
 
 - Route hien co van phai vao dung page.
-- Khi theme Ruby Noir dang bat, cung URL co the render layout Ruby Noir.
-- Theme toggle khong duoc reset route hien tai.
-- Neu dang o detail page, toggle theme phai giu lai story dang xem.
+- Moi route public render Ruby Noir.
+- Route home/detail va hash navigation hien co phai tiep tuc hoat dong.
 - Carousel/dots/hover co the khac default neu can de giong visual Ruby Noir.
 
 ## 5. Color tokens
@@ -233,10 +217,7 @@ Scale:
 - Nen header: `rgba(6, 3, 10, 0.78)` voi blur.
 - Border bottom: ruby/rose rat mong.
 - Active nav: underline hoac pill ruby.
-- Theme toggle button:
-  - Icon: palette/swatch/moon-sparkle.
-  - Tooltip/aria-label: `Doi theme`.
-  - State active Ruby: vien rose + glow nhe.
+- Header khong co theme toggle.
 
 ### Search
 
@@ -299,34 +280,13 @@ Ghost:
 - Link hover: rose.
 - Newsletter CTA: ruby button.
 
-## 9. Theme toggle interaction
+## 9. Theme runtime
 
-Yeu cau:
-
-- Nut doi theme nam tren nav.
-- Click toggle theme giua current va Ruby Noir.
-- Luu theme vao `localStorage`.
-- Khi reload, giu theme da chon.
-- Neu `localStorage` khong co, dung default theme hien tai.
-
-Pseudo behavior:
-
-```js
-const theme = localStorage.getItem("novelverse-theme") || "default";
-document.documentElement.dataset.theme = theme;
-
-toggleButton.addEventListener("click", () => {
-  const next = document.documentElement.dataset.theme === "ruby-noir" ? "default" : "ruby-noir";
-  document.documentElement.dataset.theme = next;
-  localStorage.setItem("novelverse-theme", next);
-});
-```
-
-Accessibility:
-
-- Button co `aria-label="Doi theme"`.
-- Button co `aria-pressed="true"` khi Ruby Noir dang bat.
-- Keyboard focus visible.
+- HTML khoi tao san `data-theme="ruby-noir"` va `data-layout="ruby-noir"`.
+- JavaScript chi ap dung label/composition Ruby Noir, khong co toggle runtime.
+- URL `?theme=` khong con anh huong giao dien.
+- `localStorage` khong duoc dung de luu theme.
+- Viec loai theme toggle giup header gon hon va giam state khong can thiet.
 
 ## 10. Responsive behavior
 
@@ -343,7 +303,7 @@ Tablet:
 
 Mobile:
 
-- Header can gon, theme toggle la icon button.
+- Header can gon, uu tien search, nap vang, so xu, notification, avatar va menu.
 - Hero cover o tren hoac nam trung tam tuy visual Ruby Noir, text/CTA ben duoi va khong tran ngang.
 - Bia truyen that nen duoc giu 2:3, khong crop qua muc.
 - Neu background line neon lam roi, giam opacity line o mobile.
@@ -353,8 +313,7 @@ Mobile:
 Can giu:
 
 - Thu muc `bia-truyen/` dung lam cover that cho visual.
-- Background hien tai co the giu cho default theme.
-- Ruby Noir co the dung CSS gradient truoc.
+- Ruby Noir dung Silk Noir + Ruby Grain va cac lop gradient hien tai.
 
 Neu can asset rieng sau nay:
 
@@ -371,11 +330,11 @@ Asset yeu cau:
 
 Theme Ruby Noir duoc xem la dat khi:
 
-- Co the chuyen qua lai giua default theme va Ruby Noir bang nut nav.
-- Theme default khong bi thay doi ngoai y muon va van giu layout hien tai.
-- Ruby Noir ap dung tren ca home va detail page.
-- Ruby Noir co layout/section order rieng, giong visual Ruby Noir hon thay vi chi doi mau.
-- Toggle theme doi dung visual va layout ma khong lam mat route hien tai.
+- Ruby Noir ap dung mac dinh tren ca home va detail page.
+- Khong con nut theme toggle tren desktop/mobile.
+- Khong con logic `?theme=`, `localStorage` hoac fallback theme.
+- Ruby Noir co layout/section order rieng, giong visual da chot thay vi chi doi mau.
+- Route hien tai khong bi anh huong.
 - Cac section, card, chapter, button, badge, header, footer deu doi mau dong bo.
 - Anh bia truyen that van hien thi dung ti le 2:3.
 - Text khong bi kho doc tren nen toi.
@@ -390,9 +349,9 @@ Can kiem tra:
 - Tablet: 768px
 - Mobile: 390px va 320px
 - Home page va detail page
-- Toggle theme bang mouse
-- Toggle theme bang keyboard
-- Reload page van giu theme da chon
+- Reload trang van hien Ruby Noir ngay lap tuc
+- URL co hoac khong co query cu van hien Ruby Noir
+- Header desktop/mobile khong con khoang trong bat thuong sau khi bo nut toggle
 - Bia truyen trong:
   - Hero
   - De cu
@@ -405,20 +364,15 @@ Can kiem tra:
 
 Thu tu code de xuat sau khi spec nay duoc chap nhan:
 
-1. Ghi nhan baseline default theme hien tai de tranh sua nham.
-2. Them theme toggle UI tren header.
-3. Them JS doc/luu `localStorage` theme va giu route hien tai khi toggle.
-4. Them CSS token block `[data-theme="ruby-noir"]`.
-5. Tach layout rendering cho Ruby Noir neu can:
-   - Home: render section order Ruby Noir.
-   - Detail: render detail hero/chapter/comment theo Ruby Noir.
-6. Style header, hero, cards, chapter rows, footer theo Ruby Noir.
-7. Kiem tra screenshot desktop/mobile va so sanh voi visual Ruby Noir.
-8. Dieu chinh layout, opacity, spacing theo screenshot.
-9. Commit rieng cho theme toggle + Ruby Noir.
+1. Giu `data-theme="ruby-noir"` va `data-layout="ruby-noir"` trong HTML.
+2. Giu CSS token block `[data-theme="ruby-noir"]` lam source of truth.
+3. Render home/detail theo layout Ruby Noir.
+4. Style header, hero, cards, chapter rows, footer theo Ruby Noir.
+5. Kiem tra screenshot desktop/mobile va so sanh voi visual Ruby Noir.
+6. Dieu chinh layout, opacity, spacing theo screenshot.
 
 Ghi chu:
 
-- Nen giu theme default tach bach de rollback/so sanh nhanh.
-- Ruby Noir duoc phep doi layout, nhung khong nen rewrite data layer hoac mock data neu khong can.
-- Neu mot thay doi chi phuc vu Ruby Noir, scope bang `data-theme="ruby-noir"` hoac render branch rieng de tranh anh huong default.
+- Ruby Noir la theme san pham duy nhat; khong them lai toggle neu chua co decision moi.
+- Khong rewrite data layer hoac mock data neu khong can.
+- Tiep tuc scope style bang `data-theme="ruby-noir"` de giu CSS hien tai on dinh.

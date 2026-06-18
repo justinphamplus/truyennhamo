@@ -2,38 +2,39 @@
 
 ## Design Direction
 
-NovelVerse dung phong cach dark fantasy premium:
+NovelVerse dung phong cach Ruby Noir Romance premium:
 
-- Nen toi, gan den.
-- Card toi co border mong.
-- Accent tim/violet cho brand va CTA.
-- Pink/orange cho hot, combo, VIP.
-- Green cho trang thai dang ra.
+- Nen silk noir gan den, ruby grain nhe.
+- Card ruby glass co border rose mong.
+- Accent ruby/rose cho brand, active state va CTA.
+- Champagne/gold cho nap vang, VIP va currency.
+- Green cho trang thai Full/Free va nut Doc Tiep.
 - Anh bia truyen la diem nhan lon.
+- Khong co theme toggle; Ruby Noir la theme duy nhat.
 
 ## Color Tokens
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `--bg` | `#070a13` | Nen chinh |
-| `--bg-deep` | `#050710` | Nen sau/footer |
-| `--surface` | `#111624` | Card |
-| `--surface-2` | `#151a2a` | Card layer 2 |
-| `--surface-3` | `#1a2032` | Hover/raised |
-| `--border` | `#252b3d` | Border |
-| `--text` | `#f8fafc` | Text chinh |
-| `--text-soft` | `#c7c9d4` | Text phu |
-| `--muted` | `#8a91a6` | Metadata |
-| `--violet` | `#7c3aed` | Brand/CTA |
-| `--violet-2` | `#8b5cf6` | Hover/accent |
-| `--pink` | `#ec4899` | Hot/accent |
-| `--green` | `#22c55e` | Dang ra/success |
-| `--amber` | `#f59e0b` | VIP/rating |
-| `--red` | `#f43f5e` | Hot/alert |
+| `--bg` | `#06030a` | Nen chinh |
+| `--bg-deep` | `#030106` | Nen sau/footer |
+| `--surface` | `#210716` | Card |
+| `--surface-2` | `#160712` | Card layer 2 |
+| `--surface-3` | `#2a0a1c` | Hover/raised |
+| `--border` | `rgba(244, 114, 182, 0.3)` | Border |
+| `--text` | `#fff4f7` | Text chinh |
+| `--text-soft` | `rgba(255, 228, 238, 0.74)` | Text phu |
+| `--muted` | `rgba(223, 197, 207, 0.56)` | Metadata |
+| `--violet` | `#e11d48` | Ruby primary |
+| `--violet-2` | `#f472b6` | Rose hover/accent |
+| `--pink` | `#ff3d8d` | Hot/accent |
+| `--green` | `#16a34a` | Full/Free/Doc Tiep |
+| `--amber` | `#f59e0b` | VIP/currency |
+| `--red` | `#fb7185` | Alert |
 
 ## Typography
 
-Font chinh: `Be Vietnam Pro`.
+Font display va body hien tai: `Lora`, fallback `Be Vietnam Pro`/system serif-sans.
 
 Guideline:
 

@@ -103,3 +103,21 @@ Consequence:
 - Header/logo, hero, action bar, cards, badges, VIP, footer va detail page dung token `--tm-*`.
 - Them CSS-art mascot/action bar/widget de khong can asset moi.
 - Layout va mock data hien co van duoc giu.
+
+## 2026-06-18: Ruby Noir Romance Becomes The Only Theme
+
+Decision: Chot Ruby Noir Romance lam giao dien chinh thuc va duy nhat cua public website.
+
+Reason:
+
+- Ruby Noir phu hop hon voi noi dung truyen ngon va bo anh bia hien tai.
+- User da hoan tat giai doan so sanh theme va chon Ruby Noir.
+- Theme toggle, query parameter va localStorage tao them state khong con can thiet.
+
+Consequence:
+
+- `index.html` khoi tao `data-theme="ruby-noir"` va `data-layout="ruby-noir"`.
+- Xoa nut palette khoi header desktop/mobile.
+- Xoa logic toggle, doc query `?theme=` va luu `novelverse-theme`.
+- CSS Ruby Noir tiep tuc duoc scope de tranh refactor lon khong can thiet.
+- Tieu Mo/Mystical Night chi con la lich su thiet ke, khong con la giao dien runtime.
