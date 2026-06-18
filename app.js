@@ -1,3 +1,20 @@
+const coverImages = [
+  "bia-truyen/ba-xa-xinh-dep-sau-khi-ly-hon-1774133037.jpg",
+  "bia-truyen/chi-dai-xung-than-trong-show-tap-ky-thong-linh-1764284981.jpg",
+  "bia-truyen/cong-chua-hom-nay-tay-trang-sao-1752423420.jpg",
+  "bia-truyen/giong-cai-cuoi-cung-thoi-tinh-te-1754907283.jpg",
+  "bia-truyen/huynh-truong-doc-sung-tieu-muoi-1762460517.jpg",
+  "bia-truyen/ke-hoach-thuan-hoa-bao-quan-tan-doc-1759585901.jpg",
+  "bia-truyen/ke-nao-noi-xau-bon-gia-1778546324.jpg",
+  "bia-truyen/my-nhan-trong-long-lang-vuong-1764415439.jpg",
+  "bia-truyen/song-lai-thanh-bao-boi-trong-long-nhiep-chinh-vuong-1757198074.jpg",
+  "bia-truyen/tam-can-cua-nhiep-chinh-vuong-1757175850.jpg",
+  "bia-truyen/thai-tu-cuong-ai-doat-the-1767748297.jpg",
+  "bia-truyen/thap-nien-80-tieu-dang-thuong-trong-dai-vien-la-dai-lao-huyen-hoc-1772670958.jpg",
+  "bia-truyen/the-tu-cung-chieu-muoi-muoi-toi-tan-troi-xanh-1754925855.jpg",
+  "bia-truyen/truc-ma-cua-ta-la-thien-tai-khoa-cu-1747531540.jpg",
+];
+
 const stories = [
   {
     title: "Vạn Cổ Thần Đế",
@@ -121,6 +138,10 @@ const stories = [
   },
 ];
 
+stories.forEach((story, index) => {
+  story.coverImage = coverImages[index % coverImages.length];
+});
+
 const heroStories = [
   {
     title: "Trở Thành Kiều Nữ Trong Lòng Thái Tử, Bùi Đại Nhân Hối Hận",
@@ -130,6 +151,7 @@ const heroStories = [
     reads: "125.6K",
     rating: "4.8",
     cover: "cover-gold",
+    coverImage: coverImages[10],
   },
   ...stories.slice(0, 4).map((story) => ({
     title: story.title,
@@ -139,6 +161,7 @@ const heroStories = [
     reads: story.reads,
     rating: story.rating,
     cover: story.cover,
+    coverImage: story.coverImage,
   })),
 ];
 
@@ -187,16 +210,126 @@ const comments = [
 ];
 
 const continueItems = [
-  { title: "Vạn Cổ Thần Đế", chapter: "Chương 2686", progress: 85, cover: "cover-blue" },
-  { title: "Toàn Chức Pháp Sư", chapter: "Chương 1198", progress: 60, cover: "cover-mono" },
-  { title: "Đấu Phá Thương Khung", chapter: "Chương 1652", progress: 45, cover: "cover-red" },
+  { title: "Vạn Cổ Thần Đế", chapter: "Chương 2686", progress: 85, cover: "cover-blue", coverImage: coverImages[0] },
+  { title: "Toàn Chức Pháp Sư", chapter: "Chương 1198", progress: 60, cover: "cover-mono", coverImage: coverImages[3] },
+  { title: "Đấu Phá Thương Khung", chapter: "Chương 1652", progress: 45, cover: "cover-red", coverImage: coverImages[1] },
 ];
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+const THEME_KEY = "novelverse-theme";
+const RUBY_NOIR_THEME = "ruby-noir";
+const DEFAULT_THEME = "default";
 
-function cover(className = "") {
-  return `<span class="cover-thumb ${className}" aria-hidden="true"></span>`;
+const themeLabels = {
+  default: {
+    toggle: "Doi sang theme Ruby Noir",
+    newTitle: "Truyện mới",
+    recommendTitle: "Đề cử cho bạn",
+    completedTitle: "Truyện đã hoàn",
+    genresTitle: "Thể loại phổ biến",
+    footerBrand: "Tiểu Mộ",
+    footerTagline: "Nấm Truyện",
+  },
+  "ruby-noir": {
+    toggle: "Doi ve theme mac dinh",
+    newTitle: "Truyện Hot",
+    recommendTitle: "Truyện mới ra",
+    completedTitle: "Truyện Đã Hoàn Thành",
+    genresTitle: "Thể loại nổi bật",
+    footerBrand: "Ruby Noir",
+    footerTagline: "Romance",
+  },
+};
+
+themeLabels[RUBY_NOIR_THEME].completedTitle = "Truy\u1ec7n Ho\u00e0n Th\u00e0nh";
+
+function readTheme() {
+  const themeParam = new URLSearchParams(location.search).get("theme");
+  if (themeParam === RUBY_NOIR_THEME) return RUBY_NOIR_THEME;
+  if (themeParam === DEFAULT_THEME) return DEFAULT_THEME;
+  try {
+    return localStorage.getItem(THEME_KEY) === RUBY_NOIR_THEME ? RUBY_NOIR_THEME : DEFAULT_THEME;
+  } catch {
+    return DEFAULT_THEME;
+  }
+}
+
+function applyTheme(theme, options = {}) {
+  const resolvedTheme = theme === RUBY_NOIR_THEME ? RUBY_NOIR_THEME : DEFAULT_THEME;
+  const labels = themeLabels[resolvedTheme];
+  document.documentElement.dataset.theme = resolvedTheme;
+  document.body.dataset.layout = resolvedTheme;
+
+  const toggle = $("[data-theme-toggle]");
+  if (toggle) {
+    toggle.setAttribute("aria-pressed", String(resolvedTheme === RUBY_NOIR_THEME));
+    toggle.setAttribute("aria-label", labels.toggle);
+    toggle.title = labels.toggle;
+  }
+
+  const titleMap = [
+    ["#new-title", labels.newTitle],
+    ["#recommend-title", labels.recommendTitle],
+    ["#completed-title", labels.completedTitle],
+    ["#genres-title", labels.genresTitle],
+  ];
+
+  titleMap.forEach(([selector, text]) => {
+    const node = $(selector);
+    if (node) node.textContent = text;
+  });
+
+  const navLabels = [
+    ['.main-nav a[href="#ranking"]', resolvedTheme === RUBY_NOIR_THEME ? "Bảng xếp hạng" : "BXH"],
+    ['.main-nav a[href="#completed"]', "Đã hoàn"],
+    ['.main-nav a[href="#community"]', "Cộng đồng"],
+  ];
+
+  navLabels.forEach(([selector, text]) => {
+    const node = $(selector);
+    if (node) node.textContent = text;
+  });
+
+  const heroHotPill = $(".hero-copy .pill.hot");
+  if (heroHotPill) {
+    heroHotPill.textContent = resolvedTheme === RUBY_NOIR_THEME ? "Truyện nổi bật" : "Truyện hot";
+  }
+
+  $$(".brand-copy").forEach((brandCopy) => {
+    const strong = $("strong", brandCopy);
+    const small = $("small", brandCopy);
+    if (strong) strong.textContent = labels.footerBrand;
+    if (small) small.textContent = labels.footerTagline;
+  });
+
+  if (options.persist !== false) {
+    try {
+      localStorage.setItem(THEME_KEY, resolvedTheme);
+    } catch {
+      // Storage can be unavailable in strict browser privacy modes.
+    }
+  }
+}
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.dataset.theme === RUBY_NOIR_THEME ? RUBY_NOIR_THEME : DEFAULT_THEME;
+  applyTheme(currentTheme === RUBY_NOIR_THEME ? DEFAULT_THEME : RUBY_NOIR_THEME);
+  renderHero(activeHeroIndex);
+  renderRecommendations();
+  renderStoryCards();
+  renderCompletedCards();
+  renderRelated();
+}
+
+function coverImageStyle(image) {
+  return image ? `style="background-image: url('${image.replace(/'/g, "%27")}')"` : "";
+}
+
+function cover(item = "") {
+  const className = typeof item === "string" ? item : item.cover || "";
+  const image = typeof item === "string" ? "" : item.coverImage;
+  return `<span class="cover-thumb ${className}${image ? " has-cover-image" : ""}" ${coverImageStyle(image)} aria-hidden="true"></span>`;
 }
 
 function storyBlurb(story) {
@@ -219,21 +352,47 @@ function renderHero(index = activeHeroIndex) {
   activeHeroIndex = index;
   const story = heroStories[activeHeroIndex];
   const stats = $$(".hero-stats div");
+  const isRubyNoir = document.documentElement.dataset.theme === RUBY_NOIR_THEME;
 
   $("#home-title").textContent = truncateHeroTitle(story.title);
   $(".hero-copy .status").className = `status ${statusClass(story.status)}`;
   $(".hero-copy .status").textContent = statusText(story.status);
   $(".hero-copy p").textContent = story.blurb;
-  stats[0].querySelector("dt").textContent = story.time;
-  stats[0].querySelector("dd").textContent = "cập nhật";
-  stats[1].querySelector("dt").textContent = story.reads;
-  stats[2].querySelector("dt").textContent = story.rating;
-  $("[data-hero-cover]").className = `hero-featured-cover ${story.cover}`;
+  if (isRubyNoir) {
+    stats[0].querySelector("dt").textContent = story.author || "Mặc Liên";
+    stats[0].querySelector("dd").textContent = "tác giả";
+    stats[1].querySelector("dt").textContent = story.reads;
+    stats[1].querySelector("dd").textContent = "lượt đọc";
+    stats[2].querySelector("dt").textContent = (Number(story.rating) * 2).toFixed(1);
+    stats[2].querySelector("dd").textContent = "điểm";
+  } else {
+    stats[0].querySelector("dt").textContent = story.time;
+    stats[0].querySelector("dd").textContent = "cập nhật";
+    stats[1].querySelector("dt").textContent = story.reads;
+    stats[1].querySelector("dd").textContent = "lượt đọc";
+    stats[2].querySelector("dt").textContent = story.rating;
+    stats[2].querySelector("dd").textContent = "đánh giá";
+  }
+  const heroCover = $("[data-hero-cover]");
+  heroCover.className = `hero-featured-cover ${story.cover}${story.coverImage ? " has-cover-image" : ""}`;
+  heroCover.style.backgroundImage = story.coverImage ? `url('${story.coverImage}')` : "";
   $("[data-hero-rank] strong").textContent = `#${activeHeroIndex + 1}`;
 
   $("[data-hero-dots]").innerHTML = heroStories.map((item, itemIndex) => `
     <button class="hero-dot ${itemIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${itemIndex}" aria-label="Xem truyện hot ${itemIndex + 1}"></button>
   `).join("");
+
+  const thumbs = $("[data-ruby-hero-thumbs]");
+  if (thumbs) {
+    const thumbIndexes = Array.from({ length: Math.min(4, heroStories.length) }, (_, offset) => (activeHeroIndex + offset) % heroStories.length);
+    thumbs.innerHTML = thumbIndexes.map((storyIndex) => {
+      const item = heroStories[storyIndex];
+      return `
+      <button class="ruby-hero-thumb ${storyIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${storyIndex}" aria-label="Xem truyện nổi bật ${storyIndex + 1}">
+        <span class="${item.cover}${item.coverImage ? " has-cover-image" : ""}" ${coverImageStyle(item.coverImage)}></span>
+      </button>`;
+    }).join("");
+  }
 }
 
 function startHeroAutoSlide() {
@@ -259,7 +418,12 @@ function genreIcon(index) {
 
 function renderRecommendations() {
   const list = $("[data-recommend-list]");
-  list.innerHTML = stories.slice(0, 8).map((story) => storyCard(story, { showMeta: false })).join("");
+  const isRubyNoir = document.documentElement.dataset.theme === RUBY_NOIR_THEME;
+  const items = isRubyNoir ? [...stories, ...stories.slice(0, 8)] : stories.slice(0, 8);
+  list.innerHTML = items.map((story) => storyCard(story, {
+    showMeta: false,
+    cornerTag: isRubyNoir ? "Đang ra" : "",
+  })).join("");
 }
 
 function renderGenres() {
@@ -278,7 +442,7 @@ function renderRanking(mode = "week") {
   list.innerHTML = stories.slice(0, 10).map((story, index) => `
     <li class="ranking-item">
       <span class="rank-number">${index + 1}</span>
-      ${cover(story.cover)}
+      ${cover(story)}
       <span class="ranking-copy">
         <h3>${story.title}</h3>
         <p>${story.genre}</p>
@@ -302,7 +466,7 @@ function renderUpdates() {
   const list = $("[data-updates-list]");
   list.innerHTML = stories.slice(0, 5).map((story) => `
     <a class="update-item" href="#story" data-open-story>
-      ${cover(story.cover)}
+      ${cover(story)}
       <span class="update-copy">
         <h3>${story.title}</h3>
         <p>${story.chapter}</p>
@@ -314,27 +478,42 @@ function renderUpdates() {
 
 function renderStoryCards() {
   const list = $("[data-story-card-list]");
-  list.innerHTML = [...stories, ...stories.slice(0, 6)].map((story) => storyCard(story, { showMeta: false })).join("");
+  const isRubyNoir = document.documentElement.dataset.theme === RUBY_NOIR_THEME;
+  const items = isRubyNoir
+    ? stories.slice(0, 10)
+    : [...stories, ...stories.slice(0, 6)];
+  list.innerHTML = items.map((story, index) => storyCard(story, {
+    showMeta: false,
+    rank: isRubyNoir ? index + 1 : null,
+  })).join("");
 }
 
 function renderCompletedCards() {
   const list = $("[data-completed-card-list]");
-  list.innerHTML = [...stories.slice(2), ...stories.slice(0, 8)].slice(0, 16).map((story) => storyCard(story, {
+  const limit = 16;
+  list.innerHTML = [...stories.slice(2), ...stories.slice(0, 8)].slice(0, limit).map((story) => storyCard(story, {
     showMeta: false,
     fullBadge: true,
   })).join("");
 }
 
 function storyCard(story, options = {}) {
-  const { showMeta = true, fullBadge = false } = options;
+  const { showMeta = true, fullBadge = false, rank = null, cornerTag = "" } = options;
   const meta = showMeta ? `
       <p>${story.genre}</p>
       <span class="rating-line"><strong>★ ${story.rating}</strong></span>
       <span class="read-line">${story.reads} lượt đọc</span>` : "";
+  const badge = fullBadge
+    ? '<span class="full-tag">Full</span>'
+    : rank
+      ? `<span class="rank-tag">${rank}</span>`
+      : cornerTag
+        ? `<span class="full-tag">${cornerTag}</span>`
+        : "";
 
   return `
     <a class="story-card ${fullBadge ? "is-full" : ""}" href="#story" data-open-story>
-      <span class="story-cover ${story.cover}" aria-hidden="true">${fullBadge ? '<span class="full-tag">Full</span>' : ""}</span>
+      <span class="story-cover ${story.cover}${story.coverImage ? " has-cover-image" : ""}" ${coverImageStyle(story.coverImage)} aria-hidden="true">${badge}</span>
       <h3>${story.title}</h3>
       ${meta}
     </a>
@@ -346,7 +525,7 @@ function renderContinue(type = "reading") {
   if (type === "saved") {
     list.innerHTML = stories.slice(3, 6).map((story) => `
       <article class="continue-card">
-        ${cover(story.cover)}
+        ${cover(story)}
         <span>
           <h3>${story.title}</h3>
           <p>Đã lưu vào tủ truyện</p>
@@ -360,7 +539,7 @@ function renderContinue(type = "reading") {
   list.innerHTML = [
     ...continueItems.map((item) => `
       <article class="continue-card">
-        ${cover(item.cover)}
+        ${cover(item)}
         <span>
           <h3>${item.title}</h3>
           <p>${item.chapter}</p>
@@ -431,7 +610,17 @@ function renderComments() {
 }
 
 function renderRelated() {
-  $("[data-related-list]").innerHTML = stories.slice(2, 10).map((story) => storyCard(story)).join("");
+  const isRubyNoir = document.documentElement.dataset.theme === RUBY_NOIR_THEME;
+  $("[data-related-list]").innerHTML = stories.slice(2, 10).map((story) => storyCard(story, {
+    showMeta: !isRubyNoir,
+  })).join("");
+}
+
+function renderStoryDetailCover() {
+  const detailCover = $(".story-detail .cover-card");
+  const story = stories[0];
+  detailCover.className = `cover-card featured-cover lightning-cover ${story.cover} has-cover-image`;
+  detailCover.style.backgroundImage = `url('${story.coverImage}')`;
 }
 
 function setPage(page, options = {}) {
@@ -463,6 +652,38 @@ function syncRoute() {
 
 function bindInteractions() {
   document.addEventListener("click", (event) => {
+    const themeToggle = event.target.closest("[data-theme-toggle]");
+    if (themeToggle) {
+      toggleTheme();
+      return;
+    }
+
+    if (event.target.closest("[data-hero-prev]")) {
+      renderHero((activeHeroIndex - 1 + heroStories.length) % heroStories.length);
+      startHeroAutoSlide();
+      return;
+    }
+
+    if (event.target.closest("[data-hero-next]")) {
+      renderHero((activeHeroIndex + 1) % heroStories.length);
+      startHeroAutoSlide();
+      return;
+    }
+
+    const recommendDirection = event.target.closest("[data-recommend-prev]") ? -1 : event.target.closest("[data-recommend-next]") ? 1 : 0;
+    if (recommendDirection) {
+      const track = $("[data-recommend-list]");
+      track.scrollBy({ left: recommendDirection * Math.max(track.clientWidth * 0.85, 320), behavior: "smooth" });
+      return;
+    }
+
+    const hotDirection = event.target.closest("[data-hot-prev]") ? -1 : event.target.closest("[data-hot-next]") ? 1 : 0;
+    if (hotDirection) {
+      const track = $("[data-story-card-list]");
+      track.scrollBy({ left: hotDirection * Math.max(track.clientWidth * 0.85, 320), behavior: "smooth" });
+      return;
+    }
+
     const openStory = event.target.closest("[data-open-story]");
     if (openStory) {
       event.preventDefault();
@@ -568,6 +789,7 @@ function bindInteractions() {
 }
 
 function renderApp() {
+  applyTheme(readTheme(), { persist: false });
   renderHero();
   startHeroAutoSlide();
   renderRecommendations();
@@ -581,6 +803,8 @@ function renderApp() {
   renderChapters();
   renderComments();
   renderRelated();
+  renderStoryDetailCover();
+  applyTheme(readTheme(), { persist: false });
   bindInteractions();
   syncRoute();
 }
