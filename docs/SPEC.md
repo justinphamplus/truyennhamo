@@ -25,16 +25,16 @@ Nguoi dung muc tieu:
 
 1. Trang chu public
 2. Trang chi tiet truyen
+3. Trang doc chuong
 
 ### Future phase, chua lam trong scope hien tai
 
-1. Trang doc chuong
-2. Trang danh sach the loai
-3. Trang ket qua tim kiem
-4. Trang bang xep hang day du
-5. Trang tu truyen/user library
-6. Trang dang nhap/dang ky
-7. Admin dashboard
+1. Trang danh sach the loai
+2. Trang ket qua tim kiem
+3. Trang bang xep hang day du
+4. Trang tu truyen/user library
+5. Trang dang nhap/dang ky
+6. Admin dashboard
 
 ## 3. Section cua tung trang
 
@@ -380,7 +380,43 @@ Rules:
   - CTA full width hoac sticky bottom.
   - Chapter list 1 cot.
   - Comment form stack hop ly.
-  - Related stories horizontal carousel.
+- Related stories horizontal carousel.
+
+### 3.3 Trang doc chuong
+
+Trang doc chuong tap trung vao kha nang doc lau, it nhieu va khong bi phan tam.
+
+Sections:
+
+- Breadcrumb ve trang chi tiet truyen.
+- Ten truyen, ten chuong va metadata ngan.
+- Toolbar:
+  - Chuong truoc / chuong sau.
+  - Chon chuong trong danh sach mock.
+  - Mo tuy chinh doc.
+- Noi dung chuong:
+  - Cot doc can giua.
+  - Do rong dong thoai mai.
+  - Font chu ro, line-height rong.
+  - Noi dung mock co nhieu doan de kiem tra cuon trang.
+- Reader settings:
+  - Tang/giam co chu.
+  - Chon do rong cot doc.
+  - Chon nen Ruby Noir, Sepia hoac Sang.
+- Chapter navigation lap lai o cuoi bai.
+
+Responsive:
+
+- Desktop: noi dung toi da 760-860px, toolbar sticky ben duoi header.
+- Tablet: toolbar co the wrap, cot doc giu khoang trong.
+- Mobile: noi dung full width co padding, nut chuong truoc/sau de bam, khong overflow.
+
+Boundaries:
+
+- Dung mock data trong `app.js`.
+- Khong luu setting hoac reading progress vao backend/localStorage trong task nay.
+- Khong them auth, payment hoac khoa VIP that.
+- Khong cai dependency moi.
 
 ## 8. Interaction
 
@@ -419,6 +455,16 @@ Rules:
 - Comment submit mock them comment moi.
 - Related carousel previous/next.
 - Back-to-top scroll len dau.
+
+### Reader page
+
+- Click chapter row, `Doc ngay`, `Doc tiep` hoac mobile CTA mo `#reader`.
+- Chon chuong cap nhat title va noi dung mock.
+- Nut chuong truoc/sau cap nhat chuong va scroll len dau noi dung.
+- Phim mui ten trai/phai chuyen chuong khi focus khong nam trong control.
+- Tang/giam co chu trong gioi han an toan.
+- Doi do rong cot doc va nen doc.
+- Focus duoc dua den tieu de chuong khi mo bang ban phim.
 
 ### Motion
 
@@ -581,6 +627,7 @@ Them sau khi xac nhan dung framework hoac xac nhan cho phep cai dependency npm. 
 - Comment mock submit hoat dong.
 - Carousel controls hoat dong.
 - Back-to-top hoat dong.
+- Reader route, chapter navigation va reader settings hoat dong.
 
 ### Accessibility completion
 

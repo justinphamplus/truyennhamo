@@ -13,8 +13,9 @@ Static public website prototype.
 | Project shell | Done | Static `index.html`, `styles.css`, `app.js` |
 | Homepage | Done | Day du section theo spec phase dau |
 | Story detail | Done | Co hero, stats, chapters, comments, related |
+| Reader page | Done | Co noi dung chuong, dieu huong va tuy chinh doc |
 | Interactions | Done | Mock interactions da co |
-| Responsive CSS | In progress | Da co breakpoint, can browser QA ky |
+| Responsive CSS | Done | Da QA browser tai 320px, 768px, 1024px va 1440px |
 | Documentation | Done | Bo docs du an da duoc tao |
 | Visual theme | Done | Ruby Noir Romance la theme chinh thuc duy nhat |
 | Backend/API | Not started | Out of scope hien tai |
@@ -92,14 +93,14 @@ Static public website prototype.
 
 ## Not Yet Verified
 
-- [ ] Browser console clean.
+- [x] Browser console clean.
 - [x] Visual QA at 1440px.
-- [ ] Visual QA at 1024px.
-- [ ] Visual QA at 768px.
+- [x] Visual QA at 1024px.
+- [x] Visual QA at 768px.
 - [x] Visual QA at 390px.
-- [ ] Visual QA at 320px.
-- [ ] Full keyboard tab order.
-- [ ] Accessibility tree/labels.
+- [x] Visual QA at 320px.
+- [x] Full keyboard tab order.
+- [x] Accessibility tree/labels.
 - [ ] Contrast check with real browser.
 
 ## Latest Screenshot Audit
@@ -149,17 +150,71 @@ Latest screenshots:
 
 ## Next Recommended Task
 
-Task 15 in `TASKS.md`: Browser visual QA.
+Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu that.
 
-Suggested checklist:
+## Reader Page 2026-06-18
 
-1. Open `index.html`.
-2. Check homepage desktop.
-3. Click `Doc ngay` or story card to open `#story`.
-4. Check story detail desktop.
-5. Resize to mobile widths.
-6. Note layout issues in this file.
-7. Fix issues one by one.
+- Them route `#reader` trong static hash routing.
+- Click chapter row, `Doc ngay`, `Doc tiep` va mobile CTA mo trang doc.
+- Them title chuong, metadata, noi dung mock 12 doan va drop cap.
+- Them chapter selector, chuong truoc/sau o toolbar va cuoi bai.
+- Toolbar co link quay lai thong tin truyen; phim mui ten trai/phai chuyen chuong.
+- Them reader settings:
+  - Co chu 16-24px.
+  - Do rong gon/can bang/rong.
+  - Nen Ruby Noir/Sepia/Sang.
+- Reader toolbar sticky tren desktop/tablet va chuyen thanh grid 2 cot tren mobile.
+- Focus den tieu de chuong khi mo bang ban phim.
+- QA tai 320px, 768px, 1024px va 1440px: khong horizontal overflow.
+- Browser console sach; `node --check app.js` pass.
+- Anh QA:
+  - `docs/screenshots/reader-mobile-320.png`
+  - `docs/screenshots/reader-desktop-1440.png`
+
+## Legacy Theme Cleanup 2026-06-19
+
+- Xoa HTML Tieu Mo mascot/suggestion da bi an trong Ruby Noir.
+- Xoa CSS mascot, story banner va animation `tmFloat` khong con selector runtime.
+- Giu `--tm-*` token contract vi Ruby Noir van phu thuoc truc tiep.
+- Screenshot comparison 1440px:
+  - Home: 0 pixel thay doi.
+  - Story: 0 pixel thay doi.
+  - Reader: 0.0102% pixel sai khac rat nho do render, khong co layout shift.
+- Anh before/after duoc luu trong `docs/screenshots/cleanup-*-1440.png`.
+- QA Home/Story/Reader tai 320px: khong horizontal overflow.
+- Browser console sach; `node --check app.js` va `git diff --check` pass.
+
+## Accessibility And Keyboard QA 2026-06-18
+
+- Kiem tra chuoi Tab tren homepage, story detail va mobile 320px; khong focus vao phan tu an.
+- Them focus ring Ruby Noir co do tuong phan ro cho link, button, input va phan tu co `tabindex`.
+- Skip link dua focus den `main`; mo story bang ban phim dua focus den tieu de trang.
+- Mobile menu va user menu mo bang Enter/Space, dong bang Escape va tra focus ve nut mo.
+- Them `aria-controls`, `aria-haspopup`, `aria-current` va dong bo `aria-expanded`.
+- Chuyen hai nhom nut loc tu tab semantics sang button group va dong bo `aria-pressed`.
+- Kiem tra Ctrl+K, loc chuong va gui binh luan bang ban phim.
+- Accessibility tree cua header co ten truy cap cho search va cac nut dang hien thi.
+- Browser console khong co error/warning; `node --check app.js` pass.
+- Anh QA:
+  - `docs/screenshots/a11y-focus-mobile-320.png`
+  - `docs/screenshots/a11y-focus-story-1440.png`
+
+## Responsive QA 2026-06-18
+
+- Da kiem tra homepage va story detail tai 320px, 768px, 1024px va 1440px.
+- Khong co horizontal page overflow va browser console khong co error/warning.
+- Tach breakpoint header 1100px khoi breakpoint layout 960px de story detail tai 1024px giu bo cuc hai cot.
+- Tai 320px, an notification de giu nut mobile menu va dam bao van truy cap duoc dieu huong chinh.
+- Mobile menu dong bang Escape va dong bo lai `aria-expanded`.
+- Anh QA:
+  - `docs/screenshots/qa-home-320.png`
+  - `docs/screenshots/qa-home-768.png`
+  - `docs/screenshots/qa-home-1024.png`
+  - `docs/screenshots/qa-home-1440.png`
+  - `docs/screenshots/qa-story-320.png`
+  - `docs/screenshots/qa-story-768.png`
+  - `docs/screenshots/qa-story-1024.png`
+  - `docs/screenshots/qa-story-1440.png`
 
 ## Known Limitations
 

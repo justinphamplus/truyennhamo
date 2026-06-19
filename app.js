@@ -203,6 +203,9 @@ const chapters = [
   ["Chương 2667: Âm mưu dần lộ", "3 ngày trước", ["vip"]],
 ];
 
+let activeReaderIndex = 0;
+let readerFontSize = 19;
+
 const comments = [
   ["Thiên Đạo Vô Cực", "Truyện quá hay! Mình đã đọc, tình tiết hấp dẫn, càng đọc càng cuốn!", "2 giờ trước"],
   ["Kiếm Tâm", "Chương mới ra nhanh quá, cảm ơn tác giả và nhóm tác giả nhiều!", "1 giờ trước"],
@@ -276,7 +279,7 @@ function renderHero(index = activeHeroIndex) {
   $("[data-hero-rank] strong").textContent = `#${activeHeroIndex + 1}`;
 
   $("[data-hero-dots]").innerHTML = heroStories.map((item, itemIndex) => `
-    <button class="hero-dot ${itemIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${itemIndex}" aria-label="Xem truyện hot ${itemIndex + 1}"></button>
+    <button class="hero-dot ${itemIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${itemIndex}" aria-label="Xem truyện hot ${itemIndex + 1}"${itemIndex === activeHeroIndex ? ' aria-current="true"' : ""}></button>
   `).join("");
 
   const thumbs = $("[data-ruby-hero-thumbs]");
@@ -285,7 +288,7 @@ function renderHero(index = activeHeroIndex) {
     thumbs.innerHTML = thumbIndexes.map((storyIndex) => {
       const item = heroStories[storyIndex];
       return `
-      <button class="ruby-hero-thumb ${storyIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${storyIndex}" aria-label="Xem truyện nổi bật ${storyIndex + 1}">
+      <button class="ruby-hero-thumb ${storyIndex === activeHeroIndex ? "is-active" : ""}" type="button" data-hero-slide="${storyIndex}" aria-label="Xem truyện nổi bật ${storyIndex + 1}"${storyIndex === activeHeroIndex ? ' aria-current="true"' : ""}>
         <span class="${item.cover}${item.coverImage ? " has-cover-image" : ""}" ${coverImageStyle(item.coverImage)}></span>
       </button>`;
     }).join("");
@@ -472,6 +475,7 @@ function renderChapters(filter = "", reversed = false) {
   }
 
   list.innerHTML = items.map(([title, time, flags], index) => {
+    const chapterIndex = chapters.findIndex(([chapterTitle]) => chapterTitle === title);
     const [chapterNo, chapterTitle = ""] = title.split(": ");
     const isVip = flags.includes("vip");
     const meta = isVip
@@ -485,7 +489,7 @@ function renderChapters(filter = "", reversed = false) {
           <span class="chapter-chevron" aria-hidden="true">›</span>
         </span>`;
     return `
-    <button class="chapter-row ${isVip ? "is-vip" : ""} ${index === 0 ? "is-latest" : ""}" type="button" aria-label="${title}${isVip ? " VIP 700 Gold" : ""}">
+    <button class="chapter-row ${isVip ? "is-vip" : ""} ${index === 0 ? "is-latest" : ""}" type="button" data-open-reader="${chapterIndex}" aria-label="${title}${isVip ? " VIP 700 Gold" : ""}">
       <span class="chapter-title"><strong>${chapterNo}</strong>${chapterTitle ? `<span>${chapterTitle}</span>` : ""}</span>
       ${meta}
     </button>
@@ -520,19 +524,85 @@ function renderStoryDetailCover() {
   detailCover.style.backgroundImage = `url('${story.coverImage}')`;
 }
 
+const readerParagraphs = [
+  "Màn đêm phủ xuống Thần Uyên như một tấm lụa đen không đáy. Trương Thần đứng trên vách đá, áo bào bị gió kéo căng về phía sau, ánh mắt dừng lại ở những đạo phù văn đang lần lượt sáng lên giữa thung lũng.",
+  "Tiếng chuông cổ vang từ nơi rất xa. Mỗi nhịp chuông đi qua, linh khí trong thiên địa lại nặng thêm một tầng, khiến đá vụn quanh chân hắn khẽ rung lên rồi lơ lửng giữa không trung.",
+  "Đối diện hắn, cánh cổng bằng huyền thiết từ từ mở ra. Sau khe cửa là một khoảng tối đặc quánh, nhưng trong bóng tối ấy có vô số ánh mắt đỏ như máu đang đồng loạt nhìn về phía trước.",
+  "Trương Thần không lùi. Hắn giơ tay, từng sợi kiếm ý mỏng như tơ tụ lại trên đầu ngón tay. Kiếm chưa xuất hiện, nhưng mặt đất phía trước đã nứt thành một đường thẳng kéo dài hàng trăm trượng.",
+  "Người áo đen bước ra khỏi cổng, giọng nói khàn đặc: “Ngươi đã biết nơi này là cấm địa, vì sao vẫn đến?”",
+  "“Bởi thứ các ngươi lấy đi vốn thuộc về ta.” Trương Thần đáp, thanh âm không lớn, nhưng át qua cả tiếng gió và tiếng gầm đang dâng lên phía sau cánh cổng.",
+  "Trong khoảnh khắc tiếp theo, hàng nghìn đạo trận văn bùng sáng. Ánh đỏ phủ kín bầu trời, hóa thành những sợi xích khổng lồ lao xuống. Trương Thần xoay cổ tay, kiếm quang trắng bạc vạch một vòng cung tròn hoàn mỹ.",
+  "Va chạm không phát ra tiếng nổ. Mọi âm thanh dường như bị rút khỏi thế giới trong một nhịp thở. Sau đó, luồng khí cuồng bạo mới tràn ra, nghiền nát những vách núi gần nhất thành bụi mịn.",
+  "Người áo đen lùi ba bước. Trên mặt nạ xuất hiện một vết nứt nhỏ. Hắn đưa tay chạm vào vết nứt, lần đầu tiên trong mắt hiện lên vẻ kinh ngạc không thể che giấu.",
+  "Trương Thần tiến về phía trước. Mỗi bước chân của hắn đều khiến một tầng trận pháp tắt đi. Những ký ức từ vạn năm trước trở lại rõ ràng hơn bao giờ hết, nhưng trong lòng hắn không còn phẫn nộ, chỉ còn sự bình tĩnh lạnh lẽo.",
+  "Sau cánh cổng, một luồng khí tức cổ xưa thức tỉnh. Cả Thần Uyên nghiêng đi như sắp sụp đổ, còn thanh kiếm trong tay Trương Thần cuối cùng cũng hiện hình, sáng như một vầng trăng mới mọc.",
+  "Hắn nâng kiếm, mũi kiếm hướng thẳng vào bóng tối. “Trận chiến này đã kéo dài quá lâu. Hôm nay, chúng ta kết thúc nó.”",
+];
+
+function renderReader(index = activeReaderIndex) {
+  activeReaderIndex = Math.min(Math.max(index, 0), chapters.length - 1);
+  const [title] = chapters[activeReaderIndex];
+  const [chapterNo] = title.split(":");
+  const select = $("[data-reader-select]");
+
+  select.innerHTML = chapters.map(([chapterTitle], chapterIndex) => `
+    <option value="${chapterIndex}"${chapterIndex === activeReaderIndex ? " selected" : ""}>${chapterTitle}</option>
+  `).join("");
+
+  $("[data-reader-title]").textContent = title;
+  $("[data-reader-breadcrumb]").textContent = chapterNo;
+  $("[data-reader-content]").innerHTML = readerParagraphs.map((paragraph, paragraphIndex) => `
+    <p${paragraphIndex === 0 ? ' class="reader-lead"' : ""}>${paragraph}</p>
+  `).join("");
+
+  $$("[data-reader-prev]").forEach((button) => {
+    button.disabled = activeReaderIndex >= chapters.length - 1;
+  });
+  $$("[data-reader-next]").forEach((button) => {
+    button.disabled = activeReaderIndex <= 0;
+  });
+}
+
+function changeReaderChapter(index, focusHeading = false) {
+  renderReader(index);
+  $(".reader-heading").scrollIntoView({ behavior: "smooth", block: "start" });
+  if (focusHeading) {
+    $("[data-reader-title]").focus();
+  }
+}
+
 function setPage(page, options = {}) {
   $$("[data-page]").forEach((node) => node.classList.toggle("is-active", node.dataset.page === page));
-  $$("[data-nav]").forEach((node) => node.classList.toggle("is-active", page === "home" && node.dataset.nav === "home"));
+  $$("[data-nav]").forEach((node) => {
+    const isCurrent = page === "home" && node.dataset.nav === "home";
+    node.classList.toggle("is-active", isCurrent);
+    if (isCurrent) {
+      node.setAttribute("aria-current", "page");
+    } else {
+      node.removeAttribute("aria-current");
+    }
+  });
   $("[data-mobile-cta]").classList.toggle("is-visible", page === "story");
+  document.body.classList.toggle("reader-mode", page === "reader");
   document.body.classList.remove("menu-open");
   $("[data-mobile-panel]").classList.remove("is-open");
   $("[data-menu-trigger]").setAttribute("aria-expanded", "false");
   if (options.scrollTop !== false) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
+  if (options.focusHeading) {
+    const headingId = page === "reader" ? "reader-title" : page === "story" ? "story-title" : "home-title";
+    $(`#${headingId}`).focus();
+  }
 }
 
 function syncRoute() {
+  if (location.hash === "#reader") {
+    renderReader(activeReaderIndex);
+    setPage("reader");
+    return;
+  }
+
   if (location.hash === "#story") {
     setPage("story");
     return;
@@ -549,6 +619,24 @@ function syncRoute() {
 
 function bindInteractions() {
   document.addEventListener("click", (event) => {
+    const readerDirection = event.target.closest("[data-reader-prev]")
+      ? 1
+      : event.target.closest("[data-reader-next]")
+        ? -1
+        : 0;
+    if (readerDirection) {
+      changeReaderChapter(activeReaderIndex + readerDirection, event.detail === 0);
+      return;
+    }
+
+    const readerFontButton = event.target.closest("[data-reader-font]");
+    if (readerFontButton) {
+      readerFontSize = Math.min(24, Math.max(16, readerFontSize + Number(readerFontButton.dataset.readerFont)));
+      $("[data-reader-paper]").style.setProperty("--reader-font-size", `${readerFontSize}px`);
+      $("[data-reader-font-value]").value = `${readerFontSize}px`;
+      return;
+    }
+
     if (event.target.closest("[data-hero-prev]")) {
       renderHero((activeHeroIndex - 1 + heroStories.length) % heroStories.length);
       startHeroAutoSlide();
@@ -579,7 +667,16 @@ function bindInteractions() {
     if (openStory) {
       event.preventDefault();
       history.pushState(null, "", "#story");
-      setPage("story");
+      setPage("story", { focusHeading: event.detail === 0 });
+      return;
+    }
+
+    const openReader = event.target.closest("[data-open-reader]");
+    if (openReader) {
+      activeReaderIndex = Number(openReader.dataset.openReader) || 0;
+      renderReader(activeReaderIndex);
+      history.pushState(null, "", "#reader");
+      setPage("reader", { focusHeading: event.detail === 0 });
       return;
     }
 
@@ -596,6 +693,9 @@ function bindInteractions() {
       const isOpen = panel.classList.toggle("is-open");
       document.body.classList.toggle("menu-open", isOpen);
       menuTrigger.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen && event.detail === 0) {
+        panel.querySelector("a")?.focus();
+      }
       return;
     }
 
@@ -604,6 +704,9 @@ function bindInteractions() {
       const menu = $("[data-user-menu]");
       const isOpen = menu.classList.toggle("is-open");
       userTrigger.setAttribute("aria-expanded", String(isOpen));
+      if (isOpen && event.detail === 0) {
+        menu.querySelector("a, button")?.focus();
+      }
       return;
     }
 
@@ -625,18 +728,38 @@ function bindInteractions() {
 
   $$("[data-ranking-tab]").forEach((tab) => {
     tab.addEventListener("click", () => {
-      $$("[data-ranking-tab]").forEach((node) => node.classList.remove("is-active"));
+      $$("[data-ranking-tab]").forEach((node) => {
+        node.classList.remove("is-active");
+        node.setAttribute("aria-pressed", "false");
+      });
       tab.classList.add("is-active");
+      tab.setAttribute("aria-pressed", "true");
       renderRanking(tab.dataset.rankingTab);
     });
   });
 
   $$("[data-library-tab]").forEach((tab) => {
     tab.addEventListener("click", () => {
-      $$("[data-library-tab]").forEach((node) => node.classList.remove("is-active"));
+      $$("[data-library-tab]").forEach((node) => {
+        node.classList.remove("is-active");
+        node.setAttribute("aria-pressed", "false");
+      });
       tab.classList.add("is-active");
+      tab.setAttribute("aria-pressed", "true");
       renderContinue(tab.dataset.libraryTab);
     });
+  });
+
+  $("[data-reader-select]").addEventListener("change", (event) => {
+    changeReaderChapter(Number(event.target.value));
+  });
+
+  $("[data-reader-width]").addEventListener("change", (event) => {
+    $("[data-reader-paper]").dataset.readerWidthValue = event.target.value;
+  });
+
+  $("[data-reader-theme]").addEventListener("change", (event) => {
+    $("[data-reader-paper]").dataset.readerThemeValue = event.target.value;
   });
 
   let reversed = false;
@@ -665,14 +788,31 @@ function bindInteractions() {
   });
 
   document.addEventListener("keydown", (event) => {
+    const readerIsActive = $("#reader-page").classList.contains("is-active");
+    const isReaderControl = event.target.closest("input, select, textarea, button, summary");
+    if (readerIsActive && !isReaderControl && (event.key === "ArrowLeft" || event.key === "ArrowRight")) {
+      event.preventDefault();
+      changeReaderChapter(activeReaderIndex + (event.key === "ArrowLeft" ? 1 : -1), true);
+      return;
+    }
+
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
       $("#global-search").focus();
     }
     if (event.key === "Escape") {
+      const userMenuWasOpen = $("[data-user-menu]").classList.contains("is-open");
+      const mobileMenuWasOpen = $("[data-mobile-panel]").classList.contains("is-open");
       $("[data-user-menu]").classList.remove("is-open");
       $("[data-mobile-panel]").classList.remove("is-open");
+      $("[data-user-menu-trigger]").setAttribute("aria-expanded", "false");
+      $("[data-menu-trigger]").setAttribute("aria-expanded", "false");
       document.body.classList.remove("menu-open");
+      if (userMenuWasOpen) {
+        $("[data-user-menu-trigger]").focus();
+      } else if (mobileMenuWasOpen) {
+        $("[data-menu-trigger]").focus();
+      }
     }
   });
 
@@ -694,6 +834,7 @@ function renderApp() {
   renderComments();
   renderRelated();
   renderStoryDetailCover();
+  renderReader();
   bindInteractions();
   syncRoute();
 }

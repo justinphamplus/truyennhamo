@@ -119,19 +119,19 @@ File nay la checklist ngan de theo doi tien do. Chi tiet tung task nam trong `IM
 
 ## Phase 5: Mobile-Friendly QA
 
-- [ ] Task 5.1: Mobile layout audit
+- [x] Task 5.1: Mobile layout audit
   - Muc tieu: Dam bao mobile-friendly.
   - Files/components: `styles.css`, `index.html`; header, hero, cards, detail, chapter list, footer.
   - Ket qua: 320px/390px khong overflow, CTA bam duoc, text doc duoc.
   - Kiem tra: Screenshot mobile home/story tai 320px va 390px.
 
-- [ ] Task 5.2: Desktop visual comparison audit
+- [x] Task 5.2: Desktop visual comparison audit (bo qua theo quyet dinh user)
   - Muc tieu: So sanh desktop voi design goc.
   - Files/components: `docs/visual-audit.md` neu can; co the sua `styles.css`, `index.html`, `app.js` sau audit.
   - Ket qua: Co danh sach khac biet va screenshot before/after.
   - Kiem tra: Screenshot homepage/story desktop, ghi issue vao docs.
 
-- [ ] Task 5.3: Accessibility and keyboard audit
+- [x] Task 5.3: Accessibility and keyboard audit
   - Muc tieu: Kiem tra keyboard va label.
   - Files/components: `index.html`, `styles.css`, `app.js`
   - Ket qua: Focus order hop ly, icon buttons co label, Escape dong menu.
@@ -145,7 +145,7 @@ File nay la checklist ngan de theo doi tien do. Chi tiet tung task nam trong `IM
   - Ket qua: Decision ro truoc khi scaffold/cai dependency.
   - Kiem tra: Docs co decision va commands neu co framework.
 
-- [ ] Task 6.2: Add reader page
+- [x] Task 6.2: Add reader page
   - Muc tieu: Tao trang doc chuong.
   - Files/components: `index.html`, `styles.css`, `app.js`; `ReaderPage`, `ReaderToolbar`, `ChapterContent`, `ReaderSettings`
   - Ket qua: Click chapter row mo reader page, mobile doc thoai mai.

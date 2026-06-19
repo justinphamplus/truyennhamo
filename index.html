@@ -18,7 +18,7 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20,400,1,0&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="styles.css?v=reader-20260619" />
   </head>
   <body data-layout="ruby-noir">
     <a class="skip-link" href="#main">Bỏ qua điều hướng</a>
@@ -33,7 +33,7 @@
         </a>
 
         <nav class="main-nav" aria-label="Điều hướng chính">
-          <a href="#home" data-nav="home">Trang chủ</a>
+          <a href="#home" data-nav="home" aria-current="page">Trang chủ</a>
           <a href="#genres">Thể loại</a>
           <a href="#ranking">Bảng xếp hạng</a>
           <a href="#new">Truyện mới</a>
@@ -59,16 +59,16 @@
           <button class="icon-button" type="button" aria-label="Thông báo">
             <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" /><path d="M13.7 21a2 2 0 0 1-3.4 0" /></svg>
           </button>
-          <button class="user-button avatar-only" type="button" aria-label="Mở menu tài khoản" aria-expanded="false" data-user-menu-trigger>
+          <button class="user-button avatar-only" type="button" aria-label="Mở menu tài khoản" aria-expanded="false" aria-controls="user-menu" aria-haspopup="true" data-user-menu-trigger>
             <span class="avatar">M</span>
           </button>
-          <button class="menu-button" type="button" aria-label="Mở menu" aria-expanded="false" data-menu-trigger>
+          <button class="menu-button" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-panel" data-menu-trigger>
             <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
           </button>
         </div>
       </div>
 
-      <div class="mobile-panel" data-mobile-panel>
+      <div class="mobile-panel" id="mobile-panel" data-mobile-panel>
         <nav aria-label="Điều hướng di động">
           <a href="#home">Trang chủ</a>
           <a href="#genres">Thể loại</a>
@@ -77,14 +77,14 @@
         </nav>
       </div>
 
-      <div class="user-menu" data-user-menu>
+      <div class="user-menu" id="user-menu" data-user-menu>
         <a href="#library">Tủ truyện</a>
         <a href="#settings">Cài đặt</a>
         <button type="button">Đăng xuất</button>
       </div>
     </header>
 
-    <main id="main">
+    <main id="main" tabindex="-1">
       <section class="page is-active" id="home-page" data-page="home" aria-labelledby="home-title">
         <div class="shell page-stack">
           <div class="home-hero-grid">
@@ -104,7 +104,7 @@
               <div class="ruby-hero-thumbs" data-ruby-hero-thumbs aria-label="Truyen noi bat khac"></div>
               <div class="hero-copy">
                 <span class="pill hot">Truyện nổi bật</span>
-                <h1 id="home-title">Trở Thành Kiều Nữ Trong Lòng Thái Tử, Bùi Đại Nhân Hối Hận</h1>
+                <h1 id="home-title" tabindex="-1">Trở Thành Kiều Nữ Trong Lòng Thái Tử, Bùi Đại Nhân Hối Hận</h1>
                 <div class="status-line">
                   <span class="status ongoing">Đang ra</span>
                 </div>
@@ -158,10 +158,10 @@
             <section class="card section-block" id="ranking" aria-labelledby="ranking-title">
               <div class="section-head">
                 <h2 id="ranking-title">Bảng xếp hạng</h2>
-                <div class="tabs ranking-tabs" role="tablist" aria-label="Lọc bảng xếp hạng">
-                  <button class="tab is-active" type="button" data-ranking-tab="week">Tuần này</button>
-                  <button class="tab" type="button" data-ranking-tab="month">Tháng này</button>
-                  <button class="tab" type="button" data-ranking-tab="all">Tất cả thời gian</button>
+                <div class="tabs ranking-tabs" role="group" aria-label="Lọc bảng xếp hạng">
+                  <button class="tab is-active" type="button" aria-pressed="true" data-ranking-tab="week">Tuần này</button>
+                  <button class="tab" type="button" aria-pressed="false" data-ranking-tab="month">Tháng này</button>
+                  <button class="tab" type="button" aria-pressed="false" data-ranking-tab="all">Tất cả thời gian</button>
                 </div>
               </div>
               <ol class="ranking-list" data-ranking-list></ol>
@@ -204,33 +204,12 @@
           <section class="card section-block" id="library" aria-labelledby="library-title">
             <div class="section-head">
               <h2 id="library-title">Dành cho bạn</h2>
-              <div class="tabs" role="tablist" aria-label="Tủ truyện">
-                <button class="tab is-active" type="button" data-library-tab="reading">Đang đọc dở</button>
-                <button class="tab" type="button" data-library-tab="saved">Đã lưu</button>
+              <div class="tabs" role="group" aria-label="Tủ truyện">
+                <button class="tab is-active" type="button" aria-pressed="true" data-library-tab="reading">Đang đọc dở</button>
+                <button class="tab" type="button" aria-pressed="false" data-library-tab="saved">Đã lưu</button>
               </div>
             </div>
             <div class="continue-grid" data-continue-list></div>
-          </section>
-
-          <section class="mascot-feature-grid" aria-label="Tiểu Mộ gợi ý và đặc quyền">
-            <article class="card section-block mascot-widget">
-              <div>
-                <span class="pill">Tiểu Mộ Gợi Ý</span>
-                <h2>Hôm nay đọc truyện gì nhỉ?</h2>
-                <p>Để Tiểu Mộ gợi ý cho bạn vài câu chuyện hợp tâm trạng tối nay.</p>
-                <button class="button primary" type="button">Để Tiểu Mộ gợi ý</button>
-              </div>
-              <span class="mascot-mini" aria-hidden="true"></span>
-            </article>
-
-            <article class="card section-block story-banner">
-              <div>
-                <span class="pill hot">Kho truyện phép thuật</span>
-                <h2>Cùng Tiểu Mộ khám phá kho truyện vô tận</h2>
-                <p>Truyện mới cập nhật mỗi ngày, đọc thư giãn với không gian thư viện ấm áp.</p>
-              </div>
-              <a class="button buy" href="#new">Khám phá ngay</a>
-            </article>
           </section>
 
           <section class="card section-block" id="community" aria-labelledby="community-title" hidden>
@@ -276,7 +255,7 @@
             <span aria-hidden="true">/</span>
             <a href="#genres">Huyền Huyễn</a>
             <span aria-hidden="true">/</span>
-            <span>Vạn Cổ Thần Đế</span>
+            <span aria-current="page">Vạn Cổ Thần Đế</span>
           </nav>
 
           <section class="story-detail card" aria-labelledby="story-title">
@@ -284,7 +263,7 @@
             </div>
             <div class="story-info">
               <span class="pill">Tiên Hiệp</span>
-              <h1 id="story-title">Vạn Cổ Thần Đế</h1>
+              <h1 id="story-title" tabindex="-1">Vạn Cổ Thần Đế</h1>
               <div class="author-line">
                 <span class="avatar small">P</span>
                 <strong>Phi Thiên Ngư</strong>
@@ -300,11 +279,11 @@
                 <div><dt>2686</dt><dd>Số chương</dd></div>
               </dl>
               <div class="story-actions">
-                <button class="button primary" type="button">
+                <button class="button primary" type="button" data-open-reader="0">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" /><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15Z" /></svg>
                   Đọc ngay
                 </button>
-                <button class="button primary" type="button">
+                <button class="button primary" type="button" data-open-reader="0">
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
                   Đọc Tiếp
                 </button>
@@ -353,12 +332,12 @@
             </div>
             <div class="chapter-grid" data-chapter-list></div>
             <div class="pagination" aria-label="Phân trang chương">
-              <button class="is-active" type="button">1</button>
+              <button class="is-active" type="button" aria-current="page">1</button>
               <button type="button">2</button>
               <button type="button">3</button>
               <button type="button">4</button>
               <button type="button">5</button>
-              <button type="button">...</button>
+              <span aria-hidden="true">...</span>
               <button type="button">54</button>
             </div>
             <div class="legend">
@@ -394,6 +373,80 @@
             </div>
             <div class="related-track" data-related-list></div>
           </section>
+        </div>
+      </section>
+
+      <section class="page reader-page" id="reader-page" data-page="reader" aria-labelledby="reader-title">
+        <div class="reader-shell">
+          <nav class="reader-breadcrumb" aria-label="Điều hướng trang đọc">
+            <a href="#story">Vạn Cổ Thần Đế</a>
+            <span aria-hidden="true">/</span>
+            <span data-reader-breadcrumb aria-current="page">Chương 2686</span>
+          </nav>
+
+          <header class="reader-heading">
+            <span class="reader-kicker">Vạn Cổ Thần Đế</span>
+            <h1 id="reader-title" tabindex="-1" data-reader-title>Chương 2686: Quyết chiến</h1>
+          </header>
+
+          <div class="reader-toolbar" aria-label="Công cụ đọc truyện">
+            <a class="reader-story-link" href="#story">Thông tin truyện</a>
+
+            <button class="reader-nav-button" type="button" data-reader-prev>
+              <span aria-hidden="true">←</span>
+              Chương trước
+            </button>
+
+            <label class="reader-chapter-picker">
+              <span class="sr-only">Chọn chương</span>
+              <select data-reader-select aria-label="Chọn chương"></select>
+            </label>
+
+            <details class="reader-settings">
+              <summary>Tùy chỉnh đọc</summary>
+              <div class="reader-settings-panel">
+                <div class="reader-setting-row">
+                  <span>Cỡ chữ</span>
+                  <div role="group" aria-label="Điều chỉnh cỡ chữ">
+                    <button type="button" data-reader-font="-1" aria-label="Giảm cỡ chữ">A−</button>
+                    <output data-reader-font-value>19px</output>
+                    <button type="button" data-reader-font="1" aria-label="Tăng cỡ chữ">A+</button>
+                  </div>
+                </div>
+                <label class="reader-setting-row">
+                  <span>Độ rộng</span>
+                  <select data-reader-width>
+                    <option value="narrow">Gọn</option>
+                    <option value="balanced" selected>Cân bằng</option>
+                    <option value="wide">Rộng</option>
+                  </select>
+                </label>
+                <label class="reader-setting-row">
+                  <span>Màu nền</span>
+                  <select data-reader-theme>
+                    <option value="noir" selected>Ruby Noir</option>
+                    <option value="sepia">Sepia</option>
+                    <option value="light">Sáng</option>
+                  </select>
+                </label>
+              </div>
+            </details>
+
+            <button class="reader-nav-button" type="button" data-reader-next>
+              Chương sau
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+
+          <article class="reader-paper" data-reader-paper data-reader-width-value="balanced" data-reader-theme-value="noir">
+            <div class="reader-content" data-reader-content></div>
+          </article>
+
+          <nav class="reader-bottom-nav" aria-label="Điều hướng chương">
+            <button class="button ghost" type="button" data-reader-prev>← Chương trước</button>
+            <a class="button ghost" href="#story">Danh sách chương</a>
+            <button class="button primary" type="button" data-reader-next>Chương sau →</button>
+          </nav>
         </div>
       </section>
     </main>
@@ -453,10 +506,10 @@
     </footer>
 
     <div class="mobile-cta" data-mobile-cta>
-      <button class="button primary" type="button">Đọc ngay</button>
+      <button class="button primary" type="button" data-open-reader="0">Đọc ngay</button>
       <button class="button ghost" type="button">Yêu thích</button>
     </div>
 
-    <script src="app.js"></script>
+    <script src="app.js?v=reader-20260619"></script>
   </body>
 </html>

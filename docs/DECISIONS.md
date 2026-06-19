@@ -121,3 +121,32 @@ Consequence:
 - Xoa logic toggle, doc query `?theme=` va luu `novelverse-theme`.
 - CSS Ruby Noir tiep tuc duoc scope de tranh refactor lon khong can thiet.
 - Tieu Mo/Mystical Night chi con la lich su thiet ke, khong con la giao dien runtime.
+
+## 2026-06-18: Skip Further Desktop Reference Comparison
+
+Decision: Khong tiep tuc task so sanh desktop voi visual goc.
+
+Reason:
+
+- User da chu dong sua va chot layout theo y rieng.
+- Visual hien tai la source of truth thay vi anh tham chieu cu.
+
+Consequence:
+
+- Task 5.2 duoc dong theo decision, khong can them vong visual comparison.
+- Cong viec tiep theo chuyen sang Reader Page.
+
+## 2026-06-19: Remove Dormant Tieu Mo UI
+
+Decision: Xoa section mascot/suggestion Tieu Mo dang bi an trong Ruby Noir va CSS chi phuc vu cac component nay.
+
+Reason:
+
+- Ruby Noir la theme runtime duy nhat.
+- HTML Tieu Mo khong hien thi nhung van lam tang DOM va CSS.
+- Screenshot comparison Home/Story khong co pixel thay doi sau cleanup.
+
+Consequence:
+
+- Xoa `mascot-feature-grid`, `mascot-widget`, `mascot-mini`, `story-banner` va `tmFloat`.
+- Giu token `--tm-*` vi Ruby Noir hien van dung chung token contract nay; doi ten token la refactor rieng co rui ro cao hon.

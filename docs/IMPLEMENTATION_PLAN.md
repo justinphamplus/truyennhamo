@@ -761,7 +761,7 @@ Tao trang doc chuong rieng sau khi public homepage/detail on dinh.
 
 **Trang thai hien tai**
 
-- Not started.
+- Done 2026-06-18.
 
 ### Task 6.3: Add admin dashboard
 
@@ -798,12 +798,10 @@ Lam admin dashboard theo visual admin sau khi public site on dinh.
 
 Vi app static da co prototype, thu tu tiep theo nen la:
 
-1. Task 5.2: Desktop visual comparison audit.
-2. Task 5.1: Mobile layout audit.
-3. Task 5.3: Accessibility and keyboard audit.
-4. Task 4.1: Xac nhan motion library approach.
-5. Task 4.2: Them motion polish.
-6. Task 6.1: Quyet dinh co chuyen framework khong.
+1. Task 6.1: Quyet dinh stack frontend/backend cho MVP.
+2. Thiet ke schema va API contract cho story, chapter, user, bookmark va reading progress.
+3. Ket noi Reader Page voi du lieu that theo tung vertical slice.
+4. Task 4.1 va 4.2 chi lam sau khi luong du lieu core on dinh.
 
 ## Definition of Done for each large UI change
 
@@ -811,7 +809,7 @@ Mot thay doi UI lon chi duoc coi la xong khi:
 
 - Desktop screenshot da chup.
 - Mobile screenshot da chup.
-- Da so sanh voi design goc va ghi nhan khac biet neu co.
+- Da so sanh voi design goc neu task con yeu cau visual reference.
 - Khong co horizontal overflow tren mobile.
 - Interaction lien quan hoat dong.
 - Neu sua JS: `node --check app.js` pass.
