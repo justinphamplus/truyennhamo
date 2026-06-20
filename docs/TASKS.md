@@ -139,10 +139,10 @@ File nay la checklist ngan de theo doi tien do. Chi tiet tung task nam trong `IM
 
 ## Phase 6: Future Expansion
 
-- [ ] Task 6.1: Decide static vs React/Vite/Next
+- [x] Task 6.1: Decide static vs React/Vite/Next
   - Muc tieu: Quyet dinh co chuyen framework khong.
   - Files/components: `docs/DECISIONS.md`, future `package.json` neu co.
-  - Ket qua: Decision ro truoc khi scaffold/cai dependency.
+  - Ket qua: Chot Next.js App Router + Supabase; chi tiet trong `docs/BACKEND_SPEC.md`.
   - Kiem tra: Docs co decision va commands neu co framework.
 
 - [x] Task 6.2: Add reader page

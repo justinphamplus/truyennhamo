@@ -30,7 +30,7 @@ Nguoi dung muc tieu:
 ### Future phase, chua lam trong scope hien tai
 
 1. Trang danh sach the loai
-2. Trang ket qua tim kiem
+2. Trang ket qua tim kiem (da trien khai tai `/tim-kiem`)
 3. Trang bang xep hang day du
 4. Trang tu truyen/user library
 5. Trang dang nhap/dang ky
@@ -430,8 +430,10 @@ Boundaries:
 ### Search
 
 - Global search input co shortcut `Ctrl K`.
-- Phase hien tai: focus input.
-- Future: open command palette/search overlay voi ket qua truyen/tac gia.
+- `Ctrl K` focus input.
+- Submit bang GET den `/tim-kiem?q=...`; ket qua lay qua Supabase RPC theo ten truyen, synopsis
+  va tac gia.
+- Cursor phan trang dung `(rank, id)` trong URL.
 
 ### Header
 
@@ -657,7 +659,8 @@ Them sau khi xac nhan dung framework hoac xac nhan cho phep cai dependency npm. 
 
 ## 13. Open questions cho phase tiep theo
 
-- Co chuyen sang React/Vite/Next de dung `framer-motion` khong?
+- Da chot chuyen sang Next.js App Router + TypeScript.
+- Da chot Supabase PostgreSQL + Auth + Storage; xem `BACKEND_SPEC.md`.
 - Co copy/upload asset anh that vao project de thay cover CSS mock khong?
-- Trang tiep theo nen lam la reader page hay admin dashboard?
-- Co can search results page rieng khong?
+- Payment/VIP entitlement se dung provider va rule nao?
+- Auth phase dau chi email/password hay them Google OAuth?

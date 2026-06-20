@@ -150,3 +150,27 @@ Consequence:
 
 - Xoa `mascot-feature-grid`, `mascot-widget`, `mascot-mini`, `story-banner` va `tmFloat`.
 - Giu token `--tm-*` vi Ruby Noir hien van dung chung token contract nay; doi ten token la refactor rieng co rui ro cao hon.
+
+## 2026-06-19: Next.js And Supabase Backend Stack
+
+Decision:
+
+- Chuyen frontend sang Next.js App Router + TypeScript.
+- Dung Supabase PostgreSQL, Auth va Storage.
+- Dung Data API + RLS cho public/user-owned data.
+- Dung Server Actions cho mutation noi bo; Route Handlers cho webhook/API ben ngoai.
+
+Reason:
+
+- Public story pages can SEO va server rendering.
+- Supabase cung cap PostgreSQL, Auth, Storage va RLS trong mot stack gon.
+- Vertical slice Home/Story/Reader co the migrate dan, khong can build custom backend CRUD.
+
+Security consequences:
+
+- Publishable key duoc phep o client voi RLS va least-privilege grants.
+- Secret key chi nam trong server-only client rieng.
+- Chapter metadata va body duoc tach de khong lo noi dung locked.
+- Payment/VIP entitlement khong nam trong migration dau.
+
+Full specification: `docs/BACKEND_SPEC.md`.

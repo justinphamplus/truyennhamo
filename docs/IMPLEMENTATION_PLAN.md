@@ -728,7 +728,7 @@ Quyet dinh co giu static app hay chuyen sang framework de tach component va dung
 
 **Trang thai hien tai**
 
-- Not started.
+- Done 2026-06-19: chot Next.js App Router + Supabase. Xem `docs/BACKEND_SPEC.md`.
 
 ### Task 6.2: Add reader page
 

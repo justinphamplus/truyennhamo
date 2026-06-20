@@ -1,0 +1,33 @@
+{
+  "name": "truyennhamo",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "supabase:start": "supabase start",
+    "supabase:stop": "supabase stop",
+    "db:reset": "supabase db reset --local",
+    "db:test": "docker cp supabase/tests/catalog.sql supabase_db_truyennhamo:/tmp/catalog.sql && docker exec supabase_db_truyennhamo psql -U postgres -d postgres -v ON_ERROR_STOP=1 -f /tmp/catalog.sql",
+    "db:types": "supabase gen types --local --schema public > src/types/database.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.0",
+    "@supabase/supabase-js": "^2.108.2",
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.0",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "eslint": "latest",
+    "eslint-config-next": "latest",
+    "supabase": "^2.107.0",
+    "typescript": "latest"
+  }
+}

@@ -41,12 +41,12 @@
           <a class="ruby-only-nav" href="#community">Cộng đồng</a>
         </nav>
 
-        <form class="search-form" role="search">
+        <form class="search-form" role="search" action="/tim-kiem" method="get">
           <label class="sr-only" for="global-search">Tìm kiếm truyện</label>
           <span class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24"><path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" /></svg>
           </span>
-          <input id="global-search" type="search" placeholder="Tìm kiếm truyện, tác giả..." />
+          <input id="global-search" name="q" type="search" maxlength="120" placeholder="Tìm kiếm truyện, tác giả..." />
           <kbd>Ctrl K</kbd>
         </form>
 
@@ -243,6 +243,33 @@
               </article>
             </div>
           </section>
+        </div>
+      </section>
+
+      <section class="page" id="search-page" data-page="search" aria-labelledby="search-title">
+        <div class="shell page-stack search-page-stack">
+          <nav class="breadcrumb" aria-label="Breadcrumb">
+            <a href="#home">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <span aria-current="page">Tìm kiếm</span>
+          </nav>
+
+          <header class="search-heading">
+            <span class="section-kicker">Thư viện Ruby Noir</span>
+            <h1 id="search-title" tabindex="-1">Tìm kiếm truyện</h1>
+            <p data-search-summary>Nhập tên truyện, tác giả hoặc từ khóa nội dung.</p>
+          </header>
+
+          <form class="search-page-form" role="search" action="/tim-kiem" method="get">
+            <label for="search-page-input">Từ khóa tìm kiếm</label>
+            <div>
+              <input id="search-page-input" name="q" type="search" maxlength="120" autocomplete="off" placeholder="Ví dụ: Vạn Cổ Thần Đế" />
+              <button class="button primary" type="submit">Tìm truyện</button>
+            </div>
+          </form>
+
+          <div class="search-results" data-search-results aria-live="polite"></div>
+          <nav class="search-pagination" data-search-pagination aria-label="Phân trang kết quả tìm kiếm"></nav>
         </div>
       </section>
 

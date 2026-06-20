@@ -12,6 +12,8 @@ Thu muc nay la noi theo doi yeu cau, ke hoach va tien do cua du an NovelVerse.
 6. `PROJECT_STRUCTURE.md` - Y nghia cac file/thuc muc trong project.
 7. `DECISIONS.md` - Cac quyet dinh ky thuat da chon va ly do.
 8. `TEST_PLAN.md` - Cach kiem tra UI, responsive va interaction.
+9. `BACKEND_SPEC.md` - Stack, schema, RLS, Storage va API contract cho MVP.
+10. `BACKEND_TASKS.md` - Thu tu migration va vertical slice backend.
 
 ## Trang thai hien tai
 
