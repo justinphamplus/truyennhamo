@@ -1,10 +1,10 @@
 # Progress Tracker: NovelVerse
 
-Cap nhat lan cuoi: 2026-06-20
+Cap nhat lan cuoi: 2026-06-21
 
 ## Current Phase
 
-Next.js App Router frontend connected to the local Supabase public catalog.
+Next.js App Router frontend connected to Supabase catalog, Auth, profiles and bookmarks.
 
 ## Overall Status
 
@@ -18,7 +18,7 @@ Next.js App Router frontend connected to the local Supabase public catalog.
 | Responsive CSS | Done | Da QA browser tai 320px, 768px, 1024px va 1440px |
 | Documentation | Done | Bo docs du an da duoc tao |
 | Visual theme | Done | Ruby Noir Romance la theme chinh thuc duy nhat |
-| Backend/API | Catalog ready | Supabase local + catalog migration/search/RLS/seed done; user data not started |
+| Backend/API | Reading progress ready | Catalog + Auth + bookmarks + reading resume are connected |
 | Admin dashboard | Not started | Out of scope hien tai |
 | Deployment | Not started | Chua yeu cau |
 
@@ -269,7 +269,7 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
 - Embedded chapter query chi lay chapter moi nhat cho moi story.
 - Legacy Ruby Noir renderer nhan serialized server payload; khong fetch Supabase tu browser.
 - Cac section story tren Homepage khong con dung mock story dataset.
-- `Dang doc do` van la UI progress placeholder cho den phase user data, nhung title/cover/chapter lay tu catalog that.
+- `Dang doc do` lay reading progress that cho user da dang nhap; anonymous van thay fallback catalog.
 - Story Detail va Reader van dung mock data dung theo scope task.
 - Verification:
   - Server HTML co `data-homepage-source="supabase"`.
@@ -348,9 +348,25 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
 
 - Cover art and hero art are CSS approximations, not real uploaded images.
 - Chua co production Supabase project; backend hien tai chay local.
-- No real auth.
 - No real payment/VIP purchase.
 - Chua co entitlement/payment flow de mo khoa body VIP.
+
+## Supabase Auth And Profiles 2026-06-20
+
+- Them `public.profiles` voi FK `auth.users`, constraints, grants va RLS.
+- Trigger `private.handle_new_user` tao profile sau signup; security-definer function khong nam trong
+  exposed schema.
+- Them email/password signup, login, logout va profile update bang Next.js Server Actions.
+- Them `/auth/confirm` cho hosted email confirmation va `src/proxy.ts` de refresh session cookies.
+- Them route `/dang-ky`, `/dang-nhap`, protected `/tai-khoan`.
+- Header public phan biet anonymous/authenticated va hien ten/avatar/profile/logout phu hop.
+- Validation server dung Zod; username normalize lowercase va chi cho phep `[a-z0-9_]`.
+- Verification:
+  - `supabase db reset --local`, migration list va SQL RLS/trigger tests pass.
+  - Supabase security/performance advisors: no issues.
+  - Browser E2E pass signup -> update profile -> authenticated header -> logout -> login.
+  - 42 Playwright tests pass; Auth UI pass tai 320/768/1024/1440, console sach.
+  - TypeScript, ESLint, production build va production dependency audit pass.
 
 ## Search Supabase RPC Integration 2026-06-20
 
@@ -365,6 +381,45 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
   - 32 Playwright tests pass tren Chrome.
   - Search pass tai 320/768/1024/1440, khong horizontal overflow, console sach.
   - TypeScript, ESLint va production build pass.
+
+## Supabase Bookmarks And User Library 2026-06-21
+
+- Them `public.bookmarks` voi primary key `(user_id, story_id)`, FK cascade va index
+  `(user_id, created_at desc)`/`story_id`.
+- Bat RLS, explicit grant cho authenticated va chan user doc/ghi/xoa bookmark cua user khac.
+- Policy insert chi cho phep published story.
+- Them Server Action idempotent dung upsert/delete va revalidate Story/Home/Library.
+- Story Detail co nut Theo doi dong bo tai desktop/mobile; guest duoc chuyen den login voi return URL.
+- Them protected route `/tu-truyen`, empty state, danh sach theo thoi gian luu va thao tac bo theo doi.
+- Menu tai khoan va nav Tu truyen tro den route that.
+- Verification:
+  - Local database reset va SQL role tests pass.
+  - Supabase database lint, security advisor va performance advisor: no issues.
+  - TypeScript, ESLint va production build pass.
+  - 44 Playwright tests pass; follow -> library -> remove pass.
+  - `/tu-truyen` khong horizontal overflow tai 320/768/1024/1440.
+
+## Supabase Reading Progress 2026-06-21
+
+- Them `public.reading_progress` voi primary key `(user_id, story_id)`, progress/scroll checks,
+  explicit grants va owner-only RLS.
+- Them composite FK `(story_id, chapter_id)` den `chapters(story_id, id)` de database tu choi
+  chapter khong thuoc story.
+- Them index `(user_id, last_read_at desc)` va `chapter_id`.
+- Reader chapter Free autosave sau 1.2 giay ngung cuon, heartbeat 15 giay va restore theo phan tram
+  noi dung; VIP khong ghi progress.
+- Mutation di qua internal Route Handler `/api/reading-progress`, re-check session/chapter Free va
+  goi atomic upsert server-side.
+- `/tu-truyen` co hai che do `Dang doc` va `Da theo doi`; reading card co progressbar va canonical
+  resume URL.
+- Homepage `Dang doc do`/`Da luu` dung personalized payload that khi da dang nhap.
+- Nut `Doc tiep` tren Story Detail mo chapter da luu; `Doc ngay` van mo chapter moi nhat.
+- Verification:
+  - Clean database reset, SQL RLS/upsert/cross-story FK tests pass.
+  - Supabase database lint, security advisor va performance advisor: no issues.
+  - JavaScript syntax, TypeScript, ESLint va production build pass.
+  - 45 Playwright tests pass, gom save -> reload restore -> library/home -> Story resume.
+  - Reading library pass khong overflow tai 320/768/1024/1440.
 
 ## Decision Log Shortcut
 

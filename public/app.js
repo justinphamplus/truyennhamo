@@ -186,10 +186,22 @@ function readSearchData() {
   }
 }
 
+function readUserLibraryData() {
+  const node = document.getElementById("user-library-data");
+  if (!node) return null;
+
+  try {
+    return JSON.parse(node.textContent);
+  } catch {
+    return null;
+  }
+}
+
 const homepageCatalog = readHomepageCatalog();
 const storyDetail = readStoryDetail();
 const readerData = readReaderData();
 const searchData = readSearchData();
+const userLibraryData = readUserLibraryData();
 const homepageStories = homepageCatalog?.stories?.length
   ? homepageCatalog.stories
   : stories;
@@ -524,6 +536,22 @@ function storyCard(story, options = {}) {
 function renderContinue(type = "reading") {
   const list = $("[data-continue-list]");
   if (type === "saved") {
+    if (userLibraryData) {
+      list.innerHTML = userLibraryData.saved.length
+        ? userLibraryData.saved.slice(0, 3).map((story, index) => `
+            <article class="continue-card">
+              <span class="cover-thumb cover-${["gold", "red", "blue"][index]}${story.coverImage ? " has-cover-image" : ""}" ${coverImageStyle(story.coverImage)} aria-hidden="true"></span>
+              <span>
+                <h3>${escapeHtml(story.title)}</h3>
+                <p>${escapeHtml(story.latestChapter)}</p>
+                <a class="mini-button" href="/truyen/${encodeURIComponent(story.slug)}">Xem truyện</a>
+              </span>
+            </article>
+          `).join("")
+        : '<p class="continue-empty" role="status">Bạn chưa theo dõi truyện nào.</p>';
+      return;
+    }
+
     list.innerHTML = homepageStories.slice(3, 6).map((story) => `
       <article class="continue-card">
         ${cover(story)}
@@ -534,6 +562,23 @@ function renderContinue(type = "reading") {
         </span>
       </article>
     `).join("");
+    return;
+  }
+
+  if (userLibraryData) {
+    list.innerHTML = userLibraryData.reading.length
+      ? userLibraryData.reading.slice(0, 3).map((item, index) => `
+          <article class="continue-card">
+            <span class="cover-thumb cover-${["gold", "red", "blue"][index]}${item.coverImage ? " has-cover-image" : ""}" ${coverImageStyle(item.coverImage)} aria-hidden="true"></span>
+            <span>
+              <h3>${escapeHtml(item.storyTitle)}</h3>
+              <p>${escapeHtml(item.chapterLabel)}</p>
+              <div class="progress" aria-label="Đã đọc ${Math.round(item.progressPercent)}%"><span style="width:${item.progressPercent}%"></span></div>
+              <a class="mini-button" href="/truyen/${encodeURIComponent(item.storySlug)}/${encodeURIComponent(item.chapterSlug)}">Đọc tiếp</a>
+            </span>
+          </article>
+        `).join("")
+      : '<p class="continue-empty" role="status">Mở một chương Free để bắt đầu lưu tiến độ đọc.</p>';
     return;
   }
 
@@ -771,7 +816,15 @@ function renderStoryDetail() {
   descriptionParagraphs[1].hidden = true;
   $("[data-expand-description]").style.display = "none";
 
-  $$(".story-actions [data-open-reader], .mobile-cta [data-open-reader]").forEach((button) => {
+  const storyReaderButtons = $$(".story-actions [data-open-reader]");
+  storyReaderButtons.forEach((button, index) => {
+    button.dataset.storySlug = story.slug;
+    button.dataset.chapterSlug =
+      index === 1 && storyDetail.readingProgress?.chapterSlug
+        ? storyDetail.readingProgress.chapterSlug
+        : storyDetail.chapters[0]?.slug || "";
+  });
+  $$(".mobile-cta [data-open-reader]").forEach((button) => {
     button.dataset.storySlug = story.slug;
     button.dataset.chapterSlug = storyDetail.chapters[0]?.slug || "";
   });
@@ -1207,4 +1260,6 @@ function renderApp() {
   syncRoute();
 }
 
-renderApp();
+if ($("[data-page]")) {
+  renderApp();
+}

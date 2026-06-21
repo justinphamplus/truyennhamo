@@ -14,6 +14,7 @@ export type ReaderChapterLink = {
 export type ReaderPayload = {
   source: "supabase";
   story: {
+    id: number;
     slug: string;
     title: string;
   };
@@ -129,6 +130,7 @@ export const getReaderData = cache(
     return {
       source: "supabase",
       story: {
+        id: story.id,
         slug: story.slug,
         title: story.title,
       },

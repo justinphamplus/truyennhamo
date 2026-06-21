@@ -39,6 +39,32 @@ export type Database = {
         }
         Relationships: []
       }
+      bookmarks: {
+        Row: {
+          created_at: string
+          story_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          story_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          story_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chapter_contents: {
         Row: {
           chapter_id: number
@@ -147,6 +173,81 @@ export type Database = {
           sort_order?: number
         }
         Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_path: string | null
+          bio: string | null
+          created_at: string
+          display_name: string
+          id: string
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          avatar_path?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name: string
+          id: string
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          avatar_path?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      reading_progress: {
+        Row: {
+          chapter_id: number
+          last_read_at: string
+          progress_percent: number
+          scroll_offset: number
+          story_id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chapter_id: number
+          last_read_at?: string
+          progress_percent?: number
+          scroll_offset?: number
+          story_id: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chapter_id?: number
+          last_read_at?: string
+          progress_percent?: number
+          scroll_offset?: number
+          story_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_progress_story_chapter_fkey"
+            columns: ["story_id", "chapter_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["story_id", "id"]
+          },
+          {
+            foreignKeyName: "reading_progress_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       stories: {
         Row: {

@@ -20,6 +20,10 @@ const routes = [
     screenshot: "search",
   },
 ] as const;
+const accountRoutes = [
+  { path: "/dang-nhap", heading: "Đăng nhập", screenshot: "login" },
+  { path: "/dang-ky", heading: "Tạo tài khoản", screenshot: "signup" },
+] as const;
 
 for (const width of viewports) {
   test.describe(`${width}px`, () => {
@@ -38,6 +42,33 @@ for (const width of viewports) {
         await page.goto(route.path);
         await expect(page.locator(`[data-page="${route.page}"]`)).toHaveClass(/is-active/);
         await expect(page.locator(`[data-page="${route.page}"] h1`).first()).toBeVisible();
+
+        const hasOverflow = await page.evaluate(
+          () => document.documentElement.scrollWidth > window.innerWidth + 1,
+        );
+
+        await page.screenshot({
+          path: `.tmp/qa-next-${width}-${route.screenshot}.png`,
+          fullPage: true,
+        });
+
+        expect(hasOverflow).toBe(false);
+        expect(errors).toEqual([]);
+      });
+    }
+
+    for (const route of accountRoutes) {
+      test(`${route.path} renders without horizontal overflow`, async ({ page }) => {
+        const errors: string[] = [];
+        page.on("console", (message) => {
+          if (message.type() === "error" || message.type() === "warning") {
+            errors.push(message.text());
+          }
+        });
+        page.on("pageerror", (error) => errors.push(error.message));
+
+        await page.goto(route.path);
+        await expect(page.getByRole("heading", { name: route.heading, level: 1 })).toBeVisible();
 
         const hasOverflow = await page.evaluate(
           () => document.documentElement.scrollWidth > window.innerWidth + 1,
@@ -201,6 +232,218 @@ test("Empty search query renders a useful initial state", async ({ page }) => {
     "Bắt đầu tìm một câu chuyện",
   );
   await expect(page.locator("[data-search-pagination]")).toBeEmpty();
+});
+
+test("User can sign up, edit profile, log out and sign back in", async ({ page }) => {
+  const uniqueId = Date.now();
+  const email = `reader-${uniqueId}@example.com`;
+  const username = `doc_gia_${uniqueId}`;
+  const password = "RubyNoir2026!";
+
+  await page.goto("/dang-ky");
+  await page.getByLabel("Tên hiển thị").fill("Độc Giả Mộng");
+  await page.getByLabel("Email").fill(email);
+  await page.locator('input[name="password"]').fill(password);
+  await page.getByLabel("Xác nhận mật khẩu").fill(password);
+  await page.getByRole("button", { name: "Đăng ký" }).click();
+
+  await expect(page).toHaveURL(/\/tai-khoan\?created=1$/);
+  await expect(page.getByRole("heading", { name: "Độc Giả Mộng", level: 1 })).toBeVisible();
+  await expect(page.getByRole("status")).toContainText("Tài khoản đã được tạo");
+
+  await page.getByLabel("Tên người dùng").fill(username);
+  await page.locator('textarea[name="bio"]').fill("Mê truyện tiên hiệp và ngôn tình.");
+  await page.getByRole("button", { name: "Lưu hồ sơ" }).click();
+
+  await expect(page).toHaveURL(/\/tai-khoan\?saved=1$/);
+  await expect(page.getByRole("status")).toContainText("Hồ sơ đã được cập nhật");
+  await expect(page.getByLabel("Tên người dùng")).toHaveValue(username);
+
+  await page.goto("/");
+  await expect(page.locator("[data-auth-state='authenticated']")).toBeVisible();
+  await page.locator("[data-user-menu-trigger]").click();
+  await expect(page.locator("[data-auth-menu]")).toContainText("Độc Giả Mộng");
+  await expect(page.getByRole("link", { name: "Hồ sơ cá nhân" })).toBeVisible();
+
+  await page.goto("/tai-khoan");
+  await page.getByRole("button", { name: "Đăng xuất" }).click();
+  await expect(page).toHaveURL(/\/dang-nhap\?message=/);
+  await expect(page.getByRole("status")).toContainText("Đã đăng xuất");
+
+  await page.goto("/tai-khoan");
+  await expect(page).toHaveURL(/\/dang-nhap\?next=\/tai-khoan$/);
+
+  await page.getByLabel("Email").fill(email);
+  await page.getByLabel("Mật khẩu").fill(password);
+  await page.getByRole("button", { name: "Đăng nhập" }).click();
+
+  await expect(page).toHaveURL(/\/tai-khoan$/);
+  await expect(page.getByLabel("Tên người dùng")).toHaveValue(username);
+  await expect(page.locator('textarea[name="bio"]')).toHaveValue(
+    "Mê truyện tiên hiệp và ngôn tình.",
+  );
+});
+
+test("Auth forms return useful validation and credential errors", async ({ page }) => {
+  await page.goto("/dang-ky");
+  await page.getByLabel("Tên hiển thị").fill("Độc Giả");
+  await page.getByLabel("Email").fill(`mismatch-${Date.now()}@example.com`);
+  await page.locator('input[name="password"]').fill("RubyNoir2026!");
+  await page.getByLabel("Xác nhận mật khẩu").fill("RubyNoir2027!");
+  await page.getByRole("button", { name: "Đăng ký" }).click();
+  await expect(page).toHaveURL(/\/dang-ky\?error=/);
+  await expect(page.getByRole("status")).toContainText("Mật khẩu xác nhận chưa khớp");
+
+  await page.goto("/dang-nhap");
+  await page.getByLabel("Email").fill("unknown@example.com");
+  await page.getByLabel("Mật khẩu").fill("WrongPassword!");
+  await page.getByRole("button", { name: "Đăng nhập" }).click();
+  await expect(page).toHaveURL(/\/dang-nhap\?error=/);
+  await expect(page.getByRole("status")).toContainText("Email hoặc mật khẩu không đúng");
+});
+
+test("Anonymous users are asked to sign in before using the library", async ({
+  page,
+}) => {
+  await page.goto("/tu-truyen?tab=saved");
+  await expect(page).toHaveURL(/\/dang-nhap\?next=\/tu-truyen$/);
+
+  await page.goto("/truyen/van-co-than-de");
+  await page.getByRole("button", { name: "Thêm truyện vào tủ" }).first().click();
+  await expect(page).toHaveURL(
+    /\/dang-nhap\?next=%2Ftruyen%2Fvan-co-than-de$/,
+  );
+});
+
+test("Authenticated user can follow a story, view the library and remove it", async ({
+  page,
+}) => {
+  const uniqueId = Date.now();
+  const email = `library-${uniqueId}@example.com`;
+  const password = "RubyNoir2026!";
+
+  await page.goto("/dang-ky");
+  await page.getByLabel("Tên hiển thị").fill("Độc Giả Tủ Truyện");
+  await page.getByLabel("Email").fill(email);
+  await page.locator('input[name="password"]').fill(password);
+  await page.getByLabel("Xác nhận mật khẩu").fill(password);
+  await page.getByRole("button", { name: "Đăng ký" }).click();
+  await expect(page).toHaveURL(/\/tai-khoan\?created=1$/);
+
+  await page.goto("/truyen/van-co-than-de");
+  const followButton = page
+    .getByRole("button", { name: "Thêm truyện vào tủ" })
+    .first();
+  await expect(followButton).toHaveAttribute("aria-pressed", "false");
+  await followButton.click();
+  await expect(
+    page.getByRole("button", { name: "Bỏ truyện khỏi tủ" }).first(),
+  ).toHaveAttribute("aria-pressed", "true");
+
+  await page.goto("/tu-truyen?tab=saved");
+  await expect(
+    page.getByRole("heading", { name: "Tủ truyện", level: 1 }),
+  ).toBeVisible();
+  await expect(page.locator(".library-story-card")).toHaveCount(1);
+  await expect(page.locator(".library-story-card")).toContainText(
+    "Vạn Cổ Thần Đế",
+  );
+
+  for (const width of viewports) {
+    await page.setViewportSize({ width, height: 900 });
+    const hasOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth + 1,
+    );
+    expect(hasOverflow).toBe(false);
+  }
+
+  await page
+    .getByRole("button", { name: "Bỏ Vạn Cổ Thần Đế khỏi tủ truyện" })
+    .click();
+  await expect(page.locator(".library-story-card")).toHaveCount(0);
+  await expect(
+    page.getByRole("heading", {
+      name: "Tủ truyện đang chờ câu chuyện đầu tiên",
+      level: 2,
+    }),
+  ).toBeVisible();
+});
+
+test("Reader saves, restores and resumes authenticated reading progress", async ({
+  page,
+}) => {
+  const uniqueId = Date.now();
+  const email = `progress-${uniqueId}@example.com`;
+  const password = "RubyNoir2026!";
+
+  await page.goto("/dang-ky");
+  await page.getByLabel("Tên hiển thị").fill("Độc Giả Đang Đọc");
+  await page.getByLabel("Email").fill(email);
+  await page.locator('input[name="password"]').fill(password);
+  await page.getByLabel("Xác nhận mật khẩu").fill(password);
+  await page.getByRole("button", { name: "Đăng ký" }).click();
+  await expect(page).toHaveURL(/\/tai-khoan\?created=1$/);
+
+  await page.setViewportSize({ width: 1024, height: 360 });
+  await page.goto("/truyen/van-co-than-de/chuong-2680");
+  await expect(page.locator("#reader-title")).toContainText("Chương 2680");
+  await expect(page.locator("[data-reader-content]")).toContainText(
+    "Màn đêm phủ xuống Thần Uyên",
+  );
+  await expect(page.locator(".reader-progress-status")).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+
+  await expect
+    .poll(async () => {
+      const text =
+        (await page.locator(".reader-progress-status").textContent()) ?? "";
+      const percent = Number(text.match(/(\d+)%/)?.[1] ?? 0);
+      return percent;
+    })
+    .toBeGreaterThan(0);
+
+  const savedScrollY = await page.evaluate(() => window.scrollY);
+  expect(savedScrollY).toBeGreaterThan(200);
+
+  await page.reload();
+  await expect(page.locator(".reader-progress-status")).toBeVisible();
+  await expect
+    .poll(() => page.evaluate(() => window.scrollY))
+    .toBeGreaterThan(100);
+
+  await page.goto("/tu-truyen");
+  await expect(
+    page.getByRole("link", { name: /Đang đọc/ }).first(),
+  ).toHaveAttribute("aria-current", "page");
+  await expect(page.locator(".library-story-card")).toHaveCount(1);
+  await expect(page.locator(".library-story-card")).toContainText(
+    "Chương 2680",
+  );
+  await expect(
+    page.getByRole("progressbar", { name: /Đã đọc/ }),
+  ).toHaveAttribute("aria-valuenow", /[1-9]\d*/);
+
+  for (const width of viewports) {
+    await page.setViewportSize({ width, height: 900 });
+    const hasOverflow = await page.evaluate(
+      () => document.documentElement.scrollWidth > window.innerWidth + 1,
+    );
+    expect(hasOverflow).toBe(false);
+  }
+
+  await page.goto("/");
+  const libraryPayload =
+    (await page.locator("#user-library-data").textContent()) ?? "";
+  expect(libraryPayload).toContain("chuong-2680");
+  await expect(page.locator("[data-continue-list]")).toContainText(
+    "Chương 2680",
+  );
+
+  await page.goto("/truyen/van-co-than-de");
+  await page.locator(".story-actions [data-open-reader]").nth(1).click();
+  await expect(page).toHaveURL(
+    /\/truyen\/van-co-than-de\/chuong-2680$/,
+  );
 });
 
 test("Free Reader returns content while VIP Reader exposes metadata only", async ({

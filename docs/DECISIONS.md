@@ -174,3 +174,59 @@ Security consequences:
 - Payment/VIP entitlement khong nam trong migration dau.
 
 Full specification: `docs/BACKEND_SPEC.md`.
+
+## 2026-06-20: Email/Password Auth First
+
+Decision: Trien khai Supabase email/password Auth truoc, chua them social OAuth.
+
+Reason:
+
+- Day la default trong backend spec va du de mo khoa profile/bookmark/progress.
+- Giu pham vi Auth nho, de test RLS va session cookie end-to-end.
+
+Consequence:
+
+- Production co the bat email confirmation; app co `/auth/confirm` de verify token.
+- Google OAuth la task rieng neu can sau.
+
+## 2026-06-21: Bookmark Is The First User-Owned Data Slice
+
+Decision:
+
+- Trien khai theo doi/tủ truyện truoc reading progress va comments.
+- Bookmark mutation dung Server Action; personalized reads dung SSR client va owner-only RLS.
+- `/tu-truyen` la route protected rieng, khong tiep tuc dung homepage mock section lam source of truth.
+
+Reason:
+
+- Bookmark la vertical slice nho nhat de kiem tra day du Auth cookie, RLS, mutation va personalized UI.
+- Composite primary key `(user_id, story_id)` giup toggle idempotent va khong tao duplicate.
+- Route rieng de mo rong reading progress sau nay ma khong lam homepage thanh personalized monolith.
+
+Consequence:
+
+- Guest bam Theo doi duoc dua den login va quay lai Story Detail.
+- Homepage `Dang doc do` se duoc thay bang du lieu that trong B3.3; danh sach Da luu chinh thuc nam
+  tai `/tu-truyen`.
+
+## 2026-06-21: Reading Progress Uses An Internal Route Handler
+
+Decision:
+
+- Autosave Reader gui POST den `/api/reading-progress`.
+- Route Handler tai su dung server-side validation/upsert, Auth cookie va RLS.
+- Khong goi Server Action truc tiep tu progress tracker.
+
+Reason:
+
+- Public Reader hien van render noi dung bang legacy imperative `public/app.js`.
+- Server Action invocation tao RSC refresh va thay lai prototype DOM, trong khi imperative script
+  khong chay lai; ket qua la Reader quay ve markup mac dinh.
+- Route Handler cho background mutation ma khong thay component tree dang doc.
+
+Consequence:
+
+- Autosave khong gay layout/content reset.
+- Homepage va `/tu-truyen` la dynamic routes nen doc progress moi khi dieu huong; khong can refresh
+  Reader sau moi lan save.
+- Khi prototype shell duoc tach thanh React components hoan chinh, mutation co the duoc danh gia lai.
