@@ -576,6 +576,14 @@ Khi noi data that:
 
 Admin panel can auth guard truoc khi render UI.
 
+### Canonical admin entry
+
+- `/admin` la canonical admin entry cho MVP.
+- Khong tao secret/hidden admin slug de lam lop bao mat chinh.
+- Security khong duoc dua vao obscurity: attacker co the doan hoac scan duoc `/admin`.
+- Public UI khong can hien link `/admin` cho user thuong; admin co the truy cap truc tiep.
+- Neu sau nay doi admin path, thay doi do chi la routing/product decision, khong phai security control.
+
 MVP de xuat:
 
 - User phai dang nhap Supabase Auth.
@@ -583,6 +591,9 @@ MVP de xuat:
 - Admin allowlist nam trong server-only env, vi du `ADMIN_EMAILS`.
 - Khong dung `raw_user_meta_data`.
 - Khong tin bat ky flag admin nao tu browser.
+- Guest vao `/admin` bi redirect ve dang nhap hoac tra 404.
+- Authenticated non-admin vao `/admin` nen tra 404 trong MVP de giam lo admin surface.
+- Moi Server Action/Route Handler admin phai re-check admin authorization, khong chi dua vao layout guard.
 
 Future:
 
@@ -600,6 +611,7 @@ Trust boundaries:
 
 Rules:
 
+- `/admin` la public-guessable URL; moi request toi admin surface phai duoc authorize server-side.
 - `src/lib/supabase/admin.ts` chi duoc import trong server-only modules.
 - Khong grant browser write vao `stories`, `chapters`, `chapter_contents`.
 - Moi mutation input validate bang Zod.
@@ -644,6 +656,7 @@ src/app/admin/
 ```
 
 Route co the duoc tao dan. Chua can tao tat ca trong task dau tien; nhung sidebar label/slug phai on dinh.
+`/admin` la entry path on dinh cua admin panel; khong tao parallel hidden route cho cung mot admin surface.
 
 ## 12. Module boundaries
 
@@ -716,6 +729,8 @@ Khong dung spinner tron generic cho dashboard content.
 - UI copy tieng Viet co dau.
 - Dashboard khong de text overlap o 320, 768, 1024, 1440.
 - Admin route bi chan voi guest.
+- `/admin` la canonical admin entry va khong duoc coi la security-by-obscurity.
+- Guest/non-admin bi chan bang server-side authorization, khong chi an link tren UI.
 - Admin shell khong import secret client vao client bundle.
 - Dashboard static/mock co day du 5 KPI va 6 panels.
 - Dashboard data contract typed, khong truyen raw Supabase rows vao UI.
