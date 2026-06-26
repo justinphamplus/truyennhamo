@@ -1,6 +1,7 @@
 import { getPrototypeMarkup, type PrototypePage } from "@/lib/prototype-markup";
 import { getCurrentProfile } from "@/lib/auth/current-user";
 import { BookmarkControls } from "@/components/library/bookmark-controls";
+import { CommentControls } from "@/components/comments/comment-controls";
 import { ReadingProgressTracker } from "@/components/reader/reading-progress-tracker";
 import type { HomepageCatalog } from "@/lib/queries/homepage";
 import {
@@ -111,6 +112,14 @@ export async function PrototypeShell({
           storyId={storyDetail.story.id}
           storySlug={storyDetail.story.slug}
           initialBookmarked={bookmarked}
+          authenticated={Boolean(profile)}
+        />
+      ) : null}
+      {storyDetail ? (
+        <CommentControls
+          storyId={storyDetail.story.id}
+          storySlug={storyDetail.story.slug}
+          initialComments={storyDetail.comments}
           authenticated={Boolean(profile)}
         />
       ) : null}

@@ -103,9 +103,13 @@ Phase B1 completed 2026-06-19:
     composite FK dam bao chapter thuoc story va index cho reading history. Reader Free debounce
     autosave/restore; Story/Home/`/tu-truyen` deu co luong Doc tiep dung chapter da luu.
 
-- [ ] B3.4 Add comments
+- [x] B3.4 Add comments
   - Acceptance: read public comments; authenticated create/edit/delete own comment.
   - Verify: body validation and cross-user RLS tests pass.
+  - Completed: 2026-06-26. `public.comments` co constraints, indexes, explicit grants va RLS;
+    Story Detail doc comment that, user dang nhap co the tao/sua/xoa comment cua chinh minh qua
+    Server Actions. Local Supabase reset, SQL RLS tests, generated DB types, TypeScript, ESLint,
+    production build va Playwright comment flow pass.
 
 ## Phase B4: Admin And Production Hardening
 

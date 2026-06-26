@@ -421,6 +421,29 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
   - 45 Playwright tests pass, gom save -> reload restore -> library/home -> Story resume.
   - Reading library pass khong overflow tai 320/768/1024/1440.
 
+## Supabase Comments 2026-06-26
+
+- Them `public.comments` voi story/chapter/parent FK, soft-delete status, body length check,
+  like counter check va indexes cho story/chapter/user/parent access patterns.
+- Bat RLS va explicit grant: anon/authenticated doc comment `visible` tren published story;
+  authenticated insert own comment tren published story/chapter; update/delete own comment.
+- Seed 3 comment mau cho `van-co-than-de`.
+- Story Detail query 20 comment moi nhat va profile display name, render vao payload Supabase.
+- Them Server Actions `createCommentAction`, `updateOwnCommentAction`, `deleteOwnCommentAction`
+  voi Zod validation, session user check, owner/status filters va revalidate canonical story route.
+- Them `CommentControls` client component portal vao form/list prototype de tao/sua/xoa comment that
+  ma khong rewrite shell hien tai.
+- Them Playwright coverage cho luong signup -> comment -> edit -> delete.
+- Verification:
+  - `npm run supabase:start` started local Supabase tren Docker Desktop.
+  - `npm run db:reset` pass va apply migration `20260626044535_add_comments.sql`.
+  - `npm run db:test` pass cho public visible comments, own create/update/soft-delete, draft-story
+    block, cross-user block va cross-story chapter block.
+  - Supabase security va performance advisors local: no issues.
+  - `npm run db:types` pass va generated lai `src/types/database.ts` tu local schema.
+  - `npx tsc --noEmit`, `npm run lint` va `npm run build` pass.
+  - Full Playwright suite pass: 46/46, gom signup -> comment -> edit -> delete.
+
 ## Decision Log Shortcut
 
 Full decisions live in `DECISIONS.md`.

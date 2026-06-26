@@ -315,6 +315,41 @@ test("Anonymous users are asked to sign in before using the library", async ({
   );
 });
 
+test("Authenticated user can create, edit and delete an own story comment", async ({
+  page,
+}) => {
+  const uniqueId = Date.now();
+  const email = `comments-${uniqueId}@example.com`;
+  const password = "RubyNoir2026!";
+  const firstBody = `Binh luan E2E ${uniqueId}`;
+  const editedBody = `Binh luan da sua ${uniqueId}`;
+
+  await page.goto("/dang-ky");
+  await page.locator('input[name="displayName"]').fill("Doc Gia Binh Luan");
+  await page.locator('input[name="email"]').fill(email);
+  await page.locator('input[name="password"]').fill(password);
+  await page.locator('input[name="confirmPassword"]').fill(password);
+  await page.locator('.auth-form button[type="submit"]').click();
+  await expect(page).toHaveURL(/\/tai-khoan\?created=1$/);
+
+  await page.goto("/truyen/van-co-than-de");
+  await expect(page.locator("[data-comment-list] .comment").first()).toBeVisible();
+  expect(await page.locator("[data-comment-list] .comment").count()).toBeGreaterThanOrEqual(3);
+  await page.locator("#comment-input").fill(firstBody);
+  await page.locator(".comment-form button").click();
+  await expect(page.locator("[data-comment-list]")).toContainText(firstBody);
+  await expect(page.getByRole("button", { name: "Sửa" }).first()).toBeVisible();
+
+  await page.getByRole("button", { name: "Sửa" }).first().click();
+  await page.getByLabel("Sửa bình luận").fill(editedBody);
+  await page.getByRole("button", { name: "Lưu" }).click();
+  await expect(page.locator("[data-comment-list]")).toContainText(editedBody);
+  await expect(page.locator("[data-comment-list]")).not.toContainText(firstBody);
+
+  await page.getByRole("button", { name: "Xóa" }).first().click();
+  await expect(page.locator("[data-comment-list]")).not.toContainText(editedBody);
+});
+
 test("Authenticated user can follow a story, view the library and remove it", async ({
   page,
 }) => {

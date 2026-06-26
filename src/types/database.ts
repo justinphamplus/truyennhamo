@@ -150,6 +150,67 @@ export type Database = {
           },
         ]
       }
+      comments: {
+        Row: {
+          body: string
+          chapter_id: number | null
+          created_at: string
+          id: number
+          like_count: number
+          parent_id: number | null
+          status: string
+          story_id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          chapter_id?: number | null
+          created_at?: string
+          id?: never
+          like_count?: number
+          parent_id?: number | null
+          status?: string
+          story_id: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          chapter_id?: number | null
+          created_at?: string
+          id?: never
+          like_count?: number
+          parent_id?: number | null
+          status?: string
+          story_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_story_chapter_fkey"
+            columns: ["story_id", "chapter_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["story_id", "id"]
+          },
+          {
+            foreignKeyName: "comments_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       genres: {
         Row: {
           description: string | null

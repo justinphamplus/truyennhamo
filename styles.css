@@ -2902,6 +2902,23 @@ h3 {
   color: var(--text-soft);
 }
 
+.comment-edit-form {
+  display: grid;
+  gap: 0.55rem;
+  margin-top: 0.35rem;
+}
+
+.comment-edit-form textarea {
+  min-height: 5rem;
+  resize: vertical;
+}
+
+.comment-actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
 .comment-meta {
   display: inline-flex;
   align-items: center;

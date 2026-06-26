@@ -684,13 +684,22 @@ function renderChapterPagination() {
 }
 
 function renderComments() {
-  $("[data-comment-list]").innerHTML = comments.map(([name, text, time]) => `
+  const sourceComments = storyDetail?.comments?.length
+    ? storyDetail.comments.map((comment) => [
+        comment.authorName,
+        comment.body,
+        comment.relativeTime,
+        comment.createdAt,
+      ])
+    : comments;
+
+  $("[data-comment-list]").innerHTML = sourceComments.map(([name, text, time, dateTime]) => `
     <article class="comment">
-      <span class="avatar">${name.slice(0, 1)}</span>
+      <span class="avatar">${escapeHtml(name.slice(0, 1))}</span>
       <div class="comment-body">
-        <strong>${name}</strong>
-        <p>${text}</p>
-        <span class="comment-meta"><time>${time}</time><span aria-hidden="true">·</span><button class="text-button" type="button">Phản hồi</button></span>
+        <strong>${escapeHtml(name)}</strong>
+        <p>${escapeHtml(text)}</p>
+        <span class="comment-meta"><time${dateTime ? ` datetime="${escapeHtml(dateTime)}"` : ""}>${escapeHtml(time)}</time><span aria-hidden="true">·</span><button class="text-button" type="button">Phản hồi</button></span>
       </div>
     </article>
   `).join("");

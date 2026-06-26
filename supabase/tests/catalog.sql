@@ -30,11 +30,12 @@ begin
       'stories',
       'story_genres',
       'chapters',
-      'chapter_contents'
+      'chapter_contents',
+      'comments'
     )
     and pg_class.relrowsecurity;
-  if rls_table_count <> 6 then
-    raise exception 'Expected RLS on 6 catalog tables, found %', rls_table_count;
+  if rls_table_count <> 7 then
+    raise exception 'Expected RLS on 7 catalog tables, found %', rls_table_count;
   end if;
 
   select count(*) into expected_index_count
@@ -49,10 +50,14 @@ begin
       'story_genres_genre_story_idx',
       'story_genres_one_primary_idx',
       'chapters_published_number_idx',
-      'chapters_story_published_at_idx'
+      'chapters_story_published_at_idx',
+      'comments_visible_story_created_idx',
+      'comments_visible_chapter_created_idx',
+      'comments_user_created_at_idx',
+      'comments_parent_id_idx'
     );
-  if expected_index_count <> 9 then
-    raise exception 'Expected 9 catalog indexes, found %', expected_index_count;
+  if expected_index_count <> 13 then
+    raise exception 'Expected 13 catalog indexes, found %', expected_index_count;
   end if;
 end
 $$;
@@ -68,6 +73,8 @@ declare
   vip_metadata_count integer;
   free_content_count integer;
   author_search_count integer;
+  visible_comment_count integer;
+  draft_comment_count integer;
 begin
   select count(*) into visible_story_count from public.stories;
   if visible_story_count <> 9 then
@@ -102,6 +109,22 @@ begin
   where chapters.access_level = 'free';
   if free_content_count < 1 then
     raise exception 'Anon cannot read published free chapter content';
+  end if;
+
+  select count(*) into visible_comment_count
+  from public.comments
+  join public.stories on stories.id = comments.story_id
+  where stories.slug = 'van-co-than-de';
+  if visible_comment_count <> 3 then
+    raise exception 'Anon expected 3 visible comments, found %', visible_comment_count;
+  end if;
+
+  select count(*) into draft_comment_count
+  from public.comments
+  join public.stories on stories.id = comments.story_id
+  where stories.slug = 'ban-thao-chua-cong-bo';
+  if draft_comment_count <> 0 then
+    raise exception 'Anon can read comments on draft stories';
   end if;
 
   select count(*) into author_search_count
@@ -219,6 +242,7 @@ declare
   draft_story_id bigint;
   published_chapter_id bigint;
   other_story_chapter_id bigint;
+  comment_id bigint;
 begin
   select id into published_story_id
   from public.stories
@@ -346,6 +370,97 @@ begin
       and story_id = published_story_id;
     raise exception 'Reading progress accepted a chapter from another story';
   exception
+    when insufficient_privilege then
+      null;
+    when foreign_key_violation then
+      null;
+  end;
+
+  insert into public.comments (user_id, story_id, chapter_id, body)
+  values (
+    '00000000-0000-0000-0000-000000000001',
+    published_story_id,
+    published_chapter_id,
+    'BÃ¬nh luáº­n kiá»ƒm thá»­ RLS'
+  )
+  returning id into comment_id;
+
+  if not exists (
+    select 1
+    from public.comments
+    where id = comment_id
+      and body = 'BÃ¬nh luáº­n kiá»ƒm thá»­ RLS'
+  ) then
+    raise exception 'Authenticated user could not read own visible comment';
+  end if;
+
+  update public.comments
+  set body = 'BÃ¬nh luáº­n Ä‘Ã£ sá»­a',
+      updated_at = now()
+  where id = comment_id;
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Authenticated user could not update own comment';
+  end if;
+
+  update public.comments
+  set status = 'deleted',
+      updated_at = now()
+  where id = comment_id;
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Authenticated user could not soft delete own comment';
+  end if;
+
+  if exists (
+    select 1
+    from public.comments
+    where id = comment_id
+      and status = 'visible'
+  ) then
+    raise exception 'Soft-deleted comment remained visible in visible comment list';
+  end if;
+
+  begin
+    insert into public.comments (user_id, story_id, body)
+    values (
+      '00000000-0000-0000-0000-000000000002',
+      published_story_id,
+      'BÃ¬nh luáº­n sai chá»§ sá»Ÿ há»¯u'
+    );
+    raise exception 'Authenticated user inserted a comment for another user';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    insert into public.comments (user_id, story_id, body)
+    values (
+      '00000000-0000-0000-0000-000000000001',
+      draft_story_id,
+      'BÃ¬nh luáº­n truyá»‡n draft'
+    );
+    raise exception 'Authenticated user commented on a draft story';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    insert into public.comments (user_id, story_id, chapter_id, body)
+    values (
+      '00000000-0000-0000-0000-000000000001',
+      published_story_id,
+      other_story_chapter_id,
+      'BÃ¬nh luáº­n sai chÆ°Æ¡ng'
+    );
+    raise exception 'Comment accepted a chapter from another story';
+  exception
+    when insufficient_privilege then
+      null;
     when foreign_key_violation then
       null;
   end;
@@ -369,6 +484,13 @@ begin
 
   if exists (select 1 from public.reading_progress) then
     raise exception 'Authenticated user can read another user reading progress';
+  end if;
+
+  update public.comments
+  set body = 'KhÃ´ng Ä‘Æ°á»£c sá»­a'
+  where user_id = '00000000-0000-0000-0000-000000000001';
+  if found then
+    raise exception 'Authenticated user updated another user comment';
   end if;
 end
 $$;
