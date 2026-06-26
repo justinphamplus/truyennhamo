@@ -1,0 +1,169 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+  <title id="title">Admin Visual 01 Ruby Noir Dashboard V2</title>
+  <desc id="desc">Full Ruby Noir admin dashboard redesigned from the provided admin-dashboard reference.</desc>
+  <defs>
+    <radialGradient id="bg" cx="70%" cy="0%" r="80%">
+      <stop offset="0" stop-color="#43203A" stop-opacity=".58"/>
+      <stop offset=".42" stop-color="#171119"/>
+      <stop offset="1" stop-color="#090B11"/>
+    </radialGradient>
+    <linearGradient id="navActive" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#7B2FE8"/>
+      <stop offset="1" stop-color="#D94A64"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1D1B27"/>
+      <stop offset="1" stop-color="#111620"/>
+    </linearGradient>
+    <linearGradient id="violet" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9D4DF5"/>
+      <stop offset="1" stop-color="#622AE4"/>
+    </linearGradient>
+    <linearGradient id="ruby" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#F05D83"/>
+      <stop offset="1" stop-color="#A12A46"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFB23D"/>
+      <stop offset="1" stop-color="#E45D36"/>
+    </linearGradient>
+    <linearGradient id="green" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#51D392"/>
+      <stop offset="1" stop-color="#209B65"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#020308" flood-opacity=".42"/>
+    </filter>
+    <style>
+      .title{font:800 24px Arial,sans-serif;fill:#FFF7FA}
+      .h1{font:800 22px Arial,sans-serif;fill:#FFF7FA}
+      .h2{font:800 15px Arial,sans-serif;fill:#FFF7FA}
+      .body{font:600 13px Arial,sans-serif;fill:#E8E0E6}
+      .small{font:500 11px Arial,sans-serif;fill:#A79BA5}
+      .tiny{font:500 10px Arial,sans-serif;fill:#7E7480}
+      .metric{font:800 25px Arial,sans-serif;fill:#FFF7FA}
+      .mono{font:700 11px "Courier New",monospace;fill:#EEDFE7}
+      .card{fill:url(#panel);stroke:#302A3C;stroke-width:1}
+      .inner{fill:#141823;stroke:#2A2634;stroke-width:1}
+      .grid{stroke:#2A2634;stroke-width:1;opacity:.8}
+      .line{stroke:#302A3C;stroke-width:1}
+      .ok{fill:#46C885}
+      .pink{fill:#D94A64}
+      .purple{fill:#8A36F2}
+      .blue{fill:#3D9BE9}
+      .amber{fill:#FFB23D}
+    </style>
+  </defs>
+
+  <rect width="1440" height="960" fill="url(#bg)"/>
+  <rect x="0" y="0" width="242" height="960" fill="#0C0E15" opacity=".92" stroke="#292333"/>
+  <rect x="242" y="0" width="1198" height="66" fill="#0B0D14" opacity=".72" stroke="#292333"/>
+
+  <g id="brand">
+    <rect x="24" y="20" width="18" height="24" rx="4" fill="#8A36F2"/>
+    <rect x="45" y="18" width="18" height="28" rx="4" fill="#D94A64"/>
+    <text x="74" y="41" font-family="Arial" font-size="17" font-weight="800" fill="#FFF7FA">TruyenNhaMo</text>
+    <text x="207" y="39" class="small">☰</text>
+  </g>
+
+  <g id="sidebar">
+    <rect x="16" y="74" width="210" height="36" rx="8" fill="url(#navActive)" filter="url(#shadow)"/>
+    <text x="34" y="97" class="body">⌂  Tong quan</text><text x="208" y="97" class="small">›</text>
+    <text x="24" y="145" class="tiny">QUAN LY NOI DUNG</text>
+    <text x="30" y="180" class="small">▱  Truyen</text><text x="210" y="180" class="small">›</text>
+    <text x="30" y="214" class="small">☷  Chuong truyen</text><text x="210" y="214" class="small">›</text>
+    <text x="30" y="248" class="small">◇  The loai</text><text x="210" y="248" class="small">›</text>
+    <text x="30" y="282" class="small">✎  Tac gia</text><text x="210" y="282" class="small">›</text>
+    <text x="30" y="316" class="small">#  Tags</text><text x="210" y="316" class="small">›</text>
+    <text x="30" y="350" class="small">○  Binh luan</text><text x="210" y="350" class="small">›</text>
+    <text x="30" y="384" class="small">▣  Bao cao</text><text x="210" y="384" class="small">›</text>
+    <text x="24" y="430" class="tiny">QUAN LY NGUOI DUNG</text>
+    <text x="30" y="466" class="small">♙  Nguoi dung</text><text x="210" y="466" class="small">›</text>
+    <text x="30" y="500" class="small">♜  Vai tro va Phan quyen</text><text x="210" y="500" class="small">›</text>
+    <text x="24" y="546" class="tiny">QUAN LY DOANH THU</text>
+    <text x="30" y="582" class="small">◎  Giao dich</text><text x="210" y="582" class="small">›</text>
+    <text x="30" y="616" class="small">▧  Goi nap</text><text x="210" y="616" class="small">›</text>
+    <text x="30" y="650" class="small">▭  Rut tien</text><text x="210" y="650" class="small">›</text>
+    <text x="30" y="684" class="small">▥  Thong ke doanh thu</text><text x="210" y="684" class="small">›</text>
+    <text x="24" y="730" class="tiny">CAU HINH HE THONG</text>
+    <text x="30" y="766" class="small">⚙  Cai dat</text><text x="210" y="766" class="small">›</text>
+    <text x="30" y="800" class="small">◌  Thong bao</text><text x="210" y="800" class="small">›</text>
+    <text x="30" y="834" class="small">◷  Nhat ky hoat dong</text><text x="210" y="834" class="small">›</text>
+    <rect x="20" y="888" width="202" height="42" rx="8" fill="#101520" stroke="#332C3E"/>
+    <text x="44" y="914" class="small">◎  Truy cap trang web</text><text x="204" y="914" class="small">→</text>
+  </g>
+
+  <text x="266" y="40" class="title">Dashboard</text>
+  <rect x="800" y="14" width="270" height="38" rx="10" fill="#111522" stroke="#352D42"/>
+  <circle cx="821" cy="33" r="6" fill="none" stroke="#A79BA5"/>
+  <line x1="826" y1="38" x2="832" y2="44" stroke="#A79BA5"/>
+  <text x="846" y="37" class="small">Tim kiem truyen, nguoi dung...</text>
+  <rect x="1026" y="20" width="36" height="24" rx="7" fill="#181C28" stroke="#3B3342"/>
+  <text x="1034" y="36" class="tiny">Ctrl K</text>
+  <circle cx="1192" cy="33" r="14" fill="#181C28" stroke="#3B3342"/><text x="1187" y="38" class="small" fill="#FFD465">◐</text>
+  <circle cx="1236" cy="33" r="14" fill="#181C28" stroke="#3B3342"/><text x="1231" y="38" class="small">!</text>
+  <circle cx="1288" cy="33" r="18" fill="#D94A64"/>
+  <text x="1318" y="29" class="body">Admin</text><text x="1318" y="45" class="tiny">Super Admin</text><text x="1394" y="38" class="small">⌄</text>
+
+  <text x="266" y="101" class="h1">Tong quan</text>
+  <text x="266" y="124" class="small">Thong ke tong quan he thong</text>
+  <rect x="1228" y="90" width="190" height="34" rx="8" fill="#151925" stroke="#383141"/>
+  <text x="1244" y="112" class="small">01/05/2024 - 31/05/2024</text><text x="1392" y="112" class="small">▣</text>
+
+  <g id="metrics" filter="url(#shadow)">
+    <rect x="266" y="146" width="222" height="94" rx="10" class="card"/><circle cx="306" cy="194" r="24" fill="url(#violet)"/><text x="298" y="203" font-family="Arial" font-size="22" fill="#FFF7FA">▰</text><text x="340" y="174" class="small">Tong truyen</text><text x="340" y="204" class="metric">12,568</text><text x="340" y="224" class="tiny" fill="#46C885">↑ 12.5% so voi thang truoc</text>
+    <rect x="500" y="146" width="222" height="94" rx="10" class="card"/><circle cx="540" cy="194" r="24" fill="#2F63E7"/><text x="532" y="203" font-family="Arial" font-size="22" fill="#FFF7FA">●</text><text x="574" y="174" class="small">Tong nguoi dung</text><text x="574" y="204" class="metric">125,689</text><text x="574" y="224" class="tiny" fill="#46C885">↑ 18.7% so voi thang truoc</text>
+    <rect x="734" y="146" width="222" height="94" rx="10" class="card"/><circle cx="774" cy="194" r="24" fill="url(#ruby)"/><text x="765" y="202" font-family="Arial" font-size="22" fill="#FFF7FA">◉</text><text x="808" y="174" class="small">Luot doc</text><text x="808" y="204" class="metric">8.45M</text><text x="808" y="224" class="tiny" fill="#46C885">↑ 15.3% so voi thang truoc</text>
+    <rect x="968" y="146" width="222" height="94" rx="10" class="card"/><circle cx="1008" cy="194" r="24" fill="url(#gold)"/><text x="1001" y="203" font-family="Arial" font-size="22" fill="#FFF7FA">$</text><text x="1042" y="174" class="small">Doanh thu</text><text x="1042" y="204" class="metric">2.45B</text><text x="1112" y="204" class="body">VNĐ</text><text x="1042" y="224" class="tiny" fill="#46C885">↑ 22.1% so voi thang truoc</text>
+    <rect x="1202" y="146" width="216" height="94" rx="10" class="card"/><circle cx="1242" cy="194" r="24" fill="url(#green)"/><text x="1233" y="203" font-family="Arial" font-size="22" fill="#FFF7FA">▤</text><text x="1276" y="174" class="small">Giao dich</text><text x="1276" y="204" class="metric">15,268</text><text x="1276" y="224" class="tiny" fill="#46C885">↑ 17.8% so voi thang truoc</text>
+  </g>
+
+  <rect x="266" y="258" width="462" height="310" rx="12" class="card" filter="url(#shadow)"/>
+  <text x="284" y="291" class="h2">Luot doc trong 7 ngay qua</text>
+  <rect x="620" y="274" width="88" height="28" rx="7" fill="#151925" stroke="#383141"/><text x="634" y="292" class="tiny">7 ngay qua</text><text x="694" y="292" class="tiny">⌄</text>
+  <line x1="316" y1="500" x2="696" y2="500" class="grid"/><line x1="316" y1="455" x2="696" y2="455" class="grid"/><line x1="316" y1="410" x2="696" y2="410" class="grid"/><line x1="316" y1="365" x2="696" y2="365" class="grid"/>
+  <text x="284" y="504" class="tiny">0</text><text x="280" y="459" class="tiny">50K</text><text x="274" y="414" class="tiny">100K</text><text x="274" y="369" class="tiny">150K</text>
+  <path d="M316 458 C350 450,372 438,398 420 S458 380,502 402 S552 354,580 324 S633 382,658 400 S684 430,696 426" fill="none" stroke="#9D4DF5" stroke-width="2"/>
+  <path d="M316 458 C350 450,372 438,398 420 S458 380,502 402 S552 354,580 324 S633 382,658 400 S684 430,696 426 L696 500 L316 500 Z" fill="#8A36F2" opacity=".18"/>
+  <circle cx="316" cy="458" r="4" fill="#D86DFF"/><circle cx="398" cy="420" r="4" fill="#D86DFF"/><circle cx="462" cy="384" r="4" fill="#D86DFF"/><circle cx="524" cy="388" r="4" fill="#D86DFF"/><circle cx="580" cy="324" r="4" fill="#D86DFF"/><circle cx="644" cy="384" r="4" fill="#D86DFF"/><circle cx="696" cy="426" r="4" fill="#D86DFF"/>
+  <text x="300" y="524" class="tiny">25/05</text><text x="365" y="524" class="tiny">26/05</text><text x="430" y="524" class="tiny">27/05</text><text x="495" y="524" class="tiny">28/05</text><text x="560" y="524" class="tiny">29/05</text><text x="625" y="524" class="tiny">30/05</text><text x="680" y="524" class="tiny">31/05</text>
+
+  <rect x="740" y="258" width="326" height="310" rx="12" class="card" filter="url(#shadow)"/>
+  <text x="758" y="291" class="h2">Top truyen duoc doc nhieu</text><text x="1002" y="291" class="tiny" fill="#C58AFF">Xem tat ca</text>
+  <text x="764" y="340" class="small">1</text><rect x="786" y="316" width="34" height="46" rx="6" fill="#5F3CC8"/><text x="832" y="335" class="body">Van Co Than De</text><text x="832" y="355" class="tiny">Tien Hiep, Huyen Huyen</text><text x="1010" y="345" class="body">2.12M</text><line x1="758" y1="376" x2="1048" y2="376" class="line"/>
+  <text x="764" y="405" class="small">2</text><rect x="786" y="382" width="34" height="46" rx="6" fill="#7A2F29"/><text x="832" y="401" class="body">Dau Pha Thuong Khung</text><text x="832" y="421" class="tiny">Huyen Huyen</text><text x="1010" y="411" class="body">1.56M</text><line x1="758" y1="442" x2="1048" y2="442" class="line"/>
+  <text x="764" y="471" class="small">3</text><rect x="786" y="448" width="34" height="46" rx="6" fill="#315A7B"/><text x="832" y="467" class="body">Than An Vuong Toa</text><text x="832" y="487" class="tiny">Huyen Huyen</text><text x="1010" y="477" class="body">1.23M</text><line x1="758" y1="508" x2="1048" y2="508" class="line"/>
+  <text x="764" y="537" class="small">4</text><rect x="786" y="514" width="34" height="40" rx="6" fill="#A0522D"/><text x="832" y="533" class="body">Nhat Niem Vinh Hang</text><text x="1010" y="539" class="body">1.02M</text>
+
+  <rect x="1078" y="258" width="340" height="310" rx="12" class="card" filter="url(#shadow)"/>
+  <text x="1096" y="291" class="h2">Ty le truyen theo the loai</text><text x="1354" y="291" class="tiny" fill="#C58AFF">Chi tiet</text>
+  <circle cx="1190" cy="415" r="78" fill="none" stroke="#622AE4" stroke-width="34"/><path d="M1190 337 A78 78 0 0 1 1261 383" fill="none" stroke="#8A36F2" stroke-width="34"/><path d="M1261 383 A78 78 0 0 1 1230 482" fill="none" stroke="#D94A64" stroke-width="34"/><path d="M1230 482 A78 78 0 0 1 1137 472" fill="none" stroke="#3D9BE9" stroke-width="34"/><path d="M1137 472 A78 78 0 0 1 1115 388" fill="none" stroke="#E45D36" stroke-width="34"/><path d="M1115 388 A78 78 0 0 1 1190 337" fill="none" stroke="#46C885" stroke-width="34"/>
+  <circle cx="1190" cy="415" r="45" fill="#151925"/><text x="1166" y="410" class="metric">12,568</text><text x="1165" y="431" class="tiny">Tong truyen</text>
+  <circle cx="1300" cy="354" r="4" fill="#8A36F2"/><text x="1312" y="358" class="tiny">Tien Hiep 35.6%</text><circle cx="1300" cy="384" r="4" fill="#622AE4"/><text x="1312" y="388" class="tiny">Huyen Huyen 24.8%</text><circle cx="1300" cy="414" r="4" fill="#FFB23D"/><text x="1312" y="418" class="tiny">Do Thi 15.2%</text><circle cx="1300" cy="444" r="4" fill="#3D9BE9"/><text x="1312" y="448" class="tiny">Lich Su 8.7%</text><circle cx="1300" cy="474" r="4" fill="#46C885"/><text x="1312" y="478" class="tiny">Khac 15.7%</text>
+
+  <rect x="266" y="582" width="462" height="304" rx="12" class="card" filter="url(#shadow)"/>
+  <text x="284" y="615" class="h2">Truyen moi cap nhat</text><text x="654" y="615" class="tiny" fill="#C58AFF">Xem tat ca</text>
+  <rect x="284" y="637" width="426" height="30" rx="6" fill="#121620"/><text x="302" y="656" class="tiny">#</text><text x="336" y="656" class="tiny">Truyen</text><text x="482" y="656" class="tiny">Tac gia</text><text x="588" y="656" class="tiny">Chuong moi</text><text x="672" y="656" class="tiny">Thoi gian</text>
+  <text x="302" y="700" class="tiny">1</text><rect x="334" y="676" width="30" height="40" rx="5" fill="#6043B6"/><text x="374" y="696" class="body">Ta Co Mot Toa</text><text x="374" y="712" class="body">Luyen Yeu Tri</text><text x="482" y="704" class="tiny">Tieu Thuy</text><text x="588" y="704" class="tiny">Ch.1286</text><text x="672" y="704" class="tiny">2 gio</text><line x1="284" y1="730" x2="710" y2="730" class="line"/>
+  <text x="302" y="762" class="tiny">2</text><rect x="334" y="738" width="30" height="40" rx="5" fill="#365A7C"/><text x="374" y="762" class="body">De Ton</text><text x="482" y="762" class="tiny">Mong Nhap</text><text x="588" y="762" class="tiny">Ch.954</text><text x="672" y="762" class="tiny">5 gio</text><line x1="284" y1="792" x2="710" y2="792" class="line"/>
+  <text x="302" y="824" class="tiny">3</text><rect x="334" y="800" width="30" height="40" rx="5" fill="#B05F72"/><text x="374" y="824" class="body">Toan Chuc</text><text x="482" y="824" class="tiny">Loan</text><text x="588" y="824" class="tiny">Ch.1189</text><text x="672" y="824" class="tiny">8 gio</text>
+
+  <rect x="740" y="582" width="288" height="304" rx="12" class="card" filter="url(#shadow)"/>
+  <text x="758" y="615" class="h2">Hoat dong nguoi dung</text><text x="972" y="615" class="tiny" fill="#C58AFF">Xem tat ca</text>
+  <rect x="758" y="642" width="28" height="28" rx="8" fill="#241949"/><text x="797" y="655" class="tiny"><tspan font-weight="700" fill="#E8E0E6">user_10432</tspan> da binh luan</text><text x="797" y="673" class="tiny" fill="#C58AFF">Van Co Than De</text><line x1="758" y1="696" x2="1010" y2="696" class="line"/>
+  <rect x="758" y="712" width="28" height="28" rx="8" fill="#37143A"/><text x="797" y="725" class="tiny"><tspan font-weight="700" fill="#E8E0E6">user_20567</tspan> da theo doi tac gia</text><text x="797" y="743" class="tiny">Phi Thien Ngu</text><line x1="758" y1="766" x2="1010" y2="766" class="line"/>
+  <rect x="758" y="782" width="28" height="28" rx="8" fill="#442F10"/><text x="797" y="795" class="tiny"><tspan font-weight="700" fill="#E8E0E6">user_30988</tspan> danh gia 5 sao</text><text x="797" y="813" class="tiny" fill="#C58AFF">Dau Pha Thuong Khung</text><line x1="758" y1="836" x2="1010" y2="836" class="line"/>
+  <rect x="758" y="852" width="28" height="28" rx="8" fill="#3D102A"/><text x="797" y="865" class="tiny"><tspan font-weight="700" fill="#E8E0E6">user_51234</tspan> dang truyen moi</text>
+
+  <rect x="1040" y="582" width="378" height="304" rx="12" class="card" filter="url(#shadow)"/>
+  <text x="1058" y="615" class="h2">Thong ke doanh thu</text><rect x="1308" y="598" width="88" height="28" rx="7" fill="#151925" stroke="#383141"/><text x="1322" y="616" class="tiny">7 ngay qua</text><text x="1390" y="616" class="tiny">⌄</text>
+  <text x="1058" y="660" class="metric">785.45M</text><text x="1154" y="660" class="body">VNĐ</text><text x="1058" y="682" class="tiny" fill="#46C885">↑ 20.4% so voi 7 ngay truoc</text>
+  <line x1="1090" y1="830" x2="1390" y2="830" class="grid"/><line x1="1090" y1="790" x2="1390" y2="790" class="grid"/><line x1="1090" y1="750" x2="1390" y2="750" class="grid"/>
+  <rect x="1092" y="770" width="28" height="60" rx="4" fill="url(#violet)"/><rect x="1138" y="764" width="28" height="66" rx="4" fill="url(#violet)"/><rect x="1184" y="734" width="28" height="96" rx="4" fill="url(#violet)"/><rect x="1230" y="752" width="28" height="78" rx="4" fill="url(#violet)"/><rect x="1276" y="694" width="28" height="136" rx="4" fill="url(#violet)"/><rect x="1322" y="744" width="28" height="86" rx="4" fill="url(#violet)"/><rect x="1368" y="738" width="28" height="92" rx="4" fill="url(#violet)"/>
+  <text x="1088" y="858" class="tiny">25/05</text><text x="1178" y="858" class="tiny">27/05</text><text x="1270" y="858" class="tiny">29/05</text><text x="1360" y="858" class="tiny">31/05</text>
+
+  <line x1="0" y1="920" x2="1440" y2="920" stroke="#292333"/>
+  <text x="30" y="945" class="tiny">© 2024 TruyenNhaMo Admin. All rights reserved.</text>
+  <circle cx="1326" cy="942" r="4" fill="#23C383"/>
+  <text x="1340" y="945" class="tiny">Phien ban 1.0.0</text>
+</svg>

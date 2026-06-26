@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+  <title id="title">Admin Visual 03 Command Center</title>
+  <desc id="desc">High-density moderation and production command center for comments, audit logs, and publishing actions.</desc>
+  <defs>
+    <style>
+      .bg{fill:#E9ECEF}
+      .nav{fill:#20262B}
+      .surface{fill:#FDFDFB;stroke:#C9D0D6;stroke-width:1}
+      .panel{fill:#F4F6F7;stroke:#C9D0D6;stroke-width:1}
+      .ink{fill:#172027}
+      .muted{fill:#626E76}
+      .teal{fill:#008C7A}
+      .red{fill:#B6423B}
+      .amber{fill:#A86B13}
+      .label{font:700 11px Arial, sans-serif;fill:#626E76}
+      .tiny{font:500 11px Arial, sans-serif;fill:#6F7B84}
+      .body{font:500 14px Arial, sans-serif;fill:#172027}
+      .heading{font:800 28px Arial, sans-serif;fill:#172027}
+      .subhead{font:800 16px Arial, sans-serif;fill:#172027}
+      .mono{font:700 12px "Courier New", monospace;fill:#172027}
+      .line{stroke:#C9D0D6;stroke-width:1}
+    </style>
+  </defs>
+  <rect width="1440" height="960" class="bg"/>
+  <rect x="0" y="0" width="1440" height="72" class="nav"/>
+  <text x="40" y="44" font-family="Arial" font-size="18" font-weight="800" fill="#FDFDFB">Truyen Nha Mo Admin</text>
+  <text x="300" y="44" font-family="Arial" font-size="13" font-weight="700" fill="#B8C1C8">Stories</text>
+  <text x="382" y="44" font-family="Arial" font-size="13" font-weight="700" fill="#B8C1C8">Chapters</text>
+  <text x="478" y="44" font-family="Arial" font-size="13" font-weight="700" fill="#FFFFFF">Moderation</text>
+  <text x="596" y="44" font-family="Arial" font-size="13" font-weight="700" fill="#B8C1C8">Audit</text>
+  <rect x="1210" y="18" width="178" height="36" rx="8" fill="#008C7A"/>
+  <text x="1244" y="41" font-family="Arial" font-size="13" font-weight="800" fill="#FFFFFF">Create action</text>
+
+  <text x="40" y="128" class="heading">Command center</text>
+  <text x="40" y="156" class="body" fill="#626E76">Moderation, audit trail, and production health for server-only editorial actions.</text>
+  <rect x="1034" y="104" width="354" height="44" rx="9" class="surface"/>
+  <text x="1058" y="132" class="tiny">Search audit, comments, story slug, admin user</text>
+
+  <rect x="40" y="190" width="308" height="172" rx="14" class="surface"/>
+  <text x="64" y="226" class="label">MODERATION QUEUE</text>
+  <text x="64" y="286" font-family="Arial" font-size="54" font-weight="900" fill="#172027">48</text>
+  <text x="150" y="286" class="mono">items</text>
+  <rect x="64" y="314" width="120" height="28" rx="14" fill="#F7E3E0"/>
+  <text x="84" y="333" class="tiny" fill="#B6423B">12 urgent</text>
+
+  <rect x="376" y="190" width="308" height="172" rx="14" class="surface"/>
+  <text x="400" y="226" class="label">FAILED MUTATIONS</text>
+  <text x="400" y="286" font-family="Arial" font-size="54" font-weight="900" fill="#172027">07</text>
+  <text x="486" y="286" class="mono">24h</text>
+  <rect x="400" y="314" width="152" height="28" rx="14" fill="#FFF0D9"/>
+  <text x="420" y="333" class="tiny" fill="#A86B13">validation only</text>
+
+  <rect x="712" y="190" width="308" height="172" rx="14" class="surface"/>
+  <text x="736" y="226" class="label">PUBLISHED TODAY</text>
+  <text x="736" y="286" font-family="Arial" font-size="54" font-weight="900" fill="#172027">23</text>
+  <text x="822" y="286" class="mono">chapters</text>
+  <rect x="736" y="314" width="136" height="28" rx="14" fill="#DFF3EE"/>
+  <text x="756" y="333" class="tiny" fill="#008C7A">healthy</text>
+
+  <rect x="1048" y="190" width="340" height="172" rx="14" class="surface"/>
+  <text x="1072" y="226" class="label">SYSTEM GUARD</text>
+  <text x="1072" y="268" class="body">Secret client isolated</text>
+  <text x="1072" y="300" class="body">No browser content writes</text>
+  <text x="1072" y="332" class="body">Audit insert required</text>
+  <circle cx="1324" cy="260" r="34" fill="#DFF3EE"/>
+  <text x="1306" y="268" class="mono" fill="#008C7A">OK</text>
+
+  <rect x="40" y="398" width="870" height="500" rx="14" class="surface"/>
+  <text x="64" y="436" class="subhead">Comment moderation</text>
+  <text x="64" y="462" class="tiny">Bulk review with context, owner, story, status, and last action.</text>
+  <rect x="64" y="494" width="822" height="44" rx="8" class="panel"/>
+  <text x="88" y="522" class="label">COMMENT</text>
+  <text x="416" y="522" class="label">STORY</text>
+  <text x="586" y="522" class="label">RISK</text>
+  <text x="706" y="522" class="label">ACTION</text>
+  <g>
+    <rect x="64" y="556" width="822" height="74" rx="10" fill="#FFFFFF"/>
+    <text x="88" y="588" class="body">Spam link repeated across three chapters</text>
+    <text x="88" y="610" class="tiny">user: 9ef...12c, 4 minutes ago</text>
+    <text x="416" y="596" class="body">Van Co Than De</text>
+    <rect x="586" y="576" width="78" height="28" rx="14" fill="#F7E3E0"/>
+    <text x="608" y="595" class="tiny" fill="#B6423B">high</text>
+    <rect x="706" y="570" width="70" height="38" rx="8" fill="#20262B"/>
+    <text x="726" y="594" font-family="Arial" font-size="12" font-weight="800" fill="#FFFFFF">Hide</text>
+    <rect x="786" y="570" width="70" height="38" rx="8" class="panel"/>
+    <text x="806" y="594" class="tiny">Keep</text>
+  </g>
+  <g>
+    <rect x="64" y="642" width="822" height="74" rx="10" fill="#F8FAFA"/>
+    <text x="88" y="674" class="body">Possible spoiler in public story thread</text>
+    <text x="88" y="696" class="tiny">user: 5bd...88a, 17 minutes ago</text>
+    <text x="416" y="682" class="body">Toan Chuc Phap Su</text>
+    <rect x="586" y="662" width="78" height="28" rx="14" fill="#FFF0D9"/>
+    <text x="604" y="681" class="tiny" fill="#A86B13">medium</text>
+    <rect x="706" y="656" width="70" height="38" rx="8" fill="#20262B"/>
+    <text x="726" y="680" font-family="Arial" font-size="12" font-weight="800" fill="#FFFFFF">Hide</text>
+    <rect x="786" y="656" width="70" height="38" rx="8" class="panel"/>
+    <text x="806" y="680" class="tiny">Keep</text>
+  </g>
+  <g>
+    <rect x="64" y="728" width="822" height="74" rx="10" fill="#FFFFFF"/>
+    <text x="88" y="760" class="body">Reader report: abusive language</text>
+    <text x="88" y="782" class="tiny">user: 1aa...774, 31 minutes ago</text>
+    <text x="416" y="768" class="body">Dau Pha Thuong Khung</text>
+    <rect x="586" y="748" width="78" height="28" rx="14" fill="#F7E3E0"/>
+    <text x="608" y="767" class="tiny" fill="#B6423B">high</text>
+    <rect x="706" y="742" width="70" height="38" rx="8" fill="#20262B"/>
+    <text x="726" y="766" font-family="Arial" font-size="12" font-weight="800" fill="#FFFFFF">Hide</text>
+    <rect x="786" y="742" width="70" height="38" rx="8" class="panel"/>
+    <text x="806" y="766" class="tiny">Keep</text>
+  </g>
+  <rect x="64" y="832" width="150" height="40" rx="8" fill="#008C7A"/>
+  <text x="96" y="857" font-family="Arial" font-size="13" font-weight="800" fill="#FFFFFF">Apply selected</text>
+
+  <rect x="942" y="398" width="446" height="500" rx="14" class="surface"/>
+  <text x="966" y="436" class="subhead">Audit feed</text>
+  <text x="966" y="462" class="tiny">Every privileged mutation lands here before cache revalidation.</text>
+  <line x1="990" y1="504" x2="990" y2="848" class="line"/>
+  <circle cx="990" cy="526" r="6" class="teal"/>
+  <text x="1014" y="530" class="body">publishStory succeeded</text>
+  <text x="1014" y="552" class="tiny">story: van-co-than-de, actor: admin</text>
+  <circle cx="990" cy="616" r="6" class="red"/>
+  <text x="1014" y="620" class="body">hideComment succeeded</text>
+  <text x="1014" y="642" class="tiny">reason: spam link, comment: 9821</text>
+  <circle cx="990" cy="706" r="6" class="amber"/>
+  <text x="1014" y="710" class="body">publishChapter blocked</text>
+  <text x="1014" y="732" class="tiny">missing chapter_contents row</text>
+  <circle cx="990" cy="796" r="6" class="teal"/>
+  <text x="1014" y="800" class="body">uploadCover succeeded</text>
+  <text x="1014" y="822" class="tiny">bucket: story-covers, version: v3</text>
+</svg>
