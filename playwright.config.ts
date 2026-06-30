@@ -1,5 +1,7 @@
 import { defineConfig } from "@playwright/test";
 
+const localChromeChannel = process.env.CI ? {} : { channel: "chrome" as const };
+
 export default defineConfig({
   testDir: "./tests",
   outputDir: ".tmp/playwright-results",
@@ -21,7 +23,7 @@ export default defineConfig({
   use: {
     baseURL: "http://127.0.0.1:3110",
     browserName: "chromium",
-    channel: "chrome",
+    ...localChromeChannel,
     screenshot: "only-on-failure",
     trace: "retain-on-failure",
   },

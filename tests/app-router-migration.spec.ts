@@ -344,7 +344,7 @@ test("Anonymous users are asked to sign in before using the library", async ({
   );
 });
 
-test("Anonymous users are asked to sign in before entering admin", async ({
+test("Anonymous users are asked to sign in before entering admin @admin-smoke", async ({
   page,
 }) => {
   await page.goto("/admin");
@@ -369,7 +369,7 @@ test("Authenticated non-admin users cannot enter admin", async ({ page }) => {
   await expect(page).toHaveURL(/\/admin$/);
 });
 
-test("Admin shell renders grouped navigation and topbar for an allowlisted admin", async ({
+test("Admin shell renders grouped navigation and topbar for an allowlisted admin @admin-smoke", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -671,7 +671,7 @@ test("Admin featured stories link opens a read-only editorial picks shell", asyn
   expect(errors).toEqual([]);
 });
 
-test("Admin promo, campaign notification and marketing analytics links open read-only shells", async ({
+test("Admin promo, campaign notification and marketing analytics links open read-only shells @admin-smoke", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -905,7 +905,7 @@ test("Admin story list shows all editorial statuses and basic filters", async ({
   expect(errors).toEqual([]);
 });
 
-test("Admin comment moderation queue is actionable and filterable", async ({
+test("Admin comment moderation queue is actionable and filterable @admin-smoke", async ({
   page,
 }) => {
   const errors: string[] = [];
@@ -957,7 +957,7 @@ test("Admin comment moderation queue is actionable and filterable", async ({
   expect(errors).toEqual([]);
 });
 
-test("Admin can hide and restore a public story comment", async ({ page }) => {
+test("Admin can hide and restore a public story comment @admin-smoke", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error" || message.type() === "warning") {
@@ -1050,7 +1050,7 @@ test("Admin story detail shell keeps chapters nested under the story", async ({
   expect(errors).toEqual([]);
 });
 
-test("Admin can upload and delete a public story cover", async ({ page }) => {
+test("Admin can upload and delete a public story cover @admin-smoke", async ({ page }) => {
   const errors: string[] = [];
   page.on("console", (message) => {
     if (message.type() === "error" || message.type() === "warning") {
