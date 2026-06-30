@@ -60,7 +60,7 @@
             <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9Z" /><path d="M13.7 21a2 2 0 0 1-3.4 0" /></svg>
           </button>
           <button class="user-button avatar-only" type="button" aria-label="Mở menu tài khoản" aria-expanded="false" aria-controls="user-menu" aria-haspopup="true" data-user-menu-trigger>
-            <span class="avatar">M</span>
+            <span class="avatar" data-user-avatar>M</span>
           </button>
           <button class="menu-button" type="button" aria-label="Mở menu" aria-expanded="false" aria-controls="mobile-panel" data-menu-trigger>
             <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
@@ -77,7 +77,7 @@
         </nav>
       </div>
 
-      <div class="user-menu" id="user-menu" data-user-menu>
+      <div class="user-menu" id="user-menu" data-user-menu data-auth-menu>
         <a href="#library">Tủ truyện</a>
         <a href="#settings">Cài đặt</a>
         <button type="button">Đăng xuất</button>
@@ -294,7 +294,7 @@
               <div class="author-line">
                 <span class="avatar small">P</span>
                 <strong>Phi Thiên Ngư</strong>
-                <button class="mini-button" type="button">Theo dõi</button>
+                <span data-bookmark-slot="author"></span>
               </div>
               <div class="status-line detail">
                 <span class="status ongoing">Đang ra</span>
@@ -314,10 +314,7 @@
                   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14" /><path d="m13 6 6 6-6 6" /></svg>
                   Đọc Tiếp
                 </button>
-                <button class="button ghost" type="button">
-                  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.5 12.6 12 20l-7.5-7.4a5 5 0 0 1 7.5-6.6 5 5 0 0 1 7.5 6.6Z" /></svg>
-                  Yêu thích
-                </button>
+                <span data-bookmark-slot="actions"></span>
                 <button class="button buy" type="button">Mua Combo VIP (89,000 Gold) <span>-20%</span></button>
               </div>
               <div class="tag-list" data-story-tags></div>
@@ -414,6 +411,7 @@
           <header class="reader-heading">
             <span class="reader-kicker">Vạn Cổ Thần Đế</span>
             <h1 id="reader-title" tabindex="-1" data-reader-title>Chương 2686: Quyết chiến</h1>
+            <span data-reading-progress-slot></span>
           </header>
 
           <div class="reader-toolbar" aria-label="Công cụ đọc truyện">
@@ -534,7 +532,7 @@
 
     <div class="mobile-cta" data-mobile-cta>
       <button class="button primary" type="button" data-open-reader="0">Đọc ngay</button>
-      <button class="button ghost" type="button">Yêu thích</button>
+      <span data-bookmark-slot="mobile"></span>
     </div>
 
     <script src="app.js?v=reader-20260619"></script>

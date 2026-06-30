@@ -14,15 +14,15 @@ Thu muc nay la noi theo doi yeu cau, ke hoach va tien do cua du an NovelVerse.
 8. `TEST_PLAN.md` - Cach kiem tra UI, responsive va interaction.
 9. `BACKEND_SPEC.md` - Stack, schema, RLS, Storage va API contract cho MVP.
 10. `BACKEND_TASKS.md` - Thu tu migration va vertical slice backend.
+11. `ADMIN_RELEASE_CHECKLIST.md` - Checklist env, migration, smoke va rollback cho admin production release.
 
 ## Trang thai hien tai
 
-Du an dang o giai doan static prototype:
+Du an dang o giai doan Next.js + Supabase MVP:
 
-- Co trang chu public.
-- Co trang chi tiet truyen.
-- Dung mock data trong `app.js`.
+- Public catalog, auth, library, comments, reader va admin editorial core da co local/CI coverage.
+- Admin revenue, role, notification va marketing advanced modules dang la read-only/deferred shells.
 - Ruby Noir Romance la visual theme chinh thuc va duy nhat.
-- Chua co backend, database, auth, admin dashboard hoac thanh toan that.
+- Production release can di qua `ADMIN_RELEASE_CHECKLIST.md`.
 
-Mo file `../index.html` bang trinh duyet de xem giao dien.
+Chay local bang Next.js va Supabase local workflow trong `package.json`.

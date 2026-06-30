@@ -30,11 +30,12 @@ begin
       'stories',
       'story_genres',
       'chapters',
-      'chapter_contents'
+      'chapter_contents',
+      'comments'
     )
     and pg_class.relrowsecurity;
-  if rls_table_count <> 6 then
-    raise exception 'Expected RLS on 6 catalog tables, found %', rls_table_count;
+  if rls_table_count <> 7 then
+    raise exception 'Expected RLS on 7 catalog tables, found %', rls_table_count;
   end if;
 
   select count(*) into expected_index_count
@@ -49,10 +50,49 @@ begin
       'story_genres_genre_story_idx',
       'story_genres_one_primary_idx',
       'chapters_published_number_idx',
-      'chapters_story_published_at_idx'
+      'chapters_story_published_at_idx',
+      'comments_visible_story_created_idx',
+      'comments_visible_chapter_created_idx',
+      'comments_user_created_at_idx',
+      'comments_parent_id_idx'
     );
-  if expected_index_count <> 9 then
-    raise exception 'Expected 9 catalog indexes, found %', expected_index_count;
+  if expected_index_count <> 13 then
+    raise exception 'Expected 13 catalog indexes, found %', expected_index_count;
+  end if;
+
+  if not exists (
+    select 1
+    from storage.buckets
+    where id = 'story-covers'
+      and public
+      and file_size_limit = 5242880
+      and allowed_mime_types @> array['image/jpeg', 'image/png', 'image/webp']
+  ) then
+    raise exception 'Story cover bucket is not configured for public limited image reads';
+  end if;
+
+  if not exists (
+    select 1
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and cmd in ('SELECT', 'ALL')
+      and ('anon' = any(roles) or 'authenticated' = any(roles))
+      and coalesce(qual, '') like '%story-covers%'
+  ) then
+    raise exception 'Story cover bucket has no public read policy';
+  end if;
+
+  if exists (
+    select 1
+    from pg_policies
+    where schemaname = 'storage'
+      and tablename = 'objects'
+      and cmd in ('INSERT', 'UPDATE', 'DELETE', 'ALL')
+      and ('anon' = any(roles) or 'authenticated' = any(roles))
+      and (coalesce(qual, '') || coalesce(with_check, '')) like '%story-covers%'
+  ) then
+    raise exception 'Story cover bucket exposes public write policy';
   end if;
 end
 $$;
@@ -68,6 +108,8 @@ declare
   vip_metadata_count integer;
   free_content_count integer;
   author_search_count integer;
+  visible_comment_count integer;
+  draft_comment_count integer;
 begin
   select count(*) into visible_story_count from public.stories;
   if visible_story_count <> 9 then
@@ -102,6 +144,22 @@ begin
   where chapters.access_level = 'free';
   if free_content_count < 1 then
     raise exception 'Anon cannot read published free chapter content';
+  end if;
+
+  select count(*) into visible_comment_count
+  from public.comments
+  join public.stories on stories.id = comments.story_id
+  where stories.slug = 'van-co-than-de';
+  if visible_comment_count <> 3 then
+    raise exception 'Anon expected 3 visible comments, found %', visible_comment_count;
+  end if;
+
+  select count(*) into draft_comment_count
+  from public.comments
+  join public.stories on stories.id = comments.story_id
+  where stories.slug = 'ban-thao-chua-cong-bo';
+  if draft_comment_count <> 0 then
+    raise exception 'Anon can read comments on draft stories';
   end if;
 
   select count(*) into author_search_count
@@ -164,6 +222,589 @@ begin
     when insufficient_privilege then
       null;
   end;
+
+  begin
+    update public.stories
+    set publication_status = 'archived'
+    where slug = 'van-co-than-de';
+    raise exception 'Anon unexpectedly updated a story';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    update public.chapters
+    set title = 'Khong duoc phep'
+    where slug = 'chuong-2686';
+    raise exception 'Anon unexpectedly updated a chapter';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    update public.chapter_contents
+    set content = 'Khong duoc phep'
+    where chapter_id in (select id from public.chapters limit 1);
+    raise exception 'Anon unexpectedly updated chapter content';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    perform public.admin_save_chapter(
+      1,
+      1,
+      'Khong duoc phep',
+      'khong-duoc-phep',
+      1,
+      'free',
+      'Khong duoc phep',
+      3,
+      now()
+    );
+    raise exception 'Anon unexpectedly executed admin_save_chapter';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+end
+$$;
+
+reset role;
+
+insert into auth.users (
+  id,
+  email,
+  raw_user_meta_data,
+  created_at,
+  updated_at
+)
+values
+  (
+    '00000000-0000-0000-0000-000000000001',
+    'reader-one@example.com',
+    '{"display_name":"Độc Giả Một"}'::jsonb,
+    now(),
+    now()
+  ),
+  (
+    '00000000-0000-0000-0000-000000000002',
+    'reader-two@example.com',
+    '{"display_name":"Độc Giả Hai"}'::jsonb,
+    now(),
+    now()
+  );
+
+do $$
+begin
+  if not exists (
+    select 1
+    from public.profiles
+    where id = '00000000-0000-0000-0000-000000000001'
+      and display_name = 'Độc Giả Một'
+  ) then
+    raise exception 'Profile trigger did not create the expected row';
+  end if;
+end
+$$;
+
+set local role authenticated;
+select set_config(
+  'request.jwt.claim.sub',
+  '00000000-0000-0000-0000-000000000001',
+  true
+);
+
+do $$
+declare
+  affected_rows integer;
+  published_story_id bigint;
+  draft_story_id bigint;
+  published_chapter_id bigint;
+  other_story_chapter_id bigint;
+  comment_id bigint;
+begin
+  select id into published_story_id
+  from public.stories
+  where slug = 'van-co-than-de';
+
+  select id into draft_story_id
+  from public.stories
+  where slug = 'ban-thao-chua-cong-bo';
+
+  begin
+    update public.stories
+    set publication_status = 'archived'
+    where id = published_story_id;
+    raise exception 'Authenticated user unexpectedly updated a story';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  select id into published_chapter_id
+  from public.chapters
+  where story_id = published_story_id
+    and slug = 'chuong-2686';
+
+  begin
+    update public.chapters
+    set title = 'Khong duoc phep'
+    where id = published_chapter_id;
+    raise exception 'Authenticated user unexpectedly updated a chapter';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    update public.chapter_contents
+    set content = 'Khong duoc phep'
+    where chapter_id = published_chapter_id;
+    raise exception 'Authenticated user unexpectedly updated chapter content';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    perform public.admin_publish_chapter(1, published_chapter_id, now());
+    raise exception 'Authenticated user unexpectedly executed admin_publish_chapter';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  select chapters.id into other_story_chapter_id
+  from public.chapters
+  join public.stories on stories.id = chapters.story_id
+  where stories.slug = 'dau-pha-thuong-khung'
+  order by chapters.chapter_number desc
+  limit 1;
+
+  update public.profiles
+  set username = 'doc_gia_mot'
+  where id = '00000000-0000-0000-0000-000000000001';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Authenticated user could not update own profile';
+  end if;
+
+  update public.profiles
+  set username = 'khong_duoc_phep'
+  where id = '00000000-0000-0000-0000-000000000002';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 0 then
+    raise exception 'Authenticated user updated another profile';
+  end if;
+
+  insert into public.bookmarks (user_id, story_id)
+  values ('00000000-0000-0000-0000-000000000001', published_story_id);
+
+  if not exists (
+    select 1
+    from public.bookmarks
+    where user_id = '00000000-0000-0000-0000-000000000001'
+      and story_id = published_story_id
+  ) then
+    raise exception 'Authenticated user could not read own bookmark';
+  end if;
+
+  begin
+    insert into public.bookmarks (user_id, story_id)
+    values ('00000000-0000-0000-0000-000000000002', published_story_id);
+    raise exception 'Authenticated user inserted a bookmark for another user';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    insert into public.bookmarks (user_id, story_id)
+    values ('00000000-0000-0000-0000-000000000001', draft_story_id);
+    raise exception 'Authenticated user bookmarked a draft story';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  insert into public.reading_progress (
+    user_id,
+    story_id,
+    chapter_id,
+    progress_percent,
+    scroll_offset
+  )
+  values (
+    '00000000-0000-0000-0000-000000000001',
+    published_story_id,
+    published_chapter_id,
+    42.5,
+    840
+  )
+  on conflict (user_id, story_id)
+  do update set
+    chapter_id = excluded.chapter_id,
+    progress_percent = excluded.progress_percent,
+    scroll_offset = excluded.scroll_offset,
+    last_read_at = now(),
+    updated_at = now();
+
+  if not exists (
+    select 1
+    from public.reading_progress
+    where user_id = '00000000-0000-0000-0000-000000000001'
+      and story_id = published_story_id
+      and chapter_id = published_chapter_id
+      and progress_percent = 42.5
+      and scroll_offset = 840
+  ) then
+    raise exception 'Authenticated user could not upsert own reading progress';
+  end if;
+
+  begin
+    insert into public.reading_progress (
+      user_id,
+      story_id,
+      chapter_id
+    )
+    values (
+      '00000000-0000-0000-0000-000000000002',
+      published_story_id,
+      published_chapter_id
+    );
+    raise exception 'Authenticated user inserted progress for another user';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    update public.reading_progress
+    set chapter_id = other_story_chapter_id
+    where user_id = '00000000-0000-0000-0000-000000000001'
+      and story_id = published_story_id;
+    raise exception 'Reading progress accepted a chapter from another story';
+  exception
+    when insufficient_privilege then
+      null;
+    when foreign_key_violation then
+      null;
+  end;
+
+  insert into public.comments (user_id, story_id, chapter_id, body)
+  values (
+    '00000000-0000-0000-0000-000000000001',
+    published_story_id,
+    published_chapter_id,
+    'Bình luận kiểm thử RLS'
+  )
+  returning id into comment_id;
+
+  if not exists (
+    select 1
+    from public.comments
+    where id = comment_id
+      and body = 'Bình luận kiểm thử RLS'
+  ) then
+    raise exception 'Authenticated user could not read own visible comment';
+  end if;
+
+  update public.comments
+  set body = 'Bình luận đã sửa',
+      updated_at = now()
+  where id = comment_id;
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Authenticated user could not update own comment';
+  end if;
+
+  update public.comments
+  set status = 'deleted',
+      updated_at = now()
+  where id = comment_id;
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Authenticated user could not soft delete own comment';
+  end if;
+
+  if exists (
+    select 1
+    from public.comments
+    where id = comment_id
+      and status = 'visible'
+  ) then
+    raise exception 'Soft-deleted comment remained visible in visible comment list';
+  end if;
+
+  begin
+    insert into public.comments (user_id, story_id, body)
+    values (
+      '00000000-0000-0000-0000-000000000002',
+      published_story_id,
+      'Bình luận sai chủ sở hữu'
+    );
+    raise exception 'Authenticated user inserted a comment for another user';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    insert into public.comments (user_id, story_id, body)
+    values (
+      '00000000-0000-0000-0000-000000000001',
+      draft_story_id,
+      'Bình luận truyện draft'
+    );
+    raise exception 'Authenticated user commented on a draft story';
+  exception
+    when insufficient_privilege then
+      null;
+  end;
+
+  begin
+    insert into public.comments (user_id, story_id, chapter_id, body)
+    values (
+      '00000000-0000-0000-0000-000000000001',
+      published_story_id,
+      other_story_chapter_id,
+      'Bình luận sai chương'
+    );
+    raise exception 'Comment accepted a chapter from another story';
+  exception
+    when insufficient_privilege then
+      null;
+    when foreign_key_violation then
+      null;
+  end;
+end
+$$;
+
+reset role;
+
+set local role authenticated;
+select set_config(
+  'request.jwt.claim.sub',
+  '00000000-0000-0000-0000-000000000002',
+  true
+);
+
+do $$
+begin
+  if exists (select 1 from public.bookmarks) then
+    raise exception 'Authenticated user can read another user bookmark';
+  end if;
+
+  if exists (select 1 from public.reading_progress) then
+    raise exception 'Authenticated user can read another user reading progress';
+  end if;
+
+  update public.comments
+  set body = 'Không được sửa'
+  where user_id = '00000000-0000-0000-0000-000000000001';
+  if found then
+    raise exception 'Authenticated user updated another user comment';
+  end if;
+end
+$$;
+
+reset role;
+
+set local role service_role;
+
+do $$
+declare
+  affected_rows integer;
+  admin_comment_count integer;
+  admin_comment_profile_count integer;
+  draft_chapter record;
+  draft_chapter_id bigint;
+begin
+  select count(*) into admin_comment_count
+  from public.comments;
+
+  if admin_comment_count < 3 then
+    raise exception 'Service role could not read comment moderation queue';
+  end if;
+
+  select count(*) into admin_comment_profile_count
+  from public.profiles
+  where id in (select user_id from public.comments);
+
+  if admin_comment_profile_count < 3 then
+    raise exception 'Service role could not read comment moderation profiles';
+  end if;
+
+  update public.stories
+  set publication_status = 'published',
+      published_at = coalesce(published_at, now()),
+      latest_published_at = coalesce(latest_published_at, now()),
+      updated_at = now()
+  where slug = 'ban-thao-chua-cong-bo';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Service role could not publish a story';
+  end if;
+
+  select chapters.id into draft_chapter_id
+  from public.chapters
+  join public.stories on stories.id = chapters.story_id
+  where stories.slug = 'ban-thao-chua-cong-bo'
+    and chapters.slug = 'chuong-1';
+
+  select *
+  into draft_chapter
+  from public.admin_save_chapter(
+    (select id from public.stories where slug = 'ban-thao-chua-cong-bo'),
+    draft_chapter_id,
+    'Chuong da luu',
+    'chuong-1',
+    1,
+    'free',
+    'Noi dung kiem thu service role',
+    5,
+    now()
+  );
+
+  if draft_chapter.publication_status <> 'draft' then
+    raise exception 'Admin save changed draft chapter status';
+  end if;
+
+  select *
+  into draft_chapter
+  from public.admin_publish_chapter(
+    (select id from public.stories where slug = 'ban-thao-chua-cong-bo'),
+    draft_chapter_id,
+    now()
+  );
+
+  if draft_chapter.publication_status <> 'published' then
+    raise exception 'Service role could not publish a chapter via RPC';
+  end if;
+
+  select *
+  into draft_chapter
+  from public.admin_save_chapter(
+    (select id from public.stories where slug = 'ban-thao-chua-cong-bo'),
+    draft_chapter_id,
+    'Chuong da xuat ban',
+    'chuong-1',
+    1,
+    'free',
+    'Noi dung kiem thu service role da sua',
+    7,
+    now()
+  );
+
+  if draft_chapter.publication_status <> 'published' then
+    raise exception 'Admin save demoted a published chapter';
+  end if;
+
+  update public.stories
+  set publication_status = 'archived',
+      updated_at = now()
+  where slug = 'ban-thao-chua-cong-bo';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Service role could not archive a story';
+  end if;
+
+  update public.stories
+  set cover_path = 'http://127.0.0.1:54321/storage/v1/object/public/story-covers/1/test.png',
+      updated_at = now()
+  where slug = 'van-co-than-de';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Service role could not update a story cover path';
+  end if;
+end
+$$;
+
+reset role;
+
+set local role service_role;
+
+do $$
+declare
+  affected_rows integer;
+  moderated_comment_id bigint;
+begin
+  select comments.id into moderated_comment_id
+  from public.comments
+  join public.stories on stories.id = comments.story_id
+  where stories.slug = 'van-co-than-de'
+    and comments.status = 'visible'
+  order by comments.id
+  limit 1;
+
+  update public.comments
+  set status = 'hidden',
+      updated_at = now()
+  where id = moderated_comment_id
+    and status = 'visible';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Service role could not hide a visible comment';
+  end if;
+end
+$$;
+
+reset role;
+
+set local role authenticated;
+select set_config(
+  'request.jwt.claim.sub',
+  '10000000-0000-0000-0000-000000000001',
+  true
+);
+
+do $$
+declare
+  affected_rows integer;
+begin
+  update public.comments
+  set status = 'visible',
+      updated_at = now()
+  where user_id = '10000000-0000-0000-0000-000000000001'
+    and status = 'hidden';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 0 then
+    raise exception 'Comment owner restored a hidden moderated comment';
+  end if;
+end
+$$;
+
+reset role;
+
+set local role service_role;
+
+do $$
+declare
+  affected_rows integer;
+begin
+  update public.comments
+  set status = 'visible',
+      updated_at = now()
+  where user_id = '10000000-0000-0000-0000-000000000001'
+    and status = 'hidden';
+  get diagnostics affected_rows = row_count;
+
+  if affected_rows <> 1 then
+    raise exception 'Service role could not restore a hidden comment';
+  end if;
 end
 $$;
 

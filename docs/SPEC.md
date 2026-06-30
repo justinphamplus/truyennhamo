@@ -33,7 +33,7 @@ Nguoi dung muc tieu:
 2. Trang ket qua tim kiem (da trien khai tai `/tim-kiem`)
 3. Trang bang xep hang day du
 4. Trang tu truyen/user library
-5. Trang dang nhap/dang ky
+5. Trang dang nhap/dang ky (da trien khai)
 6. Admin dashboard
 
 ## 3. Section cua tung trang
@@ -663,4 +663,4 @@ Them sau khi xac nhan dung framework hoac xac nhan cho phep cai dependency npm. 
 - Da chot Supabase PostgreSQL + Auth + Storage; xem `BACKEND_SPEC.md`.
 - Co copy/upload asset anh that vao project de thay cover CSS mock khong?
 - Payment/VIP entitlement se dung provider va rule nao?
-- Auth phase dau chi email/password hay them Google OAuth?
+- Auth phase dau da chot email/password; Google OAuth de phase sau.

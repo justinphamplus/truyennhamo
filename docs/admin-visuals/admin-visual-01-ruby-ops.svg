@@ -1,0 +1,154 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="960" viewBox="0 0 1440 960" role="img" aria-labelledby="title desc">
+  <title id="title">Admin Visual 01 Ruby Ops Cockpit</title>
+  <desc id="desc">Dark editorial operations dashboard for story and chapter publishing.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171215"/>
+      <stop offset="0.54" stop-color="#231820"/>
+      <stop offset="1" stop-color="#101316"/>
+    </linearGradient>
+    <linearGradient id="ruby" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#D94A64"/>
+      <stop offset="1" stop-color="#8F243B"/>
+    </linearGradient>
+    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#050506" flood-opacity="0.38"/>
+    </filter>
+    <style>
+      .label{font:500 13px Arial, sans-serif;fill:#AFA4AA}
+      .tiny{font:500 11px Arial, sans-serif;fill:#82777E}
+      .body{font:500 15px Arial, sans-serif;fill:#E9E2E6}
+      .heading{font:700 26px Arial, sans-serif;fill:#FFF7FA}
+      .subhead{font:700 18px Arial, sans-serif;fill:#FFF7FA}
+      .mono{font:700 13px "Courier New", monospace;fill:#F5D7DE}
+      .panel{fill:#241A20;stroke:#3D2B34;stroke-width:1}
+      .panel2{fill:#1B171B;stroke:#33262D;stroke-width:1}
+      .line{stroke:#3A2A32;stroke-width:1}
+      .muted{fill:#AFA4AA}
+      .ruby{fill:#D94A64}
+      .green{fill:#51B98C}
+      .amber{fill:#E0A549}
+    </style>
+  </defs>
+  <rect width="1440" height="960" fill="url(#bg)"/>
+  <rect x="28" y="28" width="206" height="904" rx="18" fill="#151216" stroke="#32252C"/>
+  <text x="58" y="76" class="subhead">Truyen Nha Mo</text>
+  <text x="58" y="99" class="tiny">Admin cockpit</text>
+  <rect x="52" y="136" width="156" height="42" rx="12" fill="url(#ruby)"/>
+  <text x="76" y="162" class="body">Dashboard</text>
+  <text x="58" y="223" class="label">Stories</text>
+  <text x="58" y="274" class="label">Chapters</text>
+  <text x="58" y="325" class="label">Comments</text>
+  <text x="58" y="376" class="label">Uploads</text>
+  <text x="58" y="427" class="label">Audit log</text>
+  <rect x="52" y="830" width="156" height="54" rx="14" fill="#211820" stroke="#3D2B34"/>
+  <circle cx="78" cy="857" r="16" fill="#D94A64"/>
+  <text x="104" y="852" class="body">Editor</text>
+  <text x="104" y="870" class="tiny">server only</text>
+
+  <text x="270" y="78" class="heading">Editorial operations</text>
+  <text x="270" y="106" class="label">Publish queue, draft health, and content safety in one dense surface.</text>
+  <rect x="1044" y="52" width="148" height="42" rx="12" fill="#2A2027" stroke="#4D3540"/>
+  <text x="1070" y="78" class="body">Preview site</text>
+  <rect x="1210" y="52" width="174" height="42" rx="12" fill="url(#ruby)"/>
+  <text x="1240" y="78" class="body">New story</text>
+
+  <g filter="url(#softShadow)">
+    <rect x="270" y="140" width="252" height="132" rx="18" class="panel"/>
+    <text x="294" y="177" class="label">Ready to publish</text>
+    <text x="294" y="220" font-family="Arial" font-size="44" font-weight="800" fill="#FFF7FA">12</text>
+    <text x="374" y="220" class="mono">+3 today</text>
+    <rect x="294" y="240" width="184" height="8" rx="4" fill="#3D2B34"/>
+    <rect x="294" y="240" width="132" height="8" rx="4" fill="#D94A64"/>
+  </g>
+  <g filter="url(#softShadow)">
+    <rect x="544" y="140" width="252" height="132" rx="18" class="panel"/>
+    <text x="568" y="177" class="label">Draft risk</text>
+    <text x="568" y="220" font-family="Arial" font-size="44" font-weight="800" fill="#FFF7FA">05</text>
+    <text x="640" y="220" class="mono">needs owner</text>
+    <rect x="568" y="240" width="184" height="8" rx="4" fill="#3D2B34"/>
+    <rect x="568" y="240" width="74" height="8" rx="4" fill="#E0A549"/>
+  </g>
+  <g filter="url(#softShadow)">
+    <rect x="818" y="140" width="252" height="132" rx="18" class="panel"/>
+    <text x="842" y="177" class="label">Comment flags</text>
+    <text x="842" y="220" font-family="Arial" font-size="44" font-weight="800" fill="#FFF7FA">18</text>
+    <text x="916" y="220" class="mono">4 urgent</text>
+    <rect x="842" y="240" width="184" height="8" rx="4" fill="#3D2B34"/>
+    <rect x="842" y="240" width="96" height="8" rx="4" fill="#D94A64"/>
+  </g>
+  <g filter="url(#softShadow)">
+    <rect x="1092" y="140" width="292" height="132" rx="18" class="panel"/>
+    <text x="1116" y="177" class="label">Publish latency</text>
+    <text x="1116" y="220" font-family="Arial" font-size="44" font-weight="800" fill="#FFF7FA">08m</text>
+    <text x="1217" y="220" class="mono">median</text>
+    <path d="M1118 248 C1162 214, 1198 266, 1242 232 S1328 244,1360 218" fill="none" stroke="#51B98C" stroke-width="4"/>
+  </g>
+
+  <rect x="270" y="304" width="706" height="600" rx="20" class="panel"/>
+  <text x="300" y="348" class="subhead">Story pipeline</text>
+  <text x="300" y="374" class="label">Prioritized by publication status and last editorial touch.</text>
+  <rect x="300" y="410" width="646" height="48" rx="12" fill="#1B171B" stroke="#3A2A32"/>
+  <text x="324" y="440" class="tiny">TITLE</text>
+  <text x="572" y="440" class="tiny">AUTHOR</text>
+  <text x="732" y="440" class="tiny">STATE</text>
+  <text x="850" y="440" class="tiny">ACTION</text>
+  <g>
+    <rect x="300" y="478" width="646" height="70" rx="14" fill="#211820"/>
+    <text x="324" y="510" class="body">Van Co Than De</text>
+    <text x="324" y="530" class="tiny">Ch. 21 waiting for body review</text>
+    <text x="572" y="518" class="label">Phi Thien Ngu</text>
+    <rect x="732" y="496" width="92" height="28" rx="14" fill="#432A20"/>
+    <text x="754" y="515" class="tiny" fill="#F6C06B">queued</text>
+    <rect x="850" y="493" width="72" height="34" rx="10" fill="#D94A64"/>
+    <text x="868" y="516" class="tiny" fill="#FFF7FA">Open</text>
+  </g>
+  <g>
+    <rect x="300" y="564" width="646" height="70" rx="14" fill="#1B171B"/>
+    <text x="324" y="596" class="body">Toan Chuc Phap Su</text>
+    <text x="324" y="616" class="tiny">Cover missing, synopsis edited</text>
+    <text x="572" y="604" class="label">Lo Mi</text>
+    <rect x="732" y="582" width="92" height="28" rx="14" fill="#263B34"/>
+    <text x="754" y="601" class="tiny" fill="#8FE0BA">draft</text>
+    <rect x="850" y="579" width="72" height="34" rx="10" fill="#30252C"/>
+    <text x="868" y="602" class="tiny">Open</text>
+  </g>
+  <g>
+    <rect x="300" y="650" width="646" height="70" rx="14" fill="#211820"/>
+    <text x="324" y="682" class="body">Dau Pha Thuong Khung</text>
+    <text x="324" y="702" class="tiny">Ready for scheduled publish</text>
+    <text x="572" y="690" class="label">Thien Tam</text>
+    <rect x="732" y="668" width="92" height="28" rx="14" fill="#392B44"/>
+    <text x="754" y="687" class="tiny" fill="#D5B5FF">review</text>
+    <rect x="850" y="665" width="72" height="34" rx="10" fill="#30252C"/>
+    <text x="868" y="688" class="tiny">Open</text>
+  </g>
+  <line x1="300" y1="754" x2="946" y2="754" class="line"/>
+  <text x="300" y="794" class="subhead">Safe mutation guardrails</text>
+  <text x="300" y="822" class="label">Every publish action passes Zod validation, secret server client, cache invalidation, and audit insert.</text>
+  <rect x="300" y="852" width="132" height="28" rx="14" fill="#263B34"/>
+  <text x="322" y="871" class="tiny" fill="#8FE0BA">RLS clean</text>
+  <rect x="444" y="852" width="148" height="28" rx="14" fill="#392B44"/>
+  <text x="466" y="871" class="tiny" fill="#D5B5FF">server-only</text>
+  <rect x="604" y="852" width="158" height="28" rx="14" fill="#432A20"/>
+  <text x="626" y="871" class="tiny" fill="#F6C06B">audit required</text>
+
+  <rect x="1000" y="304" width="384" height="600" rx="20" class="panel2"/>
+  <text x="1030" y="348" class="subhead">Today timeline</text>
+  <text x="1030" y="374" class="label">Recent admin events and failed validations.</text>
+  <line x1="1054" y1="418" x2="1054" y2="842" stroke="#4A3640" stroke-width="2"/>
+  <circle cx="1054" cy="438" r="7" fill="#51B98C"/>
+  <text x="1080" y="440" class="body">Published chapter 20</text>
+  <text x="1080" y="462" class="tiny">Van Co Than De, 09:12</text>
+  <circle cx="1054" cy="528" r="7" fill="#E0A549"/>
+  <text x="1080" y="530" class="body">Validation blocked draft</text>
+  <text x="1080" y="552" class="tiny">Missing published_at</text>
+  <circle cx="1054" cy="618" r="7" fill="#D94A64"/>
+  <text x="1080" y="620" class="body">Comment hidden</text>
+  <text x="1080" y="642" class="tiny">Moderation queue, 11:40</text>
+  <circle cx="1054" cy="708" r="7" fill="#51B98C"/>
+  <text x="1080" y="710" class="body">Cover uploaded</text>
+  <text x="1080" y="732" class="tiny">story-covers/42/v3.webp</text>
+  <rect x="1030" y="796" width="312" height="56" rx="14" fill="#241A20" stroke="#3D2B34"/>
+  <text x="1054" y="830" class="body">Open audit details</text>
+</svg>

@@ -81,21 +81,35 @@ Phase B1 completed 2026-06-19:
 
 ## Phase B3: Auth And User Data
 
-- [ ] B3.1 Add email/password Auth and profile creation
+- [x] B3.1 Add email/password Auth and profile creation
   - Acceptance: signup, confirm, login, logout and profile row work.
   - Verify: server validates claims; session cookies work.
+  - Completed: 2026-06-20. Supabase email/password Auth uses Server Actions and SSR cookies;
+    `/dang-ky`, `/dang-nhap` and protected `/tai-khoan` cover signup, login, profile update and
+    logout. A private trigger creates `public.profiles`; own-row updates are protected by RLS.
+    `/auth/confirm` handles hosted email confirmation and `src/proxy.ts` refreshes sessions.
 
-- [ ] B3.2 Add bookmarks
+- [x] B3.2 Add bookmarks
   - Acceptance: toggle bookmark and user library work with RLS.
   - Verify: users cannot access each other's rows.
+  - Completed: 2026-06-21. `public.bookmarks` dung composite primary key, explicit grants,
+    owner-only RLS va index cho user library/follow lookup. Story Detail co optimistic follow
+    controls; protected `/tu-truyen` doc danh sach theo user va cho phep bo theo doi.
 
-- [ ] B3.3 Add reading progress
+- [x] B3.3 Add reading progress
   - Acceptance: Reader periodically saves and resumes chapter/progress.
   - Verify: atomic upsert; chapter belongs to story.
+  - Completed: 2026-06-21. `public.reading_progress` dung atomic upsert, owner-only RLS,
+    composite FK dam bao chapter thuoc story va index cho reading history. Reader Free debounce
+    autosave/restore; Story/Home/`/tu-truyen` deu co luong Doc tiep dung chapter da luu.
 
-- [ ] B3.4 Add comments
+- [x] B3.4 Add comments
   - Acceptance: read public comments; authenticated create/edit/delete own comment.
   - Verify: body validation and cross-user RLS tests pass.
+  - Completed: 2026-06-26. `public.comments` co constraints, indexes, explicit grants va RLS;
+    Story Detail doc comment that, user dang nhap co the tao/sua/xoa comment cua chinh minh qua
+    Server Actions. Local Supabase reset, SQL RLS tests, generated DB types, TypeScript, ESLint,
+    production build va Playwright comment flow pass.
 
 ## Phase B4: Admin And Production Hardening
 

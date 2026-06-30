@@ -19,6 +19,17 @@ export type StoryChapter = {
   wordCount: number;
 };
 
+export type StoryComment = {
+  id: number;
+  userId: string;
+  authorName: string;
+  authorInitial: string;
+  body: string;
+  createdAt: string;
+  relativeTime: string;
+  canMutate: boolean;
+};
+
 export type StoryDetailPayload = {
   source: "supabase";
   story: {
@@ -42,6 +53,7 @@ export type StoryDetailPayload = {
     latestChapterNumber: number | null;
   };
   chapters: StoryChapter[];
+  comments: StoryComment[];
   pagination: {
     hasPrevious: boolean;
     hasNext: boolean;
@@ -61,6 +73,21 @@ function formatCompactNumber(value: number) {
 
 function formatChapterNumber(value: number) {
   return Number.isInteger(value) ? String(value) : String(value).replace(".", ",");
+}
+
+function formatRelativeTime(value: string) {
+  const elapsedSeconds = Math.max(
+    0,
+    Math.floor((Date.now() - new Date(value).getTime()) / 1000),
+  );
+
+  if (elapsedSeconds < 60) return "vừa xong";
+  const elapsedMinutes = Math.floor(elapsedSeconds / 60);
+  if (elapsedMinutes < 60) return `${elapsedMinutes} phút trước`;
+  const elapsedHours = Math.floor(elapsedMinutes / 60);
+  if (elapsedHours < 24) return `${elapsedHours} giờ trước`;
+  const elapsedDays = Math.floor(elapsedHours / 24);
+  return `${elapsedDays} ngày trước`;
 }
 
 export const getStoryDetailBySlug = cache(
@@ -132,6 +159,42 @@ export const getStoryDetailBySlug = cache(
       throw new Error(`Failed to load story chapters: ${chapterError.message}`);
     }
 
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    const { data: commentRows, error: commentError } = await supabase
+      .from("comments")
+      .select("id, user_id, body, created_at")
+      .eq("story_id", story.id)
+      .eq("status", "visible")
+      .is("chapter_id", null)
+      .order("created_at", { ascending: false })
+      .order("id", { ascending: false })
+      .limit(20);
+
+    if (commentError) {
+      throw new Error(`Failed to load story comments: ${commentError.message}`);
+    }
+
+    const commentUserIds = Array.from(
+      new Set(commentRows.map((comment) => comment.user_id)),
+    );
+    const { data: profiles, error: profileError } = commentUserIds.length
+      ? await supabase
+          .from("profiles")
+          .select("id, display_name")
+          .in("id", commentUserIds)
+      : { data: [], error: null };
+
+    if (profileError) {
+      throw new Error(`Failed to load comment profiles: ${profileError.message}`);
+    }
+
+    const profileNames = new Map(
+      profiles.map((profile) => [profile.id, profile.display_name]),
+    );
+
     const hasExtraRow = chapterRows.length > CHAPTER_PAGE_SIZE;
     const pageRows = chapterRows.slice(0, CHAPTER_PAGE_SIZE);
     if (ascending) pageRows.reverse();
@@ -148,6 +211,19 @@ export const getStoryDetailBySlug = cache(
       publishedAt: chapter.published_at,
       wordCount: chapter.word_count,
     }));
+    const comments: StoryComment[] = commentRows.map((comment) => {
+      const authorName = profileNames.get(comment.user_id) ?? "Độc giả Ruby Noir";
+      return {
+        id: comment.id,
+        userId: comment.user_id,
+        authorName,
+        authorInitial: authorName.trim().slice(0, 1).toUpperCase(),
+        body: comment.body,
+        createdAt: comment.created_at,
+        relativeTime: formatRelativeTime(comment.created_at),
+        canMutate: user?.id === comment.user_id,
+      };
+    });
 
     const primaryGenre =
       story.story_genres.find((item) => item.is_primary)?.genre?.name ??
@@ -180,6 +256,7 @@ export const getStoryDetailBySlug = cache(
         latestChapterNumber: story.latest_chapter_number,
       },
       chapters,
+      comments,
       pagination: {
         hasPrevious:
           cursor !== null &&

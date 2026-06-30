@@ -39,6 +39,32 @@ export type Database = {
         }
         Relationships: []
       }
+      bookmarks: {
+        Row: {
+          created_at: string
+          story_id: number
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          story_id: number
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          story_id?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "bookmarks_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       chapter_contents: {
         Row: {
           chapter_id: number
@@ -124,6 +150,67 @@ export type Database = {
           },
         ]
       }
+      comments: {
+        Row: {
+          body: string
+          chapter_id: number | null
+          created_at: string
+          id: number
+          like_count: number
+          parent_id: number | null
+          status: string
+          story_id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          body: string
+          chapter_id?: number | null
+          created_at?: string
+          id?: never
+          like_count?: number
+          parent_id?: number | null
+          status?: string
+          story_id: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          body?: string
+          chapter_id?: number | null
+          created_at?: string
+          id?: never
+          like_count?: number
+          parent_id?: number | null
+          status?: string
+          story_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "comments_parent_id_fkey"
+            columns: ["parent_id"]
+            isOneToOne: false
+            referencedRelation: "comments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "comments_story_chapter_fkey"
+            columns: ["story_id", "chapter_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["story_id", "id"]
+          },
+          {
+            foreignKeyName: "comments_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       genres: {
         Row: {
           description: string | null
@@ -147,6 +234,81 @@ export type Database = {
           sort_order?: number
         }
         Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_path: string | null
+          bio: string | null
+          created_at: string
+          display_name: string
+          id: string
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          avatar_path?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name: string
+          id: string
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          avatar_path?: string | null
+          bio?: string | null
+          created_at?: string
+          display_name?: string
+          id?: string
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      reading_progress: {
+        Row: {
+          chapter_id: number
+          last_read_at: string
+          progress_percent: number
+          scroll_offset: number
+          story_id: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          chapter_id: number
+          last_read_at?: string
+          progress_percent?: number
+          scroll_offset?: number
+          story_id: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          chapter_id?: number
+          last_read_at?: string
+          progress_percent?: number
+          scroll_offset?: number
+          story_id?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reading_progress_story_chapter_fkey"
+            columns: ["story_id", "chapter_id"]
+            isOneToOne: false
+            referencedRelation: "chapters"
+            referencedColumns: ["story_id", "id"]
+          },
+          {
+            foreignKeyName: "reading_progress_story_id_fkey"
+            columns: ["story_id"]
+            isOneToOne: false
+            referencedRelation: "stories"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       stories: {
         Row: {
@@ -272,6 +434,42 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_publish_chapter: {
+        Args: {
+          p_chapter_id: number
+          p_published_at: string
+          p_story_id: number
+        }
+        Returns: {
+          chapter_id: number
+          chapter_slug: string
+          previous_chapter_slug: string
+          publication_status: string
+          story_id: number
+          story_slug: string
+        }[]
+      }
+      admin_save_chapter: {
+        Args: {
+          p_access_level: string
+          p_body: string
+          p_chapter_id: number
+          p_chapter_number: number
+          p_slug: string
+          p_story_id: number
+          p_title: string
+          p_updated_at: string
+          p_word_count: number
+        }
+        Returns: {
+          chapter_id: number
+          chapter_slug: string
+          previous_chapter_slug: string
+          publication_status: string
+          story_id: number
+          story_slug: string
+        }[]
+      }
       search_stories: {
         Args: {
           cursor_id?: number

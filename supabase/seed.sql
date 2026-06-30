@@ -260,3 +260,55 @@ select
   )
 from public.chapters
 join public.stories on stories.id = chapters.story_id;
+
+insert into auth.users (
+  id,
+  email,
+  raw_user_meta_data,
+  created_at,
+  updated_at
+)
+values
+  (
+    '10000000-0000-0000-0000-000000000001',
+    'binh-luan-mot@example.com',
+    '{"display_name":"Thiên Đạo Vô Cực"}'::jsonb,
+    now(),
+    now()
+  ),
+  (
+    '10000000-0000-0000-0000-000000000002',
+    'binh-luan-hai@example.com',
+    '{"display_name":"Kiếm Tâm"}'::jsonb,
+    now(),
+    now()
+  ),
+  (
+    '10000000-0000-0000-0000-000000000003',
+    'binh-luan-ba@example.com',
+    '{"display_name":"Huyền Vũ"}'::jsonb,
+    now(),
+    now()
+  );
+
+insert into public.comments (user_id, story_id, body, created_at)
+select seed.user_id::uuid, stories.id, seed.body, now() - seed.age
+from (
+  values
+    (
+      '10000000-0000-0000-0000-000000000001',
+      'Truyện quá hay! Mình đã đọc, tình tiết hấp dẫn, càng đọc càng cuốn!',
+      interval '2 hours'
+    ),
+    (
+      '10000000-0000-0000-0000-000000000002',
+      'Chương mới ra nhanh quá, cảm ơn tác giả và nhóm tác giả nhiều!',
+      interval '1 hour'
+    ),
+    (
+      '10000000-0000-0000-0000-000000000003',
+      'Top 1 tiên hiệp không phải tự nhiên mà có!',
+      interval '30 minutes'
+    )
+) as seed (user_id, body, age)
+join public.stories on stories.slug = 'van-co-than-de';
