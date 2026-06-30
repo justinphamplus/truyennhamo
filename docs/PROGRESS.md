@@ -749,6 +749,16 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
   - Full `npx.cmd playwright test`: 72/72 pass after copy cleanup.
   - `npm.cmd run db:reset` pass after browser suite.
 
+## Admin Production Release Checklist 2026-06-30
+
+- Added `docs/ADMIN_RELEASE_CHECKLIST.md` for admin production env, Supabase migration, smoke test and rollback gates.
+- Checklist captures Supabase changelog notes relevant to this release:
+  - public table exposure/Data API grants must be verified after migration;
+  - production should not run deprecated Postgres 14;
+  - service role and secret keys must stay server-only;
+  - Node 22 remains the CI/runtime target.
+- Updated `docs/README.md` so the release checklist is discoverable.
+
 ## Decision Log Shortcut
 
 Full decisions live in `DECISIONS.md`.
