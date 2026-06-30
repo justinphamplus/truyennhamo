@@ -321,7 +321,7 @@ Trach nhiem:
 - Render grouped navigation.
 - Active route state ro rang.
 - Dung semantic `<nav>`.
-- Nut `Truy cáº­p trang web` link ve `/`.
+- Nut `Truy cập trang web` link ve `/`.
 
 ### `AdminTopbar`
 

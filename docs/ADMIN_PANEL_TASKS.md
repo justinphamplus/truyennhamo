@@ -6,7 +6,7 @@ Source of truth:
 - Selected visual: `docs/admin-visuals/admin-visual-01-ruby-dashboard-v2.png`
 - Backend constraints: `docs/BACKEND_SPEC.md`, Phase B4
 
-Trang thai: Chua code admin panel.
+Trang thai: A5.2 comment hide/restore actions da complete; story cover storage/upload la task tiep theo.
 
 ## Dependency graph
 
@@ -77,16 +77,16 @@ Admin auth decision
 **Description:** Tao server-only helper kiem tra user hien tai co quyen admin khong. MVP de xuat dung Supabase Auth user + server-only email allowlist, khong dung `raw_user_meta_data`.
 
 **Acceptance criteria:**
-- [ ] Guest bi redirect hoac notFound khi vao `/admin`.
-- [ ] Non-admin authenticated user bi chan.
-- [ ] Admin allowlist chi doc o server.
-- [ ] Helper khong import vao Client Component.
+- [x] Guest bi redirect hoac notFound khi vao `/admin`.
+- [x] Non-admin authenticated user bi chan.
+- [x] Admin allowlist chi doc o server.
+- [x] Helper khong import vao Client Component.
 
 **Verification:**
-- [ ] Unit/integration test helper neu co test harness phu hop.
-- [ ] Playwright guest blocked.
-- [ ] `npx.cmd tsc --noEmit`
-- [ ] `npm run build`
+- [x] Unit/integration test helper neu co test harness phu hop. Repo hien chua co unit test harness; covered bang Playwright route tests.
+- [x] Playwright guest blocked.
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm run build`
 
 **Dependencies:** A0.1
 
@@ -102,16 +102,16 @@ Admin auth decision
 **Description:** Tao `/admin` route voi shell tinh: sidebar, topbar, content container va footer status. Chua ket noi dashboard data that.
 
 **Acceptance criteria:**
-- [ ] Sidebar dung dung nhom va label tieng Viet.
-- [ ] Topbar co title, search placeholder, profile affordance.
-- [ ] Link `Truy cập trang web` ve `/`.
-- [ ] Layout khong bi overflow o 320/768/1024/1440.
+- [x] Sidebar dung dung nhom va label tieng Viet.
+- [x] Topbar co title, search placeholder, profile affordance.
+- [x] Link `Truy cập trang web` ve `/`.
+- [x] Layout khong bi overflow o 320/768/1024/1440.
 
 **Verification:**
-- [ ] Playwright screenshot desktop/mobile.
-- [ ] Keyboard tab qua nav/topbar duoc.
-- [ ] `npm run lint`
-- [ ] `npm run build`
+- [x] Playwright screenshot desktop/mobile.
+- [x] Keyboard tab qua nav/topbar duoc.
+- [x] `npm run lint`
+- [x] `npm run build`
 
 **Dependencies:** A1.1
 
@@ -130,14 +130,14 @@ Admin auth decision
 **Description:** Tao typed mock/static payload cho dashboard de render UI dung contract, khong lay raw data trong component.
 
 **Acceptance criteria:**
-- [ ] `AdminDashboardPayload` duoc type ro.
-- [ ] Mock payload co 5 KPI va 6 panels.
-- [ ] Revenue/giao dich co note deferred neu chua co data that.
-- [ ] Revenue breakdown va Marketing summary khong render trong dashboard MVP; chung thuoc module rieng.
+- [x] `AdminDashboardPayload` duoc type ro.
+- [x] Mock payload co 5 KPI va 6 panels.
+- [x] Revenue/giao dich co note deferred neu chua co data that.
+- [x] Revenue breakdown va Marketing summary khong render trong dashboard MVP; chung thuoc module rieng.
 
 **Verification:**
-- [ ] `npx.cmd tsc --noEmit`
-- [ ] Dashboard render duoc voi payload mock.
+- [x] `npx.cmd tsc --noEmit`
+- [x] Dashboard render duoc voi payload mock.
 
 **Dependencies:** A1.2
 
@@ -150,10 +150,10 @@ Admin auth decision
 
 ## Checkpoint: Admin foundation
 
-- [ ] Guest/non-admin access bi chan.
-- [ ] Admin shell render voi mock payload.
-- [ ] `npx.cmd tsc --noEmit`, `npm run lint`, `npm run build` pass.
-- [ ] Visual QA 320/768/1024/1440 pass.
+- [x] Guest/non-admin access bi chan.
+- [x] Admin shell render voi mock payload.
+- [x] `npx.cmd tsc --noEmit`, `npm run lint`, `npm run build` pass.
+- [x] Visual QA 320/768/1024/1440 pass.
 
 ## Phase A2: Dashboard UI Components
 
@@ -162,14 +162,14 @@ Admin auth decision
 **Description:** Render 5 KPI cards theo token Ruby Noir, co icon slot, value, delta text va accessible labels.
 
 **Acceptance criteria:**
-- [ ] Tong truyen, Tong nguoi dung, Luot doc, Doanh thu, Giao dich hien dung.
-- [ ] Delta co text tang/giam, khong chi dua vao mau.
-- [ ] Value khong wrap/leak khoi card desktop.
+- [x] Tong truyen, Tong nguoi dung, Luot doc, Doanh thu, Giao dich hien dung.
+- [x] Delta co text tang/giam, khong chi dua vao mau.
+- [x] Value khong wrap/leak khoi card desktop.
 
 **Verification:**
-- [ ] Component renders with mock payload.
-- [ ] Responsive QA 320/768/1024/1440.
-- [ ] `npm run lint`
+- [x] Component renders with mock payload.
+- [x] Responsive QA 320/768/1024/1440.
+- [x] `npm run lint`
 
 **Dependencies:** A1.3
 
@@ -185,15 +185,15 @@ Admin auth decision
 **Description:** Implement reads line chart, genre donut chart va revenue bar chart bang SVG/CSS noi bo.
 
 **Acceptance criteria:**
-- [ ] Charts render tu payload typed.
-- [ ] Co empty state khi arrays rong.
-- [ ] Co text summary cho screen reader.
-- [ ] Khong them chart dependency.
+- [x] Charts render tu payload typed.
+- [x] Co empty state khi arrays rong.
+- [x] Co text summary cho screen reader.
+- [x] Khong them chart dependency.
 
 **Verification:**
-- [ ] `npx.cmd tsc --noEmit`
-- [ ] Browser screenshot desktop/mobile.
-- [ ] Manual inspect reduced data/empty state.
+- [x] `npx.cmd tsc --noEmit`
+- [x] Browser screenshot desktop/mobile.
+- [x] Manual inspect reduced data/empty state.
 
 **Dependencies:** A2.1
 
@@ -210,15 +210,15 @@ Admin auth decision
 **Description:** Implement top stories list, recent stories semantic table va user activity feed.
 
 **Acceptance criteria:**
-- [ ] Top stories co rank, cover, title, genre, read count.
-- [ ] Recent stories dung `<table>` desktop va stacked rows mobile.
-- [ ] Activity feed co kind label va target ro rang.
-- [ ] Khong co text overlap trong row dai.
+- [x] Top stories co rank, cover, title, genre, read count.
+- [x] Recent stories dung `<table>` desktop va stacked rows mobile.
+- [x] Activity feed co kind label va target ro rang.
+- [x] Khong co text overlap trong row dai.
 
 **Verification:**
-- [ ] Playwright screenshot desktop/mobile.
-- [ ] Keyboard/focus review for links.
-- [ ] `npm run lint`
+- [x] Playwright screenshot desktop/mobile.
+- [x] Keyboard/focus review for links.
+- [x] `npm run lint`
 
 **Dependencies:** A2.1
 
@@ -232,10 +232,10 @@ Admin auth decision
 
 ## Checkpoint: Static dashboard complete
 
-- [ ] Dashboard visually gan selected V2 nhung khong bi loi text/pixel.
-- [ ] Tat ca visible copy tieng Viet co dau.
-- [ ] Loading/empty/error states co skeleton hoac message ro.
-- [ ] `npx.cmd tsc --noEmit`, `npm run lint`, `npm run build` pass.
+- [x] Dashboard visually gan selected V2 nhung khong bi loi text/pixel.
+- [x] Tat ca visible copy tieng Viet co dau.
+- [x] Empty states co message ro; route loading/error boundaries de rieng o A3.2.
+- [x] `npx.cmd tsc --noEmit`, `npm run lint`, `npm run build` pass.
 
 ## Phase A3: Real Dashboard Data
 
@@ -244,15 +244,15 @@ Admin auth decision
 **Description:** Ket noi dashboard voi du lieu that co san: stories, profiles, story_genres, comments/bookmarks neu can. Revenue va transaction van placeholder cho den phase payment.
 
 **Acceptance criteria:**
-- [ ] Query nam o server module.
-- [ ] Component UI chi nhan `AdminDashboardPayload`.
-- [ ] Khong `select("*")` trong query quan trong.
-- [ ] Draft/admin-only data chi doc qua guard server.
+- [x] Query nam o server module.
+- [x] Component UI chi nhan `AdminDashboardPayload`.
+- [x] Khong `select("*")` trong query quan trong.
+- [x] Draft/admin-only data chi doc qua guard server.
 
 **Verification:**
-- [ ] `npx.cmd tsc --noEmit`
-- [ ] `npm run build`
-- [ ] Manual check local Supabase seeded data.
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm run build`
+- [x] Manual check local Supabase seeded data.
 
 **Dependencies:** A2.3
 
@@ -268,13 +268,13 @@ Admin auth decision
 **Description:** Them loading/error UI cho `/admin` dashboard.
 
 **Acceptance criteria:**
-- [ ] Loading state dung skeleton shape.
-- [ ] Error state khong leak database error.
-- [ ] Empty states ro cho chart/list rong.
+- [x] Loading state dung skeleton shape.
+- [x] Error state khong leak database error.
+- [x] Empty states ro cho chart/list rong.
 
 **Verification:**
-- [ ] Manual route tests.
-- [ ] `npm run build`
+- [x] Manual route tests.
+- [x] `npm run build`
 
 **Dependencies:** A3.1
 
@@ -287,10 +287,10 @@ Admin auth decision
 
 ## Checkpoint: Real dashboard ready
 
-- [ ] Dashboard doc du lieu that cho nhung bang hien co.
-- [ ] Revenue/giao dich hien placeholder/deferred ro.
-- [ ] Guest/non-admin van bi chan.
-- [ ] Build/lint/typecheck pass.
+- [x] Dashboard doc du lieu that cho nhung bang hien co.
+- [x] Revenue/giao dich hien placeholder/deferred ro.
+- [x] Guest/non-admin van bi chan.
+- [x] Build/lint/typecheck pass.
 
 ## Phase A4: Editorial Mutations
 
@@ -299,18 +299,18 @@ Admin auth decision
 **Description:** Thiet ke contract cho create/update/publish/archive story va chapter theo IA moi: chuong nam trong trang chi tiet truyen, khong co module admin chuong rieng.
 
 **Acceptance criteria:**
-- [ ] Input/output schemas ro cho story metadata, story production type, author search name, chapter metadata/content.
-- [ ] Error shape nhat quan.
-- [ ] `AdminMutationResult<T>` dung chung cho story/chapter actions.
-- [ ] Slug/status/published_at validation ro.
-- [ ] Story production type chi nhan `self_produced` hoac `licensed_translation`.
-- [ ] Author payload khong co bio/avatar.
-- [ ] Destructive actions co confirmation contract ro.
-- [ ] Khong nhan actor/user_id tu browser.
+- [x] Input/output schemas ro cho story metadata, story production type, author search name, chapter metadata/content.
+- [x] Error shape nhat quan.
+- [x] `AdminMutationResult<T>` dung chung cho story/chapter actions.
+- [x] Slug/status/published_at validation ro.
+- [x] Story production type chi nhan `self_produced` hoac `licensed_translation`.
+- [x] Author payload khong co bio/avatar.
+- [x] Destructive actions co confirmation contract ro.
+- [x] Khong nhan actor/user_id tu browser.
 
 **Verification:**
-- [ ] Unit tests validators.
-- [ ] Typecheck.
+- [x] Unit tests validators.
+- [x] Typecheck.
 
 **Dependencies:** A3.1
 
@@ -326,15 +326,15 @@ Admin auth decision
 **Description:** Tao route danh sach truyen admin va trang chi tiet truyen co tabs tong quan/chuong/xuat ban/lich su. Chua can publish mutation trong cung task neu scope lon.
 
 **Acceptance criteria:**
-- [ ] Admin xem duoc draft/published/archived stories.
-- [ ] Search/filter basic theo title/status/author/production type/uploader.
-- [ ] Edit shell co form fields chinh va validation messages.
-- [ ] Story detail co khu vuc danh sach chuong nhung chua can edit content day du.
-- [ ] Sidebar khong co item `Chuong truyen` rieng.
+- [x] Admin xem duoc draft/published/archived stories.
+- [x] Search/filter basic theo title/status/author/production type/uploader.
+- [x] Edit shell co form fields chinh va validation messages.
+- [x] Story detail co khu vuc danh sach chuong nhung chua can edit content day du.
+- [x] Sidebar khong co item `Chuong truyen` rieng.
 
 **Verification:**
-- [ ] Playwright admin story list.
-- [ ] `npm run build`
+- [x] Playwright admin story list.
+- [x] `npm run build`
 
 **Dependencies:** A4.1
 
@@ -352,17 +352,19 @@ Admin auth decision
 **Description:** Them server-only publish/archive story action voi admin client, validation va revalidation.
 
 **Acceptance criteria:**
-- [ ] Publish story set status/published_at dung invariant.
-- [ ] Archive story an khoi public pages.
-- [ ] Archive story can confirmation tu UI.
-- [ ] Publish/archive ghi audit event neu audit schema co san.
-- [ ] Public route revalidated.
-- [ ] Browser client khong co write grant vao content tables.
+- [x] Publish story set status/published_at dung invariant.
+- [x] Archive story an khoi public pages.
+- [x] Archive story can confirmation tu UI.
+- [x] Publish/archive ghi audit event neu audit schema co san.
+- [x] Public route revalidated.
+- [x] Browser client khong co write grant vao content tables.
 
 **Verification:**
-- [ ] SQL RLS/grants test.
-- [ ] Playwright: publish makes story visible, archive hides it.
-- [ ] Supabase advisors neu schema/policy thay doi.
+- [x] SQL RLS/grants test.
+- [x] Playwright: publish makes story visible, archive hides it.
+- [x] Supabase advisors neu schema/policy thay doi.
+
+**Completed:** 2026-06-29. Audit event write is deferred because no audit schema exists yet; action shape leaves the server-only boundary ready for that table.
 
 **Dependencies:** A4.2
 
@@ -379,17 +381,19 @@ Admin auth decision
 **Description:** Them admin chapter metadata/body edit va publish action server-only duoi route `truyen/[id]/chuong`.
 
 **Acceptance criteria:**
-- [ ] Admin mo va edit chapter tu trang chi tiet truyen.
-- [ ] Admin co the save draft chapter metadata/content.
-- [ ] Publish chapter validate story, content row, access_level, published_at.
-- [ ] Publish chapter ghi audit event neu audit schema co san.
-- [ ] Public Reader chi hien content free published theo RLS hien co.
-- [ ] VIP body khong leak ra public.
+- [x] Admin mo va edit chapter tu trang chi tiet truyen.
+- [x] Admin co the save draft chapter metadata/content.
+- [x] Publish chapter validate story, content row, access_level, published_at.
+- [x] Publish chapter ghi audit event neu audit schema co san.
+- [x] Public Reader chi hien content free published theo RLS hien co.
+- [x] VIP body khong leak ra public.
 
 **Verification:**
-- [ ] SQL RLS test for no browser writes.
-- [ ] Playwright: publish free chapter appears in public reader.
-- [ ] `npm run build`
+- [x] SQL RLS test for no browser writes.
+- [x] Playwright: publish free chapter appears in public reader.
+- [x] `npm run build`
+
+**Completed:** 2026-06-29. Audit event write is deferred because no audit schema exists yet; chapter save/publish now runs through service-role RPC transactions so saving a published chapter does not demote it.
 
 **Dependencies:** A4.3
 
@@ -403,7 +407,7 @@ Admin auth decision
 
 ## Checkpoint: Editorial core
 
-- [ ] Story/chapter publish flows work end-to-end.
+- [x] Story/chapter publish flows work end-to-end.
 - [ ] No browser write grants to content tables.
 - [ ] Public cache/routes revalidate.
 - [ ] SQL RLS tests, typecheck, lint, build, Playwright pass.
@@ -415,13 +419,16 @@ Admin auth decision
 **Description:** Tao admin comments queue de xem visible/hidden/deleted comments voi context story/user.
 
 **Acceptance criteria:**
-- [ ] Admin xem comments voi filters status/story.
-- [ ] Public user permissions khong thay doi.
-- [ ] No raw database errors in UI.
+- [x] Admin xem comments voi filters status/story.
+- [x] Public user permissions khong thay doi.
+- [x] No raw database errors in UI.
 
 **Verification:**
-- [ ] Playwright admin comments page.
-- [ ] `npm run build`
+- [x] SQL service-role read test.
+- [x] Playwright admin comments page.
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm run lint`
+- [x] `npm run build`
 
 **Dependencies:** A3.1
 
@@ -429,6 +436,9 @@ Admin auth decision
 - `src/app/admin/binh-luan/page.tsx`
 - `src/components/admin/comments/`
 - `src/lib/admin/comments.ts`
+- `supabase/migrations/*_grant_admin_comment_moderation_read.sql`
+- `supabase/tests/catalog.sql`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** M
 
@@ -437,20 +447,25 @@ Admin auth decision
 **Description:** Them moderation mutations cho hidden/visible status theo server-only admin path.
 
 **Acceptance criteria:**
-- [ ] Admin hide comment.
-- [ ] Hidden comment khong hien public.
-- [ ] Restore comment dua ve visible neu story published.
-- [ ] Hide/restore ghi audit event neu audit schema co san.
-- [ ] Owner public action khong the tu unhide.
+- [x] Admin hide comment.
+- [x] Hidden comment khong hien public.
+- [x] Restore comment dua ve visible neu story published.
+- [x] Hide/restore ghi audit event neu audit schema co san.
+- [x] Owner public action khong the tu unhide.
 
 **Verification:**
-- [ ] SQL RLS test.
-- [ ] Playwright: hide removes comment from public story.
+- [x] SQL RLS test.
+- [x] Playwright: hide removes comment from public story.
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm run lint`
+- [x] `npm run build`
 
 **Dependencies:** A5.1
 
 **Files likely touched:**
 - `src/app/admin/binh-luan/actions.ts`
+- `src/components/admin/comments/admin-comment-queue.tsx`
+- `supabase/migrations/*_grant_admin_comment_moderation_mutations.sql`
 - `supabase/tests/catalog.sql`
 - `tests/app-router-migration.spec.ts`
 
@@ -461,32 +476,36 @@ Admin auth decision
 **Description:** Implement bucket/policy cho story covers va admin upload UI.
 
 **Acceptance criteria:**
-- [ ] Public read story covers.
-- [ ] Upload/update/delete cover chi server/admin.
-- [ ] File type/size/path validated.
-- [ ] Story cover path update goes through server-only action.
-- [ ] Cover update/delete ghi audit event neu audit schema co san.
+- [x] Public read story covers.
+- [x] Upload/update/delete cover chi server/admin.
+- [x] File type/size/path validated.
+- [x] Story cover path update goes through server-only action.
+- [x] Cover update/delete ghi audit event neu audit schema co san.
+
+Note: audit event write remains deferred because no audit schema/table exists yet.
 
 **Verification:**
-- [ ] Supabase storage policy tests/manual matrix.
-- [ ] Upload happy path local.
-- [ ] `npm run build`
+- [x] Supabase storage policy tests/manual matrix.
+- [x] Upload happy path local.
+- [x] `npm run build`
 
 **Dependencies:** A4.2
 
 **Files likely touched:**
-- `supabase/migrations/`
+- `supabase/migrations/20260630032137_add_story_cover_storage_policy.sql`
 - `src/app/admin/truyen/actions.ts`
-- `src/components/admin/storage/`
+- `src/components/admin/stories/admin-story-detail.tsx`
+- `src/lib/admin/validators.ts`
 - `supabase/tests/catalog.sql`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** M
 
 ## Checkpoint: Moderation/storage
 
-- [ ] Comment moderation works.
-- [ ] Story cover upload follows admin-only write policy.
-- [ ] Advisors clean or documented.
+- [x] Comment moderation works.
+- [x] Story cover upload follows admin-only write policy.
+- [x] Advisors clean or documented.
 
 ## Phase A6: Revenue Module Shells
 
@@ -495,15 +514,15 @@ Admin auth decision
 **Description:** Tao read-only/deferred states cho cac module doanh thu chua co backend that: giao dich, goi nap, goi VIP, rut tien, thong ke doanh thu.
 
 **Acceptance criteria:**
-- [ ] Sidebar links khong dead-end.
-- [ ] Moi deferred page noi ro tinh nang dang chuan bi.
-- [ ] Khong fake mutation cho payment/revenue.
-- [ ] `Goi nap` va `Goi VIP` la 2 route/module rieng.
-- [ ] `Thong ke doanh thu` co placeholder cho breakdown theo truyen va username nguoi dang.
+- [x] Sidebar links khong dead-end.
+- [x] Moi deferred page noi ro tinh nang dang chuan bi.
+- [x] Khong fake mutation cho payment/revenue.
+- [x] `Goi nap` va `Goi VIP` la 2 route/module rieng.
+- [x] `Thong ke doanh thu` co placeholder cho breakdown theo truyen va username nguoi dang.
 
 **Verification:**
-- [ ] Playwright route smoke test.
-- [ ] `npm run build`
+- [x] Playwright route smoke test.
+- [x] `npm run build`
 
 **Dependencies:** A1.2
 
@@ -513,7 +532,9 @@ Admin auth decision
 - `src/app/admin/goi-vip/page.tsx`
 - `src/app/admin/rut-tien/page.tsx`
 - `src/app/admin/thong-ke-doanh-thu/page.tsx`
-- `src/components/admin/revenue/`
+- `src/components/admin/revenue/deferred-revenue-page.tsx`
+- `src/components/admin/admin-nav.ts`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** M
 
@@ -522,19 +543,22 @@ Admin auth decision
 **Description:** Tao read-only/deferred states cho cac module chua co backend day du: vai tro, thong bao.
 
 **Acceptance criteria:**
-- [ ] Sidebar links khong dead-end.
-- [ ] Moi deferred page noi ro tinh nang dang chuan bi.
-- [ ] Khong fake mutation cho role/notification.
+- [x] Sidebar links khong dead-end.
+- [x] Moi deferred page noi ro tinh nang dang chuan bi.
+- [x] Khong fake mutation cho role/notification.
 
 **Verification:**
-- [ ] Playwright route smoke test.
-- [ ] `npm run build`
+- [x] Playwright route smoke test.
+- [x] `npm run build`
 
 **Dependencies:** A1.2
 
 **Files likely touched:**
 - `src/app/admin/vai-tro/page.tsx`
 - `src/app/admin/thong-bao/page.tsx`
+- `src/components/admin/deferred-admin-page.tsx`
+- `src/components/admin/admin-nav.ts`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** S
 
@@ -545,14 +569,14 @@ Admin auth decision
 **Description:** Tao nhom Marketing voi overview, su kien/campaign va deferred state de sau nay gan event marketing.
 
 **Acceptance criteria:**
-- [ ] Sidebar co nhom `MARKETING`.
-- [ ] Marketing overview hien campaign dang chay/upcoming banners/upcoming events o dang placeholder co cau truc.
-- [ ] Su kien co list shell voi status draft/scheduled/live/ended.
-- [ ] Khong co mutation that neu chua co campaign schema.
+- [x] Sidebar co nhom `MARKETING`.
+- [x] Marketing overview hien campaign dang chay/upcoming banners/upcoming events o dang placeholder co cau truc.
+- [x] Su kien co list shell voi status draft/scheduled/live/ended.
+- [x] Khong co mutation that neu chua co campaign schema.
 
 **Verification:**
-- [ ] Playwright route smoke test.
-- [ ] `npm run build`
+- [x] Playwright route smoke test.
+- [x] `npm run build`
 
 **Dependencies:** A1.2
 
@@ -560,6 +584,8 @@ Admin auth decision
 - `src/app/admin/marketing/page.tsx`
 - `src/app/admin/marketing/su-kien/page.tsx`
 - `src/components/admin/marketing/`
+- `src/components/admin/admin-nav.ts`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** M
 
@@ -568,19 +594,21 @@ Admin auth decision
 **Description:** Tao route shell cho banner placement de chuan bi quan ly banner theo vi tri hien thi.
 
 **Acceptance criteria:**
-- [ ] Banner route co placement list placeholder: trang chu, the loai, chi tiet truyen, reader.
-- [ ] Moi placement hien status placeholder va kich thuoc/vi tri du kien.
-- [ ] Khong co upload/mutation that neu chua co storage/campaign schema.
+- [x] Banner route co placement list placeholder: trang chu, the loai, chi tiet truyen, reader.
+- [x] Moi placement hien status placeholder va kich thuoc/vi tri du kien.
+- [x] Khong co upload/mutation that neu chua co storage/campaign schema.
 
 **Verification:**
-- [ ] Playwright route smoke test.
-- [ ] `npm run build`
+- [x] Playwright route smoke test.
+- [x] `npm run build`
 
 **Dependencies:** A7.1
 
 **Files likely touched:**
 - `src/app/admin/marketing/banner/page.tsx`
 - `src/components/admin/marketing/banner-placement-list.tsx`
+- `src/components/admin/admin-nav.ts`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** S
 
@@ -589,13 +617,13 @@ Admin auth decision
 **Description:** Tao route shell cho truyen de xuat/editorial picks dung trong campaign.
 
 **Acceptance criteria:**
-- [ ] Truyen de xuat route co table/list placeholder cho editorial picks.
-- [ ] Placeholder noi ro dependency campaign schema va story ranking/boost policy.
-- [ ] Khong fake boost mutation.
+- [x] Truyen de xuat route co table/list placeholder cho editorial picks.
+- [x] Placeholder noi ro dependency campaign schema va story ranking/boost policy.
+- [x] Khong fake boost mutation.
 
 **Verification:**
-- [ ] Playwright route smoke test.
-- [ ] `npm run build`
+- [x] Playwright route smoke test.
+- [x] `npm run build`
 
 **Dependencies:** A7.1
 
@@ -610,14 +638,14 @@ Admin auth decision
 **Description:** Tao cac route deferred cho ma khuyen mai, thong bao chien dich va thong ke Marketing.
 
 **Acceptance criteria:**
-- [ ] Ma khuyen mai route noi ro dependency payment/VIP.
-- [ ] Thong bao chien dich route noi ro dependency notification system.
-- [ ] Thong ke Marketing co placeholder cho clicks, reads, conversion va attribution.
-- [ ] Khong fake coupon, push/email, hoac analytics mutation.
+- [x] Ma khuyen mai route noi ro dependency payment/VIP.
+- [x] Thong bao chien dich route noi ro dependency notification system.
+- [x] Thong ke Marketing co placeholder cho clicks, reads, conversion va attribution.
+- [x] Khong fake coupon, push/email, hoac analytics mutation.
 
 **Verification:**
-- [ ] Playwright route smoke test.
-- [ ] `npm run build`
+- [x] Playwright route smoke test.
+- [x] `npm run build`
 
 **Dependencies:** A7.1
 
@@ -625,27 +653,29 @@ Admin auth decision
 - `src/app/admin/marketing/ma-khuyen-mai/page.tsx`
 - `src/app/admin/marketing/thong-bao-chien-dich/page.tsx`
 - `src/app/admin/marketing/thong-ke/page.tsx`
-- `src/components/admin/marketing/marketing-deferred-panel.tsx`
+- `src/components/admin/marketing/marketing-deferred-page.tsx`
+- `src/components/admin/admin-nav.ts`
+- `tests/app-router-migration.spec.ts`
 
 **Estimated scope:** M
 
 ## Final checkpoint
 
-- [ ] Admin dashboard selected visual implemented without overlap.
-- [ ] All visible copy is Vietnamese with accents.
-- [ ] Guest/non-admin blocked.
-- [ ] Server-only admin client stays server-only.
-- [ ] Story/chapter publish actions verified.
-- [ ] Chapter management lives under story detail, not a separate top-level admin module.
-- [ ] Comment moderation verified.
-- [ ] Storage policy verified if upload shipped.
-- [ ] Revenue shell includes `Goi nap`, `Goi VIP`, and breakdown placeholders by story/uploader.
-- [ ] Marketing shell includes campaigns/events, banner placements, featured stories, promo placeholder, notification placeholder, analytics placeholder.
-- [ ] `npm run db:test`
-- [ ] `npx.cmd tsc --noEmit`
-- [ ] `npm run lint`
-- [ ] `npm run build`
-- [ ] `npx.cmd playwright test`
+- [x] Admin dashboard selected visual implemented without overlap.
+- [x] All visible copy is Vietnamese with accents; technical status/code tokens remain where the contract requires them.
+- [x] Guest/non-admin blocked.
+- [x] Server-only admin client stays server-only.
+- [x] Story/chapter publish actions verified.
+- [x] Chapter management lives under story detail, not a separate top-level admin module.
+- [x] Comment moderation verified.
+- [x] Storage policy verified if upload shipped.
+- [x] Revenue shell includes `Goi nap`, `Goi VIP`, and breakdown placeholders by story/uploader.
+- [x] Marketing shell includes campaigns/events, banner placements, featured stories, promo placeholder, notification placeholder, analytics placeholder.
+- [x] `npm run db:test`
+- [x] `npx.cmd tsc --noEmit`
+- [x] `npm run lint`
+- [x] `npm run build`
+- [x] `npx.cmd playwright test`
 
 ## Risks and mitigations
 

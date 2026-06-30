@@ -230,3 +230,19 @@ Consequence:
 - Homepage va `/tu-truyen` la dynamic routes nen doc progress moi khi dieu huong; khong can refresh
   Reader sau moi lan save.
 - Khi prototype shell duoc tach thanh React components hoan chinh, mutation co the duoc danh gia lai.
+
+## 2026-06-30: UTF-8 Text Hygiene
+
+Decision: Treat repository text files as UTF-8 and keep a repeatable mojibake guard in `npm run text:check`.
+
+Reason:
+
+- Vietnamese UI copy and SQL seed/test strings are easy to corrupt on Windows terminals/editors.
+- Console rendering can look broken even when files are correct, so checks should inspect file content directly.
+- A small Node stdlib script is enough; no new dependency is needed.
+
+Consequence:
+
+- Editors should follow `.editorconfig` with `charset = utf-8`.
+- Git should keep normal text/binary handling through `.gitattributes`.
+- Before shipping copy-heavy changes, run `npm run text:check` with the usual lint/type/build checks.

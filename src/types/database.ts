@@ -434,6 +434,42 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      admin_publish_chapter: {
+        Args: {
+          p_chapter_id: number
+          p_published_at: string
+          p_story_id: number
+        }
+        Returns: {
+          chapter_id: number
+          chapter_slug: string
+          previous_chapter_slug: string
+          publication_status: string
+          story_id: number
+          story_slug: string
+        }[]
+      }
+      admin_save_chapter: {
+        Args: {
+          p_access_level: string
+          p_body: string
+          p_chapter_id: number
+          p_chapter_number: number
+          p_slug: string
+          p_story_id: number
+          p_title: string
+          p_updated_at: string
+          p_word_count: number
+        }
+        Returns: {
+          chapter_id: number
+          chapter_slug: string
+          previous_chapter_slug: string
+          publication_status: string
+          story_id: number
+          story_slug: string
+        }[]
+      }
       search_stories: {
         Args: {
           cursor_id?: number

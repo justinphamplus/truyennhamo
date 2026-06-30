@@ -1,6 +1,6 @@
 # Progress Tracker: NovelVerse
 
-Cap nhat lan cuoi: 2026-06-21
+Cap nhat lan cuoi: 2026-06-30
 
 ## Current Phase
 
@@ -19,7 +19,7 @@ Next.js App Router frontend connected to Supabase catalog, Auth, profiles and bo
 | Documentation | Done | Bo docs du an da duoc tao |
 | Visual theme | Done | Ruby Noir Romance la theme chinh thuc duy nhat |
 | Backend/API | Reading progress ready | Catalog + Auth + bookmarks + reading resume are connected |
-| Admin dashboard | Not started | Out of scope hien tai |
+| Admin dashboard | Real dashboard ready | `/admin` reads Supabase payload, has route boundaries, and passes checkpoint QA |
 | Deployment | Not started | Chua yeu cau |
 
 ## Completed Code
@@ -443,6 +443,311 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
   - `npm run db:types` pass va generated lai `src/types/database.ts` tu local schema.
   - `npx tsc --noEmit`, `npm run lint` va `npm run build` pass.
   - Full Playwright suite pass: 46/46, gom signup -> comment -> edit -> delete.
+
+## Admin Foundation 2026-06-27
+
+- Them canonical `/admin` route voi server-side layout guard.
+- Them `src/lib/admin/auth.ts` server-only helper dung Supabase Auth `getUser()` va `ADMIN_EMAILS`
+  allowlist; khong dung `raw_user_meta_data`.
+- Guest vao `/admin` duoc redirect ve `/dang-nhap?next=/admin`.
+- Authenticated non-admin vao `/admin` nhan 404.
+- Them placeholder `ADMIN_EMAILS` vao `.env.example`.
+- Them static admin shell: sidebar grouped navigation, topbar, search placeholder, profile affordance,
+  content frame va footer status.
+- Admin sidebar co day du nhom Noi dung, Nguoi dung, Doanh thu, Marketing va Cau hinh he thong theo spec.
+- Them `AdminDashboardPayload` typed contract va `adminDashboardMockPayload` gom 5 KPI, 6 panel dataset,
+  note deferred cho Doanh thu/Giao dich.
+- `/admin` nhung JSON payload `#admin-dashboard-data` de A2 render component tu contract, khong truyen
+  row Supabase raw vao UI.
+- Public prototype script chi khoi dong tren cac page public duoc ho tro, khong chay nham tren admin route.
+- Verification:
+  - Playwright admin guard tests pass cho guest va non-admin.
+  - Playwright admin shell tests pass cho grouped navigation, topbar, keyboard focus va screenshots
+    tai 320/768/1024/1440.
+  - Playwright admin dashboard payload contract test pass.
+  - `npx.cmd tsc --noEmit`, `npm run lint`, `npm run build` pass.
+  - `npm.cmd audit --audit-level=high`: 0 vulnerabilities.
+  - Full Playwright suite pass: 51/51.
+
+## Admin Dashboard A2.1 2026-06-27
+
+- Render 5 KPI metric cards tu `AdminDashboardPayload` mock: Tong truyen, Tong nguoi dung,
+  Luot doc, Doanh thu va Giao dich.
+- Them `MetricCard` voi icon slot, accessible label, value, delta text va note deferred khi co.
+- Them `AdminDashboard` server component de `/admin` render payload typed thay cho placeholder cards.
+- Verification:
+  - Focused Playwright KPI test pass.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Admin Dashboard A2.2 2026-06-27
+
+- Them 3 SVG/CSS chart khong dependency moi: reads line chart, genre donut chart va revenue bar chart.
+- Charts render tu `AdminDashboardPayload`, co text summary va empty state cho arrays rong.
+- Revenue chart giu trang thai deferred cho den payment ledger.
+- Verification:
+  - Focused Playwright chart test pass.
+  - Admin Playwright group pass: 7/7.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+  - Screenshot desktop/mobile tai 1440 va 320 khong overlap.
+
+## Admin Dashboard A2.3 2026-06-27
+
+- Them top stories list voi rank, cover fallback, title link, genre/production type va read count.
+- Them recent stories semantic table; mobile rows stack bang `data-label`.
+- Them user activity feed voi kind label, actor/action va target ro rang.
+- Verification:
+  - Focused Playwright list/table/feed test pass.
+  - Admin Playwright group pass: 8/8.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+  - Screenshot desktop/mobile khong overlap; title link focus duoc.
+
+## Static Dashboard Checkpoint 2026-06-27
+
+- Dashboard static visually complete tu mock payload: KPI, charts, top stories, recent stories va activity feed.
+- Visible admin copy scan khong co mojibake; screenshots 1440/320 khong overlap.
+- Empty states co message trong dashboard panels; route loading/error boundaries duoc giu cho A3.2.
+- Verification:
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+  - Full Playwright suite pass: 54/54.
+  - `git diff --check` pass voi CRLF warnings cu.
+
+## Admin Dashboard Data A3.1 2026-06-27
+
+- `/admin` now calls server-side `getAdminDashboardPayload()` and embeds `source: "supabase"` in the JSON contract.
+- KPI, reads chart, genre distribution, top stories, recent stories, and activity feed use existing Supabase tables.
+- Revenue and transactions remain explicit deferred placeholders until payment/ledger tasks.
+- Verification:
+  - `npx.cmd tsc --noEmit` pass.
+  - `npm.cmd run build` pass.
+  - `npx.cmd playwright test tests/app-router-migration.spec.ts -g "Admin dashboard"` pass.
+
+## Admin Dashboard A3.2 2026-06-29
+
+- Added `/admin/loading.tsx` with skeleton shapes matching the dashboard grid.
+- Added `/admin/error.tsx` with a generic retry state that does not render raw database errors.
+- Verification:
+  - `npx.cmd playwright test tests/app-router-migration.spec.ts -g "Admin"` pass: 9/9.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Real Dashboard Checkpoint 2026-06-29
+
+- Reviewed A3.1/A3.2 for correctness, security, test coverage, and over-engineering.
+- No required code changes found during checkpoint review.
+- Dashboard data is server-side, guarded by admin auth, and UI still consumes only `AdminDashboardPayload`.
+- Revenue and transactions remain explicit deferred placeholders.
+- Verification:
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+  - Full Playwright suite pass: 55/55.
+  - `npm.cmd audit --audit-level=high`: 0 vulnerabilities.
+  - `git diff --check` pass voi CRLF warnings cu.
+
+## Admin Editorial Contracts A4.1 2026-06-29
+
+- Defined story-centered admin contracts in `src/lib/admin/validators.ts` for story upsert,
+  chapter upsert, publish, archive and shared mutation results.
+- Story production type is limited to `self_produced` or `licensed_translation`.
+- Story/chapter status and slug validation are explicit; published items require `publishedAt`.
+- Author search payload accepts only name, slug and aliases; no bio/avatar fields from browser input.
+- Story/chapter inputs are strict and do not accept browser-supplied actor/user ids.
+- Destructive archive inputs require explicit confirmation literals.
+- Verification:
+  - Focused validator Playwright spec pass: 4/4.
+  - `npx.cmd tsc --noEmit` pass.
+  - `npm.cmd run lint` pass.
+
+## Admin Story Shell A4.2 2026-06-29
+
+- Added `/admin/truyen` story list route and `/admin/truyen/[id]` detail shell.
+- Added server-only admin story queries using the Supabase admin client; list supports title/author
+  search plus status, production type and uploader filters.
+- Added read-only editorial form shell with title, slug, description, author, production type, status
+  and published date fields.
+- Kept chapters nested under the story detail page with a metadata table; no separate admin chapter
+  sidebar item was added.
+- Added migration `20260629102906_grant_admin_read_catalog.sql` to grant service-role read access to
+  catalog metadata needed by server-only admin pages.
+- Playwright output artifacts now use `.tmp/playwright-results` to avoid stale locked traces.
+- Verification:
+  - `npm.cmd run db:reset` pass.
+  - `npm.cmd run db:test` pass.
+  - Supabase local advisors: no issues.
+  - Focused Playwright admin story list/detail pass, including 320/768/1024/1440 overflow checks and screenshots.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Admin Story Publish/Archive A4.3 2026-06-29
+
+- Added server-only story publish/archive actions under `/admin/truyen/actions.ts`.
+- Publish sets `publication_status = 'published'`, preserves existing `published_at`, sets missing publish timestamps server-side, and revalidates admin/public story paths.
+- Archive requires UI confirmation, sets `publication_status = 'archived'`, and hides the story from public RLS-backed routes.
+- Added column-level `service_role` update grant for story publication fields; anon/authenticated still have no story write grant.
+- Audit event writing remains deferred because the audit schema/table does not exist yet.
+- Verification:
+  - `npm.cmd run db:reset` pass.
+  - `npm.cmd run db:test` pass.
+  - Supabase local advisors: no issues.
+  - Focused Playwright publish/archive test pass.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run build` pass.
+
+## Admin Chapter Edit/Publish A4.4 2026-06-29
+
+- Added nested admin chapter editor route `/admin/truyen/[id]/chuong/[chapterId]`.
+- Story detail chapter rows now link into the nested editor instead of creating a separate sidebar module.
+- Added server-only chapter save draft and publish actions using existing admin contracts.
+- Save draft updates chapter metadata and `chapter_contents`; publish validates published story, content row,
+  access level and server-side publish timestamp before exposing the chapter.
+- Follow-up consistency fix moved chapter save/publish writes into service-role RPC transactions and preserves
+  `published` status when saving an already published chapter.
+- Added column-level `service_role` grants for chapter/content mutation fields; anon/authenticated still have
+  no write grant to content tables.
+- Audit event writing remains deferred because the audit schema/table does not exist yet.
+- Verification:
+  - `npm.cmd run db:reset` pass.
+  - `npm.cmd run db:test` pass.
+  - Supabase local advisors: no issues.
+  - Focused Playwright nested chapter edit/publish test pass.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Admin Comment Moderation A5.1 2026-06-30
+
+- Added read-only admin comment queue at `/admin/binh-luan`.
+- Queue shows latest comments with story context, reader profile label, status, like count and timestamps.
+- Added status and search filters through URL params; no hide/restore mutations yet.
+- Added service-role read grant migration for comments, profiles and stories; public/user comment permissions are unchanged.
+- Verification:
+  - `npm.cmd run db:reset` pass.
+  - `npm.cmd run db:test` pass.
+  - Supabase local advisors: no issues.
+  - Focused Playwright admin comment queue test pass with 320/768/1024/1440 overflow screenshots.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## UTF-8 Hygiene 2026-06-30
+
+- Added `.editorconfig` to pin repository text editing to UTF-8 with final newlines.
+- Added `.gitattributes` to keep Git text normalization and binary asset handling explicit.
+- Added `npm run text:check`, a dependency-free Node guard for replacement characters and common UTF-8 mojibake patterns.
+- Fixed confirmed mojibake in the admin spec public-link label and comment RLS SQL test literals.
+- Verification:
+  - `npm.cmd run text:check` pass.
+
+## Admin Comment Moderation A5.2 2026-06-30
+
+- Added server-only admin hide/restore actions for comments at `/admin/binh-luan`.
+- Admin queue now shows per-row actions: visible comments can be hidden, hidden comments can be restored, deleted comments stay non-actionable.
+- Restore only allows returning a comment to `visible` when the related story is still published.
+- Added service-role update grant for comment moderation status fields; anon/authenticated grants are unchanged.
+- SQL coverage verifies service-role hide/restore and that a comment owner cannot restore a hidden moderated comment.
+- Public story cache is revalidated after moderation so hidden comments disappear from story pages and restored comments return.
+- Audit event writing remains deferred because the audit schema/table does not exist yet.
+- Verification:
+  - `npm.cmd run db:reset` pass.
+  - `npm.cmd run db:test` pass.
+  - Focused Playwright admin comment hide/restore test pass.
+  - `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Story Cover Storage A5.3 2026-06-30
+
+- Added Supabase Storage bucket `story-covers` as public read with a 5MB image limit and JPG/PNG/WebP MIME allowlist.
+- Added read policy for anon/authenticated clients and kept upload/update/delete server-admin only via service-role actions.
+- Added admin story detail cover UI for preview, upload/update and delete.
+- Server action validates story id/slug, MIME, file size, image signature and server-generated `{story_id}/{version}.{ext}` object paths before updating `stories.cover_path`.
+- Added `service_role` update grant for `stories.cover_path` and `updated_at`.
+- Audit event writing remains deferred because the audit schema/table does not exist yet.
+- Verification:
+  - `npm.cmd run db:reset` pass after implementation and again after full browser suite.
+  - `npm.cmd run db:test` pass with storage bucket/policy/grant checks.
+  - Supabase local advisors: no issues.
+  - Focused Playwright story cover upload/delete test pass.
+  - Full `npx.cmd playwright test`: 66/66 pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build`, `npm.cmd audit --audit-level=high`, `git diff --check` pass.
+
+## Admin Revenue Shells A6.1 2026-06-30
+
+- Added real admin routes for `/admin/giao-dich`, `/admin/goi-nap`, `/admin/goi-vip`, `/admin/rut-tien` and `/admin/thong-ke-doanh-thu`.
+- Updated revenue sidebar links from query-param placeholders to those routes.
+- Added a shared read-only deferred revenue shell with no forms, buttons or fake mutations.
+- Kept `Gói nạp` and `Gói VIP` as separate route/module contracts.
+- `Thống kê doanh thu` now reserves breakdown placeholders for revenue by story and by uploader username.
+- Verification:
+  - Focused Playwright revenue route smoke test pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Admin Role/Notification Shells A6.2 2026-06-30
+
+- Added real admin routes for `/admin/vai-tro` and `/admin/thong-bao`.
+- Updated role and notification sidebar links from query-param placeholders to those routes.
+- Added a shared read-only deferred admin shell with no forms, buttons or fake mutations.
+- Role shell states dependency on server-side role/permission schema and audit.
+- Notification shell states dependency on notification schema, delivery channels and opt-out policy.
+- Verification:
+  - Focused Playwright role/notification route smoke test pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build` pass.
+
+## Admin Marketing Shells A7.1 2026-06-30
+
+- Added real admin routes for `/admin/marketing` and `/admin/marketing/su-kien`.
+- Updated marketing overview and event sidebar links from query-param placeholders to those routes.
+- Added a shared read-only marketing shell with no forms, buttons or fake mutations.
+- Marketing overview reserves structured placeholders for active campaigns, upcoming banners and upcoming events.
+- Event shell reserves draft, scheduled, live and ended status slots until campaign schema exists.
+- Verification:
+  - Focused Playwright marketing route smoke test pass.
+  - Full `npx.cmd playwright test`: 69/69 pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build`, `npm.cmd audit --audit-level=high`, `git diff --check` pass.
+  - `npm.cmd run db:reset` pass after browser suite.
+
+## Admin Banner Placement Shell A7.2 2026-06-30
+
+- Added real admin route for `/admin/marketing/banner`.
+- Updated the banner sidebar link from query-param placeholder to the route.
+- Added a read-only banner placement shell with four reserved placements: Trang chủ, Thể loại, Chi tiết truyện and Reader.
+- Each placement shows placeholder status plus expected size and position notes.
+- Upload, campaign binding, scheduling and mutations remain deferred until storage/campaign schema is available.
+- Verification:
+  - Focused Playwright banner placement route smoke test pass.
+  - Full `npx.cmd playwright test`: 70/70 pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build`, `npm.cmd audit --audit-level=high`, `git diff --check` pass.
+  - `npm.cmd run db:reset` pass after browser suite.
+
+## Admin Featured Stories Shell A7.3 2026-06-30
+
+- Added real admin route for `/admin/marketing/truyen-de-xuat`.
+- Updated the Truyện đề xuất sidebar link from query-param placeholder to the route.
+- Added a read-only featured stories shell with four editorial pick slots: Hero campaign, Trang chủ, Chi tiết truyện and Reader.
+- Placeholder copy names the deferred dependencies on campaign schema and story ranking/boost policy.
+- Boost mutations remain deferred until campaign/ranking rules exist.
+- Verification:
+  - Focused Playwright featured stories route smoke test pass.
+  - Full `npx.cmd playwright test`: 71/71 pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build`, `npm.cmd audit --audit-level=high`, `git diff --check` pass.
+  - `npm.cmd run db:reset` pass after browser suite.
+
+## Admin Marketing Deferred Shells A7.4 2026-06-30
+
+- Added real admin routes for `/admin/marketing/ma-khuyen-mai`, `/admin/marketing/thong-bao-chien-dich` and `/admin/marketing/thong-ke`.
+- Updated promo, campaign notification and marketing stats sidebar links from query-param placeholders to those routes.
+- Reused the existing read-only marketing shell for all three pages; no coupon, push/email, analytics or tracking mutations were added.
+- Promo placeholder names the deferred payment/VIP dependency.
+- Campaign notification placeholder names the deferred notification system and push/email policy.
+- Marketing stats placeholder reserves clicks, reads, conversion and attribution.
+- Verification:
+  - Focused Playwright A7.4 route smoke test pass.
+  - Full `npx.cmd playwright test`: 72/72 pass.
+  - `npm.cmd run text:check`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build`, `npm.cmd audit --audit-level=high`, `git diff --check` pass.
+  - `npm.cmd run db:reset` pass after browser suite.
+
+## Admin Final Checkpoint QA 2026-06-30
+
+- Completed whole-admin checkpoint review for A1-A7.4.
+- Cleaned remaining visible shell labels from English-only `Read-only shell`/`Placeholder` wording to Vietnamese labels.
+- Reviewed admin security boundaries:
+  - Admin Supabase client remains in a `server-only` module.
+  - Service-role grants stay server-side/RPC/storage-policy scoped.
+  - Admin queries use explicit column selections instead of `select("*")`.
+  - Dashboard JSON script escapes `<` before `dangerouslySetInnerHTML`.
+- Verification:
+  - `npm.cmd run text:check`, `npm.cmd run db:test`, `npx.cmd supabase db advisors --local --type all --level warn --fail-on error`, `npx.cmd tsc --noEmit`, `npm.cmd run lint`, `npm.cmd run build`, `npm.cmd audit --audit-level=high` pass.
+  - Full `npx.cmd playwright test`: 72/72 pass after copy cleanup.
+  - `npm.cmd run db:reset` pass after browser suite.
 
 ## Decision Log Shortcut
 

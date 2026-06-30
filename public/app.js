@@ -1269,6 +1269,10 @@ function renderApp() {
   syncRoute();
 }
 
-if ($("[data-page]")) {
+const hasPrototypePage = ["home", "story", "reader", "search", "library"].some((page) =>
+  $(`[data-page="${page}"]`),
+);
+
+if (hasPrototypePage) {
   renderApp();
 }

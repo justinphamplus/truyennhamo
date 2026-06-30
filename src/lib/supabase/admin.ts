@@ -12,11 +12,12 @@ let adminClient: SupabaseClient<Database> | undefined;
 export function getAdminSupabaseClient() {
   if (!adminClient) {
     const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const secretKey = process.env.SUPABASE_SECRET_KEY;
+    const secretKey =
+      process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.SUPABASE_SECRET_KEY;
 
     if (!url || !secretKey) {
       throw new Error(
-        "Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SECRET_KEY",
+        "Missing NEXT_PUBLIC_SUPABASE_URL or server-only Supabase admin key",
       );
     }
 
