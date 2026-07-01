@@ -71,7 +71,7 @@ begin
     raise exception 'Story cover bucket is not configured for public limited image reads';
   end if;
 
-  if not exists (
+  if exists (
     select 1
     from pg_policies
     where schemaname = 'storage'
@@ -80,7 +80,7 @@ begin
       and ('anon' = any(roles) or 'authenticated' = any(roles))
       and coalesce(qual, '') like '%story-covers%'
   ) then
-    raise exception 'Story cover bucket has no public read policy';
+    raise exception 'Story cover bucket exposes public list policy';
   end if;
 
   if exists (
