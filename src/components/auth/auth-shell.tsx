@@ -20,7 +20,7 @@ export function AuthShell({
   return (
     <div className="account-page">
       <header className="account-header">
-        <Link className="brand" href="/" aria-label="Ruby Noir trang chủ">
+        <Link className="brand" href="/" aria-label="Ruby Noir trang chủ" prefetch={false}>
           <span className="brand-mark" aria-hidden="true">
             <span />
             <span />
@@ -30,7 +30,7 @@ export function AuthShell({
             <small>Romance</small>
           </span>
         </Link>
-        <Link className="account-back-link" href="/">
+        <Link className="account-back-link" href="/" prefetch={false}>
           ← Về trang chủ
         </Link>
       </header>

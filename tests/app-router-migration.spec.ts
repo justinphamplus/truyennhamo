@@ -126,14 +126,14 @@ test("Home → Story → Reader uses App Router paths", async ({ page }) => {
 });
 
 test("Home hydrates after client navigation from sign-in", async ({ page }) => {
-  await page.goto("/dang-nhap");
+  await page.goto("/dang-nhap", { waitUntil: "networkidle" });
   await page.locator(".account-back-link").click();
 
   await expect(page).toHaveURL(/\/$/);
   await expect(page.locator("[data-page='home']")).toHaveClass(/is-active/);
-  await expect(page.locator("[data-recommend-list] .story-card").first()).toBeVisible();
-  await expect(page.locator("[data-ranking-list] .ranking-item").first()).toBeVisible();
-  await expect(page.locator("[data-updates-list] .update-item").first()).toBeVisible();
+  await expect(page.locator("[data-recommend-list] .story-card")).toHaveCount(17);
+  await expect(page.locator("[data-ranking-list] .ranking-item")).toHaveCount(9);
+  await expect(page.locator("[data-updates-list] .update-item")).toHaveCount(5);
 });
 
 test("Story detail and chapter metadata load from Supabase by slug", async ({ page }) => {
