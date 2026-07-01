@@ -404,7 +404,7 @@ UPDATE luon co SELECT policy tuong ung.
 
 ### Bucket `story-covers`
 
-- Public read.
+- Public object URL read, without a broad public `storage.objects` SELECT/list policy.
 - Upload/update/delete chi server/admin.
 - Path: `{story_id}/{version}.{ext}`.
 

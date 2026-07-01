@@ -82,7 +82,7 @@ After apply:
 - [ ] Xac nhan RLS van enabled cho exposed public tables.
 - [ ] Xac nhan public/user grants khong mo them admin-only data.
 - [ ] Xac nhan `public.admin_save_chapter` va `public.admin_publish_chapter` chi grant execute cho `service_role`.
-- [ ] Xac nhan bucket `story-covers` ton tai, public read duoc, write/update/delete chi qua admin server path.
+- [ ] Xac nhan bucket `story-covers` ton tai, public object URL read duoc, khong co public list policy, write/update/delete chi qua admin server path.
 - [ ] Xac nhan image upload limit/MIME policy cho `story-covers`: JPG, PNG, WebP va 5MB.
 
 ## Deploy Order

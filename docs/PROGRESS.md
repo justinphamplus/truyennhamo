@@ -646,8 +646,8 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
 
 ## Story Cover Storage A5.3 2026-06-30
 
-- Added Supabase Storage bucket `story-covers` as public read with a 5MB image limit and JPG/PNG/WebP MIME allowlist.
-- Added read policy for anon/authenticated clients and kept upload/update/delete server-admin only via service-role actions.
+- Added Supabase Storage bucket `story-covers` as public object URL read with no broad public list policy, plus a 5MB image limit and JPG/PNG/WebP MIME allowlist.
+- Kept object reads available through public bucket URLs while avoiding anon/authenticated `storage.objects` list access; upload/update/delete stay server-admin only via service-role actions.
 - Added admin story detail cover UI for preview, upload/update and delete.
 - Server action validates story id/slug, MIME, file size, image signature and server-generated `{story_id}/{version}.{ext}` object paths before updating `stories.cover_path`.
 - Added `service_role` update grant for `stories.cover_path` and `updated_at`.
