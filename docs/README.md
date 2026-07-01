@@ -15,6 +15,7 @@ Thu muc nay la noi theo doi yeu cau, ke hoach va tien do cua du an NovelVerse.
 9. `BACKEND_SPEC.md` - Stack, schema, RLS, Storage va API contract cho MVP.
 10. `BACKEND_TASKS.md` - Thu tu migration va vertical slice backend.
 11. `ADMIN_RELEASE_CHECKLIST.md` - Checklist env, migration, smoke va rollback cho admin production release.
+12. `PRODUCTION_SEED_RUNBOOK.md` - Cach seed catalog production an toan, idempotent, khong tao fake users/comments.
 
 ## Trang thai hien tai
 

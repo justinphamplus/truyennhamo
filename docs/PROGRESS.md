@@ -759,6 +759,13 @@ Chot frontend MVP va thiet ke schema/backend contract truoc khi ket noi du lieu 
   - Node 22 remains the CI/runtime target.
 - Updated `docs/README.md` so the release checklist is discoverable.
 
+## Production Seed Runbook 2026-07-01
+
+- Added `supabase/production_homepage_seed.sql` as an idempotent production catalog seed for homepage/detail/reader/search smoke data.
+- The production seed only touches public catalog reader tables and deliberately excludes fake auth users, profiles, comments, admin roles and storage objects.
+- Added `docs/PRODUCTION_SEED_RUNBOOK.md` with run, verify, RLS expectation and rollback guidance.
+- Updated the admin release checklist and docs index so production seeding is discoverable.
+
 ## Decision Log Shortcut
 
 Full decisions live in `DECISIONS.md`.

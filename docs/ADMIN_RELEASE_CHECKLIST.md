@@ -84,10 +84,12 @@ After apply:
 - [ ] Xac nhan `public.admin_save_chapter` va `public.admin_publish_chapter` chi grant execute cho `service_role`.
 - [ ] Xac nhan bucket `story-covers` ton tai, public object URL read duoc, khong co public list policy, write/update/delete chi qua admin server path.
 - [ ] Xac nhan image upload limit/MIME policy cho `story-covers`: JPG, PNG, WebP va 5MB.
+- [ ] Neu production catalog dang rong, chay `supabase/production_homepage_seed.sql` theo `docs/PRODUCTION_SEED_RUNBOOK.md`; khong chay local `supabase/seed.sql` tren production vi file do co fake auth users/comments.
 
 ## Deploy Order
 
 - [ ] Apply/verify Supabase migrations truoc app deploy neu app code phu thuoc schema moi.
+- [ ] Neu can seed catalog production, chay production seed sau migrations va truoc app smoke.
 - [ ] Set production env vars.
 - [ ] Deploy app commit da qua CI.
 - [ ] Neu deploy preview/staging co production-like env, smoke test staging truoc khi promote.
