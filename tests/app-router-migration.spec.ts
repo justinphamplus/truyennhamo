@@ -125,6 +125,17 @@ test("Home → Story → Reader uses App Router paths", async ({ page }) => {
   await expect(page.locator("[data-page='reader']")).toHaveClass(/is-active/);
 });
 
+test("Home hydrates after client navigation from sign-in", async ({ page }) => {
+  await page.goto("/dang-nhap");
+  await page.locator(".account-back-link").click();
+
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.locator("[data-page='home']")).toHaveClass(/is-active/);
+  await expect(page.locator("[data-recommend-list] .story-card").first()).toBeVisible();
+  await expect(page.locator("[data-ranking-list] .ranking-item").first()).toBeVisible();
+  await expect(page.locator("[data-updates-list] .update-item").first()).toBeVisible();
+});
+
 test("Story detail and chapter metadata load from Supabase by slug", async ({ page }) => {
   await page.goto("/truyen/van-co-than-de");
 

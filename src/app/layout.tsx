@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "../../styles.css";
 
 export const metadata: Metadata = {
@@ -29,7 +28,6 @@ export default function RootLayout({
       </head>
       <body data-layout="ruby-noir">
         {children}
-        <Script src="/app.js" strategy="afterInteractive" />
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+import Script from "next/script";
+
 import { getPrototypeMarkup, type PrototypePage } from "@/lib/prototype-markup";
 import { getCurrentProfile } from "@/lib/auth/current-user";
 import { BookmarkControls } from "@/components/library/bookmark-controls";
@@ -130,6 +132,7 @@ export async function PrototypeShell({
           initialProgress={readingProgress}
         />
       ) : null}
+      <Script src="/app.js" strategy="afterInteractive" />
     </>
   );
 }
