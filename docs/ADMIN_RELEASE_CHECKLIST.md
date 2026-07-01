@@ -9,6 +9,14 @@ No la tai lieu van hanh, khong phai migration moi.
 - Revenue, role, notification va marketing module shells van read-only/deferred; khong bat mutation gia.
 - Public site, auth, library, comments va reader flow phai tiep tuc hoat dong nhu truoc.
 
+## Production Release Note 2026-07-01
+
+- Supabase production project `truyennhamo` (`uamtsrntbpqckjrjaojj`, `ap-southeast-1`) da apply migrations va seed catalog production theo `docs/PRODUCTION_SEED_RUNBOOK.md`.
+- Seed baseline verified: 10 stories, 9 published stories, 1 draft story, 37 chapters, 36 published chapters, 13 published free chapters va 37 chapter contents; fake auth users/comments khong seed.
+- Production deployment da redeploy tu commit `299e6bc` (`chore: add production seed runbook`) vao `https://truyennhamo.vercel.app`; Vercel metadata tro dung commit va khong co `gitDirty`.
+- Browser smoke production pass cho `/`, `/truyen/van-co-than-de`, `/truyen/van-co-than-de/chuong-2686`, `/truyen/van-co-than-de/chuong-2685` va `/tim-kiem?q=Phi%20Thi%C3%AAn%20Ng%C6%B0`.
+- Browser smoke ghi nhan 0 console errors/warnings, 0 page errors, 0 failed requests; Vercel runtime logs gan nhat khong co `error`/`fatal`.
+
 ## Supabase Changelog Notes
 
 Da kiem tra `https://supabase.com/changelog.md` ngay 2026-06-30.
