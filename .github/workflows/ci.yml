@@ -72,7 +72,20 @@ jobs:
         run: npm ci
 
       - name: Start Supabase
-        run: npm run supabase:start
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            echo "Starting Supabase (attempt ${attempt}/3)"
+            if npx supabase start --exclude edge-runtime --debug; then
+              exit 0
+            fi
+
+            npx supabase stop --no-backup || true
+            if [ "$attempt" = "3" ]; then
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
 
       - name: Reset local database
         run: npm run db:reset
@@ -112,7 +125,20 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Start Supabase
-        run: npm run supabase:start
+        shell: bash
+        run: |
+          for attempt in 1 2 3; do
+            echo "Starting Supabase (attempt ${attempt}/3)"
+            if npx supabase start --exclude edge-runtime --debug; then
+              exit 0
+            fi
+
+            npx supabase stop --no-backup || true
+            if [ "$attempt" = "3" ]; then
+              exit 1
+            fi
+            sleep $((attempt * 10))
+          done
 
       - name: Reset local database
         run: npm run db:reset
