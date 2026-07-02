@@ -17,6 +17,14 @@ No la tai lieu van hanh, khong phai migration moi.
 - Browser smoke production pass cho `/`, `/truyen/van-co-than-de`, `/truyen/van-co-than-de/chuong-2686`, `/truyen/van-co-than-de/chuong-2685` va `/tim-kiem?q=Phi%20Thi%C3%AAn%20Ng%C6%B0`.
 - Browser smoke ghi nhan 0 console errors/warnings, 0 page errors, 0 failed requests; Vercel runtime logs gan nhat khong co `error`/`fatal`.
 
+## Production Release Note 2026-07-02
+
+- GitHub checks pass cho commit `42bf9fe` (`test: add unicode search regression smoke`): `Quality`, `DB Contracts` va `Admin E2E Smoke`.
+- Production deployment `dpl_pbstDrHTEkpdqYv218PARPDKMJ8y` da redeploy tu commit `42bf9feeea36aa6ebcbd6ff8c28152a9e4fdb0e2` vao `https://truyennhamo.vercel.app`; Vercel metadata tro dung `master`, dung commit va khong co `gitDirty`.
+- HTTP smoke `/` tra `200 OK`.
+- Browser smoke production pass cho `/`, `/tim-kiem?q=V%E1%BA%A1n%20C%E1%BB%95`, Home search voi tu khoa `Vạn Cổ`, `/truyen/van-co-than-de`, `/truyen/van-co-than-de/chuong-2686` va `/truyen/van-co-than-de/chuong-2685`.
+- Browser smoke ghi nhan 0 console errors/warnings va 0 failed requests.
+
 ## Supabase Changelog Notes
 
 Da kiem tra `https://supabase.com/changelog.md` ngay 2026-06-30.
