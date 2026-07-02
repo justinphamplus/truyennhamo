@@ -24,6 +24,8 @@ No la tai lieu van hanh, khong phai migration moi.
 - HTTP smoke `/` tra `200 OK`.
 - Browser smoke production pass cho `/`, `/tim-kiem?q=V%E1%BA%A1n%20C%E1%BB%95`, Home search voi tu khoa `Vạn Cổ`, `/truyen/van-co-than-de`, `/truyen/van-co-than-de/chuong-2686` va `/truyen/van-co-than-de/chuong-2685`.
 - Browser smoke ghi nhan 0 console errors/warnings va 0 failed requests.
+- Production deployment `dpl_CgzhjDS3Yd3bSS6bu4qDUpGWDP65` da redeploy tu commit `319d4e86d244bbbf53b0fa66b278ea9d50184232` vao `https://truyennhamo.vercel.app`; Vercel metadata tro dung `master`, dung commit va khong co `gitDirty`.
+- Browser smoke/log check luc 2026-07-02 16:39-16:43 +07 sach: cac route `/`, `/tim-kiem`, `/truyen/van-co-than-de`, `/truyen/van-co-than-de/chuong-2686` va `/truyen/van-co-than-de/chuong-2685` tra `200`/`304`; Vercel runtime logs trong 2h gan nhat khong co `error`, `fatal` hoac `5xx`.
 
 ## Supabase Changelog Notes
 
