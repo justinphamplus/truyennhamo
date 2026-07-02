@@ -34,6 +34,8 @@ No la tai lieu van hanh, khong phai migration moi.
 - Production log check sau CI/deploy review sach: `error`, `fatal`, `warning`, `5xx` va `4xx` deu khong co log trong 30 phut gan nhat; production alias `https://truyennhamo.vercel.app` van tro deployment status `READY`.
 - Vercel deployment check sau commit `a603b51dc6a79bcbf70b29970cec62fffb974e15` (`docs: record final ci vercel handoff`) xac nhan docs-only push khong tao production deployment moi; deployment production hien tai van la `dpl_2byoXUAgVWLXYs7NHW6y4FyDih2w` tu commit `597544e44a7b9dbe82c607b21ac8549053d82e37`, target `production`, status `READY`.
 - Production health/log check luc 2026-07-02 17:28 +07 sach: runtime errors 1h gan nhat = 0, `warning`/`error`/`fatal` logs khong co, `4xx` va `5xx` khong co; status breakdown chi ghi nhan `200` va `304`, health check `/` tren `https://truyennhamo.vercel.app` tra `200`.
+- GitHub CI pass cho commit `7ad0c54e3dea7e3232e1cb0a635be35d044f52f2` (`docs: record a603b51 vercel handoff`) trong run `28583476811`: `Quality`, `DB Contracts` va `Admin E2E Smoke` deu success.
+- Vercel deployment check sau commit `7ad0c54` xac nhan docs-only push khong tao production deployment moi; deployment production hien tai van la `dpl_2byoXUAgVWLXYs7NHW6y4FyDih2w` tu commit `597544e44a7b9dbe82c607b21ac8549053d82e37`, target `production`, status `READY`; health/log check luc 2026-07-02 17:44 +07 sach: runtime errors 1h gan nhat = 0, `warning`/`error`/`fatal` logs khong co, `4xx` va `5xx` khong co, status breakdown ghi nhan `200`, `304`, `303`, health check `/` tren `https://truyennhamo.vercel.app` tra `200`.
 
 ## Supabase Changelog Notes
 
