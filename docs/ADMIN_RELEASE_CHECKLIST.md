@@ -26,6 +26,9 @@ No la tai lieu van hanh, khong phai migration moi.
 - Browser smoke ghi nhan 0 console errors/warnings va 0 failed requests.
 - Production deployment `dpl_CgzhjDS3Yd3bSS6bu4qDUpGWDP65` da redeploy tu commit `319d4e86d244bbbf53b0fa66b278ea9d50184232` vao `https://truyennhamo.vercel.app`; Vercel metadata tro dung `master`, dung commit va khong co `gitDirty`.
 - Browser smoke/log check luc 2026-07-02 16:39-16:43 +07 sach: cac route `/`, `/tim-kiem`, `/truyen/van-co-than-de`, `/truyen/van-co-than-de/chuong-2686` va `/truyen/van-co-than-de/chuong-2685` tra `200`/`304`; Vercel runtime logs trong 2h gan nhat khong co `error`, `fatal` hoac `5xx`.
+- Production deployment `dpl_2byoXUAgVWLXYs7NHW6y4FyDih2w` da redeploy tu commit `597544e44a7b9dbe82c607b21ac8549053d82e37` vao `https://truyennhamo.vercel.app`; Vercel inspect luc 2026-07-02 17:07 +07 bao target `production`, status `Ready`.
+- Production log check luc 2026-07-02 17:00-17:08 +07 sach: `error`, `fatal`, `warning`, `5xx` va `4xx` deu khong co log trong 30 phut gan nhat.
+- HTTP health check luc 2026-07-02 17:07 +07 pass: `/`, `/tim-kiem?q=Van%20Co` va `/truyen/van-co-than-de/chuong-2686` deu tra `200`; Vercel logs 5 phut gan nhat ghi nhan cac request moi nay voi status `200`.
 
 ## Supabase Changelog Notes
 
