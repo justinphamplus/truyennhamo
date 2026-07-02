@@ -53,6 +53,8 @@ const tinyPngCover = Buffer.from(
   "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+/p9sAAAAASUVORK5CYII=",
   "base64",
 );
+const vietnameseSearchQuery = "V\u1ea1n C\u1ed5";
+const vietnameseSearchResultTitle = "V\u1ea1n C\u1ed5 Th\u1ea7n \u0110\u1ebf";
 
 for (const width of viewports) {
   test.describe(`${width}px`, () => {
@@ -247,6 +249,58 @@ test("Global search submits to Supabase RPC results and opens the canonical stor
 
   await page.getByRole("link", { name: "Vạn Cổ Thần Đế" }).first().click();
   await expect(page).toHaveURL(/\/truyen\/van-co-than-de$/);
+});
+
+test("Search preserves Vietnamese diacritics from URL and home form submission", async ({
+  page,
+}) => {
+  await page.goto(`/tim-kiem?q=${encodeURIComponent(vietnameseSearchQuery)}`);
+  await expect(page.locator("[data-search-source='supabase-rpc']")).toBeVisible();
+  await expect(page.locator("[data-search-results]")).toContainText(
+    vietnameseSearchResultTitle,
+  );
+
+  let payload = JSON.parse(
+    (await page.locator("#search-data").textContent()) ?? "{}",
+  ) as {
+    query?: string;
+    results?: { slug: string; title: string }[];
+  };
+
+  expect(payload.query).toBe(vietnameseSearchQuery);
+  expect(payload.results).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        slug: "van-co-than-de",
+        title: vietnameseSearchResultTitle,
+      }),
+    ]),
+  );
+
+  await page.goto("/");
+  const searchbox = page.locator("#global-search");
+  await searchbox.fill(vietnameseSearchQuery);
+  await searchbox.press("Enter");
+
+  await expect(page).toHaveURL(/\/tim-kiem\?q=V%E1%BA%A1n\+C%E1%BB%95$/);
+  await expect(page.locator("[data-search-results]")).toContainText(
+    vietnameseSearchResultTitle,
+  );
+
+  payload = JSON.parse((await page.locator("#search-data").textContent()) ?? "{}") as {
+    query?: string;
+    results?: { slug: string; title: string }[];
+  };
+
+  expect(payload.query).toBe(vietnameseSearchQuery);
+  expect(payload.results).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        slug: "van-co-than-de",
+        title: vietnameseSearchResultTitle,
+      }),
+    ]),
+  );
 });
 
 test("Search matches story title and never exposes draft stories", async ({ page }) => {
